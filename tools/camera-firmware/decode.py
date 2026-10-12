@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Decode tested G5 HK20/HK30 packages offline; never flash or execute payloads."""
+"""Decode tested G3/G5 HK20/HK30 packages offline; never flash or execute payloads."""
 
 import argparse
 import hashlib
@@ -18,15 +18,26 @@ from elftools.elf.elffile import ELFFile
 KEY_XOR = bytes.fromhex("BACDBCFE D6CADDD3 BAB9A3AB BFCBB5BE".replace(" ", ""))
 
 
-# Shared vendor firmware-decryption seeds recovered from G5 V5.5.113 build 210317.
-# These are not per-camera credentials or firmware-signing keys.
-G5_SEEDS = {
-    "header": bytes.fromhex(
-        "96b51bee73eb817907c0dbf57fbd280c8eb6201553cef3058054859eee6038da"
-    ),
-    "file": bytes.fromhex(
-        "018f84c3fc13b3e6af0ab81e525bedbb7bca9290a00ddc93c193c0b4e50cfe36"
-    ),
+# Shared vendor firmware-decryption seeds, not credentials or signing keys.
+# G3: inspected DS-2CD2T87G2-L V5.5.154 build 200928 executable.
+# G5: inspected DS-2CD2386G2-ISU/SL V5.5.113 build 210317 executable.
+PLATFORM_SEEDS = {
+    "g3": {
+        "header": bytes.fromhex(
+            "f953910d42457caf4dd9787256a09269288085a5689a0510b9cb94c59ba38093"
+        ),
+        "file": bytes.fromhex(
+            "97e164650406de50f6d93c4c71898de2c5a0e2923d79b44e4df26f9f55643d80"
+        ),
+    },
+    "g5": {
+        "header": bytes.fromhex(
+            "96b51bee73eb817907c0dbf57fbd280c8eb6201553cef3058054859eee6038da"
+        ),
+        "file": bytes.fromhex(
+            "018f84c3fc13b3e6af0ab81e525bedbb7bca9290a00ddc93c193c0b4e50cfe36"
+        ),
+    },
 }
 
 
@@ -59,9 +70,10 @@ def crc_raw(data):
     return zlib.crc32(data) ^ 0xFFFFFFFF
 
 
-def read_keys(path=None):
+def read_keys(path=None, platform="g5"):
     if path is None:
-        return gen_aes_key(G5_SEEDS["header"]), gen_aes_key(G5_SEEDS["file"])
+        seeds = PLATFORM_SEEDS[platform]
+        return gen_aes_key(seeds["header"]), gen_aes_key(seeds["file"])
     with path.open("rb") as stream:
         elf = ELFFile(stream)
         symbols = elf.get_section_by_name(".dynsym")
@@ -86,7 +98,7 @@ def read_keys(path=None):
 def unpack(data, k1, k2):
     head = xor16(data[:108])
     if len(head) != 108 or head[:4] != b"02KH":
-        raise ValueError("Not an HK20 G5 package")
+        raise ValueError("Not an HK20 package")
     hlen = struct.unpack_from("<I", head, 8)[0]
     if hlen != 108:
         raise ValueError("Unsupported outer header length")
@@ -97,6 +109,8 @@ def unpack(data, k1, k2):
     if size < 1024 or size % 256 or hlen + size > len(data):
         raise ValueError("Invalid section length")
     table = aes_ecb_dec(data[hlen + 16 : hlen + size], k1)
+    if struct.unpack_from("<I", section, 4)[0] != crc_raw((section + table)[12:]):
+        raise ValueError("HK30 checksum mismatch: wrong seed profile or damaged table")
     count = struct.unpack_from("<I", table, 0x1F0)[0]
     if size != (count + 4) * 256:
         raise ValueError("Inconsistent file count / section length")
@@ -146,8 +160,6 @@ def unpack(data, k1, k2):
         cursor += length
     if cursor != len(data):
         raise ValueError("Unaccounted trailing package data")
-    if struct.unpack_from("<I", section, 4)[0] != crc_raw((section + table)[12:]):
-        raise ValueError("HK30 section checksum mismatch")
     if struct.unpack_from("<I", head, 16)[0] != len(data):
         raise ValueError("HK20 package length mismatch")
     if struct.unpack_from("<I", head, 100)[0] != len(data) - hlen:
@@ -163,20 +175,43 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("firmware", type=Path)
     parser.add_argument(
+        "--platform",
+        choices=("auto", "g3", "g5"),
+        default="auto",
+        help="Seed profile; default tries G3 and G5 with full integrity checks",
+    )
+    parser.add_argument(
         "--davinci",
         type=Path,
-        help="Optional vendor ELF seed source; defaults to built-in G5 seeds",
+        help="Optional G5 vendor ELF seed source instead of built-in seeds",
     )
     parser.add_argument(
         "--output", type=Path, required=True, help="New output directory"
     )
     args = parser.parse_args()
+    if args.davinci and args.platform == "g3":
+        parser.error("--davinci supports the inspected G5 seed table only")
     if args.output.exists():
         parser.error("Output directory must not already exist")
     try:
         data = args.firmware.read_bytes()
-        k1, k2 = read_keys(args.davinci)
-        _, _, _, entries = unpack(data, k1, k2)
+        profiles = (
+            ["g5"]
+            if args.davinci
+            else (list(PLATFORM_SEEDS) if args.platform == "auto" else [args.platform])
+        )
+        errors = []
+        for platform in profiles:
+            try:
+                k1, k2 = read_keys(args.davinci, platform)
+                _, _, _, entries = unpack(data, k1, k2)
+                break
+            except ValueError as error:
+                errors.append(f"{platform}: {error}")
+        else:
+            raise ValueError(
+                "No selected profile passed validation; " + "; ".join(errors)
+            )
         if any(e["name"] == "manifest.json" for e in entries):
             raise ValueError("Reserved output filename: manifest.json")
         args.output.mkdir(parents=True, mode=0o700)
@@ -184,6 +219,7 @@ def main():
             with (args.output / entry["name"]).open("xb") as stream:
                 stream.write(entry["plain"])
         manifest = {
+            "seed_profile": platform,
             "firmware_sha256": hashlib.sha256(data).hexdigest(),
             "integrity_checks": "passed",
             "vendor_signature": "not verified",
@@ -194,7 +230,9 @@ def main():
         }
         with (args.output / "manifest.json").open("x") as stream:
             stream.write(json.dumps(manifest, indent=2) + "\n")
-        print(f"Decoded {len(entries)} payloads to {args.output}")
+        print(
+            f"Decoded {len(entries)} payloads with {platform.upper()} seeds to {args.output}"
+        )
         print("Integrity checks passed; vendor signature NOT verified.")
     except (ValueError, OSError, struct.error, ELFError) as error:
         parser.exit(1, f"Decode failed: {error}\n")
