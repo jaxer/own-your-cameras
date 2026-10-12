@@ -43,3 +43,9 @@ included; the steps document the mechanism and order used.
 
 The official custom hook made repacking unnecessary. Modified-image experiments
 did not bypass the vendor signature; the successful upgrade used untouched firmware.
+
+## Inspect vendor firmware
+
+[Decode the G5 file table and payloads offline](../software/g5-firmware-decoding.md)
+to inspect startup scripts before an upgrade. The included G5 seeds let you decode
+the tested builds without camera access or root.
