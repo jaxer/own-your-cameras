@@ -1,1 +1,0 @@
--r ../camera-firmware/requirements.txt
