@@ -196,7 +196,7 @@ def main():
         "compatible_model_types": [
             struct.unpack("<H", xor(t[i : i + 2]))[0] for i in range(20, len(t), 2)
         ],
-        "signing": "No private-key signature in the traced SWKH flow; byte sums + payload MD5 + model/version checks. See docs/software/door-station-firmware-format.md for scope.",
+        "signing": "No private-key signature in the traced SWKH flow; byte sums + payload MD5 + model/version checks. See docs/devices/ds-kd8003-ime1/firmware-format.md for scope.",
         "flashed": False,
         "boot_tested_on_camera": False,
     }

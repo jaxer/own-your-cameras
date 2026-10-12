@@ -1,5 +1,7 @@
 # Indoor station: root SSH
 
+[DS-KH9510-WTE1 overview](README.md)
+
 **Scope:** DS-KH9510-WTE1, R1 / rk312x, Android 5.1.1,
 **V2.2.28 build 230613**. Administrator credentials and a physical panel tap are required.
 

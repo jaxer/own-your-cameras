@@ -7,12 +7,15 @@ Key-only root SSH survived both operations and their reboots.
 ARMv7, two CPUs and Linux 4.19.91 were observed on the inspected build. The exact
 SoC is not identified here; do not assume it matches the G3 camera.
 
+Start with [root access](../../shared/root-access.md), then follow the upgrade
+sequence below. For offline inspection, use the [shared decoder](../../shared/firmware-decoding.md).
+
 ## Upgrade without losing access
 
 This documents the tested sequence, not a complete installation recipe. Supply
-your own SSH worker and loader; G3 also requires firmware-extraction tooling.
+your own SSH worker and loader.
 
-**Requires a working root shell.** See [root and persistent SSH](../security/owner-access.md).
+**Requires a working root shell.** See [root and persistent SSH](../../shared/root-access.md).
 V5.7.23's startup script calls `/dav/custom_initrun.sh`, so the official firmware
 can start an owner-supplied access worker without repacking the image.
 
@@ -46,6 +49,6 @@ did not bypass the vendor signature; the successful upgrade used untouched firmw
 
 ## Inspect vendor firmware
 
-[Decode the G5 file table and payloads offline](../software/camera-firmware-decoding.md)
+[Decode the G5 file table and payloads offline](../../shared/firmware-decoding.md)
 to inspect startup scripts before an upgrade. The included G5 seeds let you decode
 the tested builds without camera access or root.

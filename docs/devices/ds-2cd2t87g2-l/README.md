@@ -2,7 +2,7 @@
 
 Tested: original non-C G3 hardware, fixed 8 MP ColorVu camera.
 Root access used V5.5.154 build 200928; the managed upgrade installed official
-V5.5.820 build 231108. Start with [root and persistent SSH](../security/owner-access.md).
+V5.5.820 build 231108. Start with [root and persistent SSH](../../shared/root-access.md).
 
 ## Hardware
 
@@ -31,7 +31,7 @@ camera into recovery. `/home/webLib` is HTTP-served; keep private files elsewher
 ## Upgrade without losing access
 
 This documents the tested sequence, not a complete installation recipe. Supply
-your own SSH worker and loader; use the [offline decoder](../software/camera-firmware-decoding.md)
+your own SSH worker and loader; use the [offline decoder](../../shared/firmware-decoding.md)
 to extract the reference startup script.
 
 **Requires a working root SSH session and installed key-only access.** The tested
@@ -75,10 +75,15 @@ ISAPI without running another detector.
 
 `libPicDetect.so` exports `PICDETECT_CreateHandle`, `PICDETECT_Inspect` and
 `PICDETECT_DestroyHandle`. These are investigation leads, not a tested independent
-SDK. See [custom inference status](../software/local-compute.md).
+SDK.
+
+NNIE requires a compatible mapper/runtime, supported operators and quantization.
+No custom model or benchmark is included; copying an ONNX file onto the camera
+is not enough. For an integration, start with vendor ISAPI region/line events
+and configure linkage on the exact firmware.
 
 ## Inspect vendor firmware
 
-[Decode the G3 file table and payloads offline](../software/camera-firmware-decoding.md)
+[Decode the G3 file table and payloads offline](../../shared/firmware-decoding.md)
 with the included G3 seeds. No camera connection or root access is needed for
 extraction. This does not sign modified packages or establish stock-updater acceptance.

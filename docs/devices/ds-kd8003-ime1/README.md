@@ -1,8 +1,12 @@
 # DS-KD8003-IME1 door station
 
 Tested: original non-B hardware, DS-17040 board, V2.2.62 build 230204.
-This page covers shell access and hardware. The [sidecar notes](../software/door-station-sidecar.md)
-explain how to observe inputs while leaving the vendor software running.
+
+1. Get a root shell and inspect hardware below.
+2. [Build firmware with a startup hook](firmware.md).
+3. [Run a sidecar alongside vendor software](sidecar.md).
+
+[Package format and verification evidence](firmware-format.md).
 
 ## Get a root shell
 
@@ -107,5 +111,5 @@ Build for ARMv5TE soft float and the matching uClibc runtime. `/home/app` is sui
 for a temporary trial. Keep `hicore` running when adding an observing program;
 stopping it also affects media, access control and watchdog behavior.
 
-For reboot persistence, follow [build and use a startup hook](../software/door-station-firmware.md).
+For reboot persistence, follow [build and use a startup hook](firmware.md).
 Stock firmware does not run a script just because it is placed in `/home/config`.

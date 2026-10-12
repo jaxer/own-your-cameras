@@ -4,7 +4,7 @@ Root is the camera's administrator shell. It lets you inspect files and run your
 own programs. Getting a shell and keeping it after a reboot are separate jobs.
 
 **Applies to:** DS-2CD2T87G2-L G3 and DS-2CD2386G2-ISU/SL G5. The door station
-has a different [access method](../devices/ds-kd8003-ime1.md#get-a-root-shell).
+has a different [access method](../devices/ds-kd8003-ime1/README.md#get-a-root-shell).
 Examples use `CAMERA_HOST` for your camera's address. Keep credentials and backups
 on your own machine, outside this repository.
 
@@ -95,9 +95,9 @@ printf 'id\nexit\n' | ssh -T -p 2222 -i CAMERA_KEY admin@CAMERA_HOST
 ## 3. Make startup survive an update
 
 - **G3:** `/dav/initrun.sh` starts the application. The tested update replaced it.
-  Restore the owner hook after upload and **before reboot**. See the [G3 sequence](../devices/ds-2cd2t87g2-l.md#upgrade-without-losing-access).
+  Restore the owner hook after upload and **before reboot**. See the [G3 sequence](../devices/ds-2cd2t87g2-l/README.md#upgrade-without-losing-access).
 - **G5:** V5.7.23 calls `/dav/custom_initrun.sh` itself. That hook and the access
-  files survived the tested upgrade and same-version reinstall. See the [G5 sequence](../devices/ds-2cd2386g2-isu-sl.md#upgrade-without-losing-access).
+  files survived the tested upgrade and same-version reinstall. See the [G5 sequence](../devices/ds-2cd2386g2-isu-sl/README.md#upgrade-without-losing-access).
 
 Keep a native configuration export, its restore password, and a readable copy of
 important settings before upgrading. Reading a backup successfully does not prove

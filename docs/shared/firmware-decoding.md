@@ -50,7 +50,7 @@ Expected: 19 payloads for G3 V5.5.820 or 32 for G5 V5.7.23, plus a manifest with
 compatibility or permission to flash a package.
 
 G5 V5.7.23 calls `/dav/custom_initrun.sh`; G3 V5.5.820 does not. See the
-[G3](../devices/ds-2cd2t87g2-l.md) and [G5](../devices/ds-2cd2386g2-isu-sl.md)
+[G3](../devices/ds-2cd2t87g2-l/README.md) and [G5](../devices/ds-2cd2386g2-isu-sl/README.md)
 upgrade guides.
 Extracted payloads may themselves be archives or filesystem images.
 

@@ -1,5 +1,7 @@
 # How the door-station sidecar works
 
+[DS-KD8003-IME1 overview](README.md)
+
 A sidecar is a small program running beside the vendor software. On DS-KD8003-IME1
 V2.2.62, it reads the door and button hardware and sends state to MQTT. Opening
 still goes through the vendor API, which owns the relock timer.
@@ -22,7 +24,7 @@ door is open, and an electrically locked strike does not prove the latch engaged
 
 The program uses one nonblocking loop with bounded buffers. It targets ARMv5TE
 soft float and the device's uClibc. It leaves `hicore` running and observes the
-button without grabbing it by default. See the [hardware map](../devices/ds-kd8003-ime1.md#hardware-map).
+button without grabbing it by default. See the [hardware map](README.md#hardware-map).
 
 ## MQTT contract
 
@@ -64,5 +66,5 @@ live UART takeover stayed disabled: two UART readers split the traffic. Those
 features should not be treated as requirements for the basic sidecar.
 
 Reboot persistence needs a firmware startup hook on this door-station build.
-It is separate from the sidecar itself; see the [firmware build guide](door-station-firmware.md)
+It is separate from the sidecar itself; see the [firmware build guide](firmware.md)
 for the offline builder and opt-in hook.

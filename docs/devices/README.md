@@ -5,11 +5,11 @@ hardware revision as well as the model name; similar names can need different fi
 
 | Model | What you can learn | Tested firmware |
 |---|---|---|
-| [DS-KD8003-IME1](ds-kd8003-ime1.md) | Root shell, firmware startup hook, hardware pinout, audio APIs | V2.2.62 build 230204, original non-B hardware |
-| [DS-2CD2T87G2-L](ds-2cd2t87g2-l.md) | G3 firmware decoding, hardware, root access, managed upgrade, AI interfaces | V5.5.154 build 200928 → V5.5.820 build 231108, original non-C hardware |
-| [DS-2CD2386G2-ISU/SL](ds-2cd2386g2-isu-sl.md) | G5 firmware decoding, root access and upgrade persistence | V5.5.113 → V5.7.23 build 260320, C variant |
-| [DS-KH9510-WTE1](ds-kh9510-wte1.md) | Root SSH, helper build/install, Android platform notes | V2.2.28 build 230613 |
+| [DS-KD8003-IME1](ds-kd8003-ime1/README.md) | Root shell, firmware startup hook, hardware pinout, audio APIs | V2.2.62 build 230204, original non-B hardware |
+| [DS-2CD2T87G2-L](ds-2cd2t87g2-l/README.md) | G3 firmware decoding, hardware, root access, managed upgrade, AI interfaces | V5.5.154 build 200928 → V5.5.820 build 231108, original non-C hardware |
+| [DS-2CD2386G2-ISU/SL](ds-2cd2386g2-isu-sl/README.md) | G5 firmware decoding, root access and upgrade persistence | V5.5.113 → V5.7.23 build 260320, C variant |
+| [DS-KH9510-WTE1](ds-kh9510-wte1/README.md) | Root SSH, helper build/install, hardware and Android application notes | V2.2.28 build 230613 |
 
-For G3/G5 access, read [root and persistent SSH](../security/owner-access.md).
-For custom software, see the [door-station sidecar design](../software/door-station-sidecar.md)
-and [AI hardware notes](../software/local-compute.md).
+Each model directory contains its overview and device-specific guides.
+G3/G5 share the [root-access](../shared/root-access.md) and
+[firmware-decoding](../shared/firmware-decoding.md) guides.

@@ -1,9 +1,11 @@
 # Build and use a door-station startup hook
 
+[DS-KD8003-IME1 overview](README.md)
+
 **Supported:** DS-KD8003-IME1, original non-B hardware, V2.2.62 build 230204.
 The builder changes only encrypted `/start.sh`. No application or credentials are
 bundled. The generic public candidate has passed offline checks; it has not been
-flashed or boot-tested. [Format and evidence](door-station-firmware-format.md).
+flashed or boot-tested. [Format and evidence](firmware-format.md).
 
 ## 1. Prepare
 
@@ -80,7 +82,7 @@ reachable; it is not a recovery guarantee.
 
 ## 5. Check the hook
 
-Enable maintenance SSH and use the [non-PTY root-shell method](../devices/ds-kd8003-ime1.md#get-a-root-shell).
+Enable maintenance SSH and use the [non-PTY root-shell method](README.md#get-a-root-shell).
 After installation and reboot:
 
 ```sh
@@ -144,5 +146,5 @@ SH
 ```
 
 This does not stop an already-running program. Marker and log files disappear
-at reboot. [Hook source](../../tools/door-station-firmware/boot-hook.sh) ·
-[Sidecar design](door-station-sidecar.md) · [Technical reference](door-station-firmware-format.md)
+at reboot. [Hook source](../../../tools/door-station-firmware/boot-hook.sh) ·
+[Sidecar design](sidecar.md) · [Technical reference](firmware-format.md)
