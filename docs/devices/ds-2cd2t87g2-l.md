@@ -1,0 +1,77 @@
+# DS-2CD2T87G2-L — G3
+
+Tested: original non-C G3 hardware, fixed 8 MP ColorVu camera.
+Root access used V5.5.154 build 200928; the managed upgrade installed official
+V5.5.820 build 231108. Start with [root and persistent SSH](../security/owner-access.md).
+
+## Hardware
+
+| Part | Observed value |
+|---|---|
+| SoC | Hi3516CV500, dual Cortex-A7 |
+| ABI | ARMv7-A softfp, NEON / VFPv4 |
+| OS | Linux 4.9.37; runtime files named `ld-2.24.so` and `libc-2.24.so` |
+| RAM | About 246 MiB usable |
+| Application storage | `/dav`, UBIFS, about 187 MiB |
+| Configuration | `/config` and `/davinci`, small shared settings volume; SQLite |
+| Temporary storage | Root and `/home`, RAM-backed |
+| Neural inference | `/dev/nnie`, owned by `hikdsp` |
+| Image processing | `/dev/ive`, owned by `hikdsp` |
+| White illumination | GPIO 81; IR/white PWM0/PWM1 |
+| IR-cut | GPIO 72/73 |
+| Speaker amplifier / microphone select | GPIO 52 / 53 |
+| Status indicators | GPIO 74/77 |
+| PHY reset / peripheral MCU reset | GPIO 62 / 91 |
+| Sensor | I2C `0x36`, 8 MP MIPI, board code HIK188; exact sensor part unconfirmed |
+
+Use ARMv7 softfp builds, not the door station's ARMv5/uClibc binary assumptions.
+Do not kill `davinci` or `hikdsp`: watchdog and `guard.sh` behavior can send the
+camera into recovery. `/home/webLib` is HTTP-served; keep private files elsewhere.
+
+## Upgrade without losing access
+
+This documents the tested sequence, not a complete installation recipe. Supply
+your own SSH worker and loader; G3 also requires firmware-extraction tooling.
+
+**Requires a working root SSH session and installed key-only access.** The tested
+updater preserved extra `/dav` files but replaced `/dav/initrun.sh`, removing the
+startup entry point. Keep the old root session alive throughout these steps.
+
+1. Back up settings and the existing access files. Obtain the matching official
+   [G3 firmware archive](https://assets.hikvision.com/prd/public/all/files/202312/Firmware__V5.5.820_231108_S3000539625.zip).
+2. Check the extracted DAV SHA-256 against the value below.
+3. Upload through `PUT /ISAPI/System/updateFirmware`. The tested upload returned
+   success with reboot required; **do not send the reboot yet**.
+4. Read the new `/dav/initrun.sh` through the existing root shell. Compare it with
+   the script extracted from that exact package. If it differs, stop.
+5. Restore the call to your access loader at the end of the new script, check with
+   `/bin/sh -n /dav/initrun.sh`, and read it back to verify the exact change.
+6. Reboot using `PUT /ISAPI/System/reboot`. Verify the firmware version, pinned SSH
+   host key, `uid=0`, fresh images and the settings you need.
+
+The restored entry point was a call to `/dav/custom_initrun.sh`; the loader started
+the access worker. Unlike the G5 build, this G3 build does not call that loader
+unless you add the call. The tested process used byte-for-byte comparisons before
+and after appending it. Firmware extraction and upload tools are not included here.
+
+```text
+Official DAV SHA-256:
+0887eac3807f9afcf1912c0faba5b580874000de27b0f184ed5ef17bd67b42dc
+```
+
+The reboot retained key-only root access. Fresh snapshots passed, and 80 comparable
+settings responses were unchanged. Cross-version backup restore and downstream
+recording/automation were not independently tested. Future firmware may behave
+differently; unattended updates can remove the startup hook.
+
+## Recognition hardware
+
+IVE supplies background subtraction, morphology and connected components through
+`libhms.so` / `HI_MPI_IVE_*`. NNIE runs neural models inside `hikdsp`.
+`/dav/G3_model.bin` contains a YOLOv2-labelled human/vehicle detector among other
+models. Supported region/line events can expose human/vehicle classification via
+ISAPI without running another detector.
+
+`libPicDetect.so` exports `PICDETECT_CreateHandle`, `PICDETECT_Inspect` and
+`PICDETECT_DestroyHandle`. These are investigation leads, not a tested independent
+SDK. See [custom inference status](../software/local-compute.md).
