@@ -1,5 +1,9 @@
 # DS-2CD2T87G2-L — G3
 
+<img src="device.png" alt="Hikvision DS-2CD2T87G2-L" width="177">
+
+[Official datasheet (PDF)](https://www.hikvision.com/content/dam/hikvision/products/S000000001/S000000002/S000000003/S000000025/OFR000043/M000041483/Data_Sheet/DS-2CD2T87G2-L_Datasheet_V5.5.154_20201202.pdf) · [Hikvision image / mirrored datasheet](https://www.doriscctv.co.uk/downloads/DS-2CD2T87G2-L_Datasheet_V5.5.154_20220114.pdf)
+
 Tested: original non-C G3 hardware, fixed 8 MP ColorVu camera.
 Root access used V5.5.154 build 200928; the managed upgrade installed official
 V5.5.820 build 231108. Start with [root and persistent SSH](../../shared/root-access.md).

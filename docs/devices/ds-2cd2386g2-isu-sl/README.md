@@ -1,5 +1,9 @@
 # DS-2CD2386G2-ISU/SL — G5
 
+<img src="device.png" alt="Hikvision DS-2CD2386G2-ISU/SL" width="280">
+
+[Official datasheet (PDF; C revision)](https://assets.hikvision.com/prd/public/all/doc/m000029379/DS-2CD2386G2-ISU_SL-C_Datasheet_V5.5.112_20230217.pdf) · [Product image: Hikvision](https://assets.hikvision.com/prd/public/all/doc/m000029379/DS-2CD2386G2-ISU_SL-C_Datasheet_V5.5.112_20230217.pdf)
+
 Tested: G5 / B-R-G5-0, C variant. V5.5.113 was upgraded to official V5.7.23
 build 260320. That same image was then installed again from V5.7.23.
 Key-only root SSH survived both operations and their reboots.

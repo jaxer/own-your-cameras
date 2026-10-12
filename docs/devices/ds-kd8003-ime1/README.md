@@ -1,5 +1,9 @@
 # DS-KD8003-IME1 door station
 
+<img src="device.png" alt="Hikvision DS-KD8003-IME1" width="280">
+
+[Official datasheet (PDF)](https://www.hikvision.com/content/dam/hikvision/products/S000000001/S000000083/S000000129/S000000131/OFR002104/M000001550/Data_Sheet/DS-KD8003-IME1_Module-Door-Staion_Datasheet_V1.0.0_20210827.pdf) · [Hikvision image / mirrored datasheet](https://www.avdsecurity.nl/File/2985)
+
 Tested: original non-B hardware, DS-17040 board, V2.2.62 build 230204.
 
 1. Get a root shell and inspect hardware below.

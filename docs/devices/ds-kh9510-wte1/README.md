@@ -1,5 +1,9 @@
 # DS-KH9510-WTE1 indoor station
 
+<img src="device.png" alt="Hikvision DS-KH9510-WTE1" width="280">
+
+[Official datasheet (PDF)](https://assets.hikvision.com/prd/public/all/doc/m000020009/DS-KH9510-WTE1-Video-Intercom-Network-Indoor-Station_Datasheet_20230818.pdf) · [Product image: Hikvision](https://assets.hikvision.com/prd/public/all/doc/m000020009/DS-KH9510-WTE1-Video-Intercom-Network-Indoor-Station_Datasheet_20230818.pdf)
+
 | Item | Observed value |
 |---|---|
 | Firmware | V2.2.28 build 230613 |

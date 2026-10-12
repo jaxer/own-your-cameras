@@ -28,3 +28,9 @@ build/
 *.jpg
 *.jpeg
 *.png
+
+# Reviewed vendor product images used in device overviews.
+!/docs/devices/ds-2cd2386g2-isu-sl/device.png
+!/docs/devices/ds-2cd2t87g2-l/device.png
+!/docs/devices/ds-kd8003-ime1/device.png
+!/docs/devices/ds-kh9510-wte1/device.png
