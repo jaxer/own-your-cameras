@@ -81,7 +81,6 @@ was insufficient in the tested modified-image experiments.
 ## Seed reuse checks
 
 Offline checks on 2026-10-12, using the same V5.5.113 G5 seed pair throughout.
-[File hashes and results; URLs for new downloads](g5-seed-checks.json).
 
 | Firmware sample | Result |
 |---|---|
@@ -92,13 +91,10 @@ Offline checks on 2026-10-12, using the same V5.5.113 G5 seed pair throughout.
 | G3 V5.5.131 build 200220, V5.5.160 build 210108, V5.5.820 build 231108 | G5 table key fails HK30 CRC |
 | H8 explosion-proof PTZ V5.7.1 build 210714 | G5 table key fails HK30 CRC |
 
-All samples passed outer package length and checksum checks. The failed table
-checks establish that this G5 pair cannot decode those samples with the inspected
-HK30 scheme; payload-key reuse was not independently tested there.
+The results suggest shared seeds across some G5 products. We assume reuse only
+for the tested builds; other G5 models and future releases need separate checks.
+The failed table checks do not establish whether the payload key is shared.
 
-The new standard G5 download matched the previously retained DAV SHA-256 above.
-The G1, solar G5 and H8 samples came from the vendor's
-[UK download portal](https://www.hikvisioneurope.com/uk/portal/).
-Those downloads required disabling TLS certificate verification locally;
-checksums establish internal consistency, not source authenticity. Vendor RSA
-signatures were not verified. Results apply to these files, not every model in a family.
+All samples passed outer package length and checksum checks. Vendor RSA signatures
+were not verified. New downloads used the vendor UK portal with TLS verification
+disabled because of a local certificate error; source authenticity remains unverified.
