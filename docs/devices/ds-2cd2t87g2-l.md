@@ -31,7 +31,8 @@ camera into recovery. `/home/webLib` is HTTP-served; keep private files elsewher
 ## Upgrade without losing access
 
 This documents the tested sequence, not a complete installation recipe. Supply
-your own SSH worker and loader; G3 also requires firmware-extraction tooling.
+your own SSH worker and loader; use the [offline decoder](../software/camera-firmware-decoding.md)
+to extract the reference startup script.
 
 **Requires a working root SSH session and installed key-only access.** The tested
 updater preserved extra `/dav` files but replaced `/dav/initrun.sh`, removing the
@@ -52,7 +53,7 @@ startup entry point. Keep the old root session alive throughout these steps.
 The restored entry point was a call to `/dav/custom_initrun.sh`; the loader started
 the access worker. Unlike the G5 build, this G3 build does not call that loader
 unless you add the call. The tested process used byte-for-byte comparisons before
-and after appending it. Firmware extraction and upload tools are not included here.
+and after appending it. Firmware extraction is included; upload and access-installation tools are not.
 
 ```text
 Official DAV SHA-256:
@@ -75,3 +76,9 @@ ISAPI without running another detector.
 `libPicDetect.so` exports `PICDETECT_CreateHandle`, `PICDETECT_Inspect` and
 `PICDETECT_DestroyHandle`. These are investigation leads, not a tested independent
 SDK. See [custom inference status](../software/local-compute.md).
+
+## Inspect vendor firmware
+
+[Decode the G3 file table and payloads offline](../software/camera-firmware-decoding.md)
+with the included G3 seeds. No camera connection or root access is needed for
+extraction. This does not sign modified packages or establish stock-updater acceptance.

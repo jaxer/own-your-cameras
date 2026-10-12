@@ -1,2 +1,1 @@
-cryptography==50.0.2
-pyelftools==0.33
+-r ../camera-firmware/requirements.txt
