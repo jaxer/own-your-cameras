@@ -64,4 +64,5 @@ live UART takeover stayed disabled: two UART readers split the traffic. Those
 features should not be treated as requirements for the basic sidecar.
 
 Reboot persistence needs a firmware startup hook on this door-station build.
-It is separate from the sidecar itself; see [startup limitations](../devices/ds-kd8003-ime1.md#running-your-own-program).
+It is separate from the sidecar itself; see the [firmware build guide](door-station-firmware.md)
+for the offline builder and opt-in hook.

@@ -107,8 +107,5 @@ Build for ARMv5TE soft float and the matching uClibc runtime. `/home/app` is sui
 for a temporary trial. Keep `hicore` running when adding an observing program;
 stopping it also affects media, access control and watchdog behavior.
 
-Reboot persistence required a modified firmware startup script: no safe existing
-user hook was found in this build. A hook-only image was flashed and boot-tested,
-then used to start software from config storage. The image builder and installer
-are not included here; stock firmware does not automatically run a script merely
-because you place it in `/home/config`.
+For reboot persistence, follow [build and use a startup hook](../software/door-station-firmware.md).
+Stock firmware does not run a script just because it is placed in `/home/config`.
