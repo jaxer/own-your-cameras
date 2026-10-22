@@ -1,0 +1,34 @@
+#!/bin/sh
+# rcS runs this after S99_Sysctl has launched the unchanged vendor services.
+# All work is in a background subshell so SSH failure cannot hold up rcS.
+(
+    umask 077
+    # A runtime directory prevents duplicate starts in this boot. Never kill
+    # another process or try to repair mounts from this optional hook.
+    mkdir /var/run/root-ssh.start.lock 2>/dev/null || exit 0
+    trap 'rmdir /var/run/root-ssh.start.lock 2>/dev/null' EXIT
+
+    # Do not write a host key into an unmounted /mnt/para directory.
+    grep -q ' /mnt/para yaffs2 ' /proc/mounts || exit 1
+    keydir=/mnt/para/root-ssh
+    hostkey=$keydir/dropbear_ed25519_host_key
+    [ ! -L "$keydir" ] || exit 1
+    mkdir -p "$keydir" || exit 1
+    chown 0:0 "$keydir" || exit 1
+    chmod 700 "$keydir" || exit 1
+    [ ! -L "$hostkey" ] || exit 1
+    if [ ! -e "$hostkey" ]; then
+        newkey=$keydir/.new-hostkey.$$
+        /usr/bin/dropbearkey -t ed25519 -f "$newkey" || exit 1
+        chmod 600 "$newkey" || exit 1
+        mv "$newkey" "$hostkey" || exit 1
+        sync
+    fi
+    [ -f "$hostkey" ] || exit 1
+    chown 0:0 "$hostkey" || exit 1
+    chmod 600 "$hostkey" || exit 1
+    # Password/PAM and forwarding are also disabled in the compiled binary.
+    /usr/sbin/dropbear -F -s -j -k -p 22 -r "$hostkey" \
+        -P /var/run/root-ssh.pid
+) </dev/null >>/mnt/tmp/root-ssh.log 2>&1 &
+exit 0
