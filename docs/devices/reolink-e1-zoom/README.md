@@ -3,6 +3,9 @@
 [Build and install key-only root SSH](root-access.md) ·
 [PAK, UBI and NAND reference](firmware-format.md)
 
+Own firmware user-space built on this root access (local RTSP, two-way audio, PTZ,
+Home Assistant over MQTT): [jaxer/reolink-e1-zoom-firmware](https://github.com/jaxer/reolink-e1-zoom-firmware).
+
 **Tested:** the 5 MP `IPC_566SD664M5MP` hardware running
 `v3.1.0.4417_2412122178`. Other E1 Zoom revisions are outside this recipe.
 
