@@ -1,6 +1,6 @@
 # Own Your Cameras
 
-Hardware and firmware notes for selected Hikvision and Reolink cameras and intercoms: root
+Hardware and firmware notes for selected Hikvision, Reolink and Xiaomi cameras and intercoms: root
 access methods, firmware-update behavior, and interfaces for custom software.
 Start with [your model](docs/devices/README.md).
 

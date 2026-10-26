@@ -1,0 +1,81 @@
+#!/bin/sh
+# Stage a matched kernel/application pair into the inactive slot, then activate.
+set -eu
+PATH=/mnt/usr/bin:/bin:/sbin:/usr/bin:/usr/sbin
+export PATH
+usage() {
+    echo 'Usage: camera-update stage KERNEL USRFS KERNEL_SHA256 USRFS_SHA256'
+    echo '       camera-update activate'
+    echo 'stage does not change boot selection. activate does not reboot.'
+    exit 1
+}
+fail() { echo "$*" >&2; exit 1; }
+lock=/tmp/camera-update.lock
+mkdir "$lock" 2>/dev/null || fail 'Another update is running, or its lock remains.'
+trap 'rm -f "$lock/activate.env"; rmdir "$lock"' EXIT
+trap 'exit 1' HUP INT TERM
+[ "$(id -u)" = 0 ] || fail 'Root is required.'
+flag=$(fw_printenv -n boot_flag) || fail 'Cannot read boot environment.'
+case "$flag" in
+    0) active=A; target=B; nextflag=1; offset=0x8f0000; oldoffset=0x2d0000; device=/dev/mtdblock3; kerneldev=/dev/mtd4; usrdev=/dev/mtd5 ;;
+    1) active=B; target=A; nextflag=0; offset=0x2d0000; oldoffset=0x8f0000; device=/dev/mtdblock5; kerneldev=/dev/mtd2; usrdev=/dev/mtd3 ;;
+    *) fail 'Unrecognized boot_flag.' ;;
+esac
+grep -q "^$device /mnt/usr squashfs " /proc/mounts || fail 'Boot flag and mounted slot disagree.'
+[ "$(fw_printenv -n bootcmd)" = "sf probe;sf read 0x80600000 $oldoffset 0x1b0000;bootm 0x80600000" ] || fail 'Unexpected boot command; refusing environment fallback or a changed layout.'
+quiesce_ota() {
+    if [ -d /tmp/perp/miio_ota ]; then
+        PERP_BASE=/tmp/perp perpctl d miio_ota || fail 'Cannot disable vendor OTA supervisor.'
+    fi
+    for attempt in 1 2 3 4 5; do
+        if ! pidof miio_ota >/dev/null; then return; fi
+        sleep 1
+    done
+    fail 'Vendor OTA is still running; refusing concurrent flash access.'
+}
+state=/tmp/camera-update.staged
+case "${1:-}" in
+    stage)
+        [ "$#" = 5 ] || usage
+        case "$2:$3" in /tmp/*:/tmp/*|/mnt/sdcard/*:/mnt/sdcard/*) ;; *) fail 'Put both images in /tmp or both on microSD.' ;; esac
+        for hash in "$4" "$5"; do
+            [ "${#hash}" = 64 ] || fail 'Expected SHA-256 digest.'
+            case "$hash" in *[!0-9a-f]*) fail 'Expected lowercase SHA-256 digest.' ;; esac
+        done
+        [ "$(sha256sum "$2" | cut -d ' ' -f 1)" = "$4" ] || fail 'Kernel SHA-256 mismatch.'
+        [ "$(sha256sum "$3" | cut -d ' ' -f 1)" = "$5" ] || fail 'USRFS SHA-256 mismatch.'
+        camera-mtd-write check kernel "$2"
+        camera-mtd-write check usrfs "$3"
+        quiesce_ota
+        rm -f "$state"
+        camera-mtd-write write kernel "$2"
+        camera-mtd-write write usrfs "$3"
+        umask 077
+        kernelhash=$(sha256sum "$kerneldev" | cut -d ' ' -f 1)
+        usrhash=$(sha256sum "$usrdev" | cut -d ' ' -f 1)
+        [ "${#kernelhash}" = 64 ] && [ "${#usrhash}" = 64 ] || fail 'Cannot hash staged partitions.'
+        printf '%s\n%s\n%s\n' "$target" "$kernelhash" "$usrhash" >"$state"
+        echo "Slot $target verified. Slot $active is still selected."
+        echo 'Run camera-update activate after reviewing the result.'
+        ;;
+    activate)
+        [ "$#" = 1 ] || usage
+        [ -f "$state" ] || fail 'No verified inactive slot staged in this boot.'
+        { IFS= read -r stagedtarget; IFS= read -r kernelhash; IFS= read -r usrhash; } <"$state"
+        [ "$stagedtarget" = "$target" ] || fail 'Staged slot differs from inactive slot.'
+        [ "${#kernelhash}" = 64 ] && [ "${#usrhash}" = 64 ] || fail 'Invalid staged partition digests.'
+        quiesce_ota
+        [ "$(sha256sum "$kerneldev" | cut -d ' ' -f 1)" = "$kernelhash" ] || fail 'Staged kernel changed; refusing activation.'
+        [ "$(sha256sum "$usrdev" | cut -d ' ' -f 1)" = "$usrhash" ] || fail 'Staged USRFS changed; refusing activation.'
+        # One fw_setenv transaction updates both values with one environment CRC.
+        script=$lock/activate.env
+        printf 'boot_flag %s\nbootcmd sf probe;sf read 0x80600000 %s 0x1b0000;bootm 0x80600000\nboot_retry 0\n' "$nextflag" "$offset" >"$script"
+        fw_setenv -s "$script" || fail 'Environment update failed; do not reboot.'
+        [ "$(fw_printenv -n boot_flag)" = "$nextflag" ] || fail 'Environment readback failed; do not reboot.'
+        [ "$(fw_printenv -n bootcmd)" = "sf probe;sf read 0x80600000 $offset 0x1b0000;bootm 0x80600000" ] || fail 'Boot command readback failed; do not reboot.'
+        rm -f "$script" "$state"
+        sync
+        echo "Slot $target selected. Reboot explicitly when ready."
+        ;;
+    *) usage ;;
+esac
