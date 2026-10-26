@@ -1,0 +1,36 @@
+#!/bin/sh
+# Run after the vendor startup. Only the SSH home and host key live in DATA.
+PATH=/mnt/usr/bin:/bin:/sbin:/usr/bin:/usr/sbin
+export PATH
+case "${1:-start}" in
+  start) ;;
+  *) exit 0 ;;
+esac
+umask 077
+base=/mnt/data/root-ssh
+ssh_home=$base/home
+key=$base/dropbear_ed25519_host_key
+grep -q ' /mnt/data jffs2 ' /proc/mounts || exit 1
+[ ! -L "$base" ] && [ ! -L "$ssh_home" ] && [ ! -L "$key" ] || exit 1
+mkdir -p "$ssh_home/.ssh" || exit 1
+[ ! -L "$ssh_home/.ssh" ] && [ ! -L "$ssh_home/.ssh/authorized_keys" ] || exit 1
+chown 0:0 "$base" "$ssh_home" "$ssh_home/.ssh" || exit 1
+chmod 700 "$base" "$ssh_home" "$ssh_home/.ssh" || exit 1
+cp /mnt/usr/etc/root-ssh/authorized_keys "$ssh_home/.ssh/authorized_keys" || exit 1
+chown 0:0 "$ssh_home/.ssh/authorized_keys"
+chmod 600 "$ssh_home/.ssh/authorized_keys"
+if [ ! -f "$key" ]; then
+    [ ! -L "$key.new" ] || exit 1
+    [ ! -e "$key.new" ] || [ -f "$key.new" ] || exit 1
+    rm -f "$key.new"
+    /mnt/usr/bin/dropbearkey -t ed25519 -f "$key.new" >/tmp/root-ssh-keygen.log 2>&1 || exit 1
+    chmod 600 "$key.new"
+    mv "$key.new" "$key" || exit 1
+    sync
+fi
+if ! grep -q ' /root ' /proc/mounts; then
+    mount -o bind "$ssh_home" /root || exit 1
+fi
+# Keep access independent of the application filesystem when staging an update.
+/mnt/usr/bin/dropbear -s -j -k -p 22 -r "$key" -P /var/run/root-ssh.pid \
+    >/tmp/root-ssh.log 2>&1
