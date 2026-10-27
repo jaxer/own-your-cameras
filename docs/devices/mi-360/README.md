@@ -3,7 +3,8 @@
 <img src="device.png" alt="Mi 360° Camera (1080p), model MJSXJ10CM" width="280">
 
 [Build the SSH image](root-access.md) · [ESP32 programmer setup](spi-programmer.md) ·
-[SSH findings](#root-ssh) · [Boot and recovery limits](#boot-and-recovery)
+[SSH findings](#root-ssh) · [Boot and recovery limits](#boot-and-recovery) ·
+[Replacement firmware](../../../firmware/cameras/mi360/README.md)
 
 **Tested:** MJSXJ10CM, factory model `chuangmi.camera.046a01`, running
 `4.3.4_0376` on Ingenic T31 / SC2336 hardware. Other Mi 360 models and sensor
@@ -92,7 +93,3 @@ SOUND and FACTORY are shared.
 The prepared inactive-slot updater was checked offline, but remote staging and
 activation have not been exercised on the camera. Its first update from B would
 replace the older A recovery build.
-
-Cold power-cycle persistence, RTSP/ONVIF, video, audio, motor/IR control and a
-complete replacement firmware remain unverified. Device nodes and running stock
-processes alone do not establish that these functions work.

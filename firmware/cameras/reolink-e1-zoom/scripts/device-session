@@ -1,0 +1,57 @@
+#!/bin/sh
+# Runs COMMAND (on this machine; it reaches the camera through ssh "$CAMERA") while our binary owns the
+# camera: refuses if a cam process already runs, copies BINARY to /mnt/tmp/cam (and AUTH, the RTSP
+# user:password file, to /mnt/tmp/cam-rtsp.auth), stops the vendor stack and holds the watchdog with
+# `cam wdt` (the vendor `router` fed it). Afterwards it always reboots the camera and waits, at most
+# WAIT seconds, for the vendor stack to come back. Exits with COMMAND's status, or 1 if the wait ran out.
+#
+#   CAMERA=<ssh host> scripts/device-session [--auth FILE] BINARY -- COMMAND...
+set -eu
+
+usage() {
+	echo "usage: CAMERA=<ssh host> $0 [--auth FILE] BINARY -- COMMAND..." >&2
+	exit 2
+}
+
+auth=
+if [ "${1:-}" = --auth ]; then
+	[ $# -ge 2 ] || usage
+	auth=$2
+	shift 2
+fi
+[ $# -ge 3 ] && [ "$2" = -- ] || usage
+binary=$1
+shift 2
+if [ -z "${CAMERA:-}" ]; then
+	echo "device-session: CAMERA=<ssh host of your camera> is required" >&2
+	exit 2
+fi
+wait_seconds=${WAIT:-300}
+# The vendor daemons that touch the hardware, the network or the watchdog.
+vendor="router device alarmcenter netserver netclient upgrade cloud push factory rtsp ftp onvif recorder"
+
+if ssh "$CAMERA" 'pidof cam' >/dev/null; then
+	echo "device-session: another cam process runs on $CAMERA" >&2
+	exit 1
+fi
+ssh "$CAMERA" 'cat > /mnt/tmp/cam.new && chmod +x /mnt/tmp/cam.new && mv /mnt/tmp/cam.new /mnt/tmp/cam' <"$binary"
+if [ -n "$auth" ]; then
+	ssh "$CAMERA" 'cat > /mnt/tmp/cam-rtsp.auth && chmod 600 /mnt/tmp/cam-rtsp.auth' <"$auth"
+fi
+ssh "$CAMERA" "killall $vendor; cd /mnt/tmp && { ./cam wdt >wdt.log 2>&1 & }; sleep 4"
+
+status=0
+CAMERA=$CAMERA "$@" || status=$?
+
+ssh "$CAMERA" reboot || true
+echo "device-session: $CAMERA rebooting; waiting up to ${wait_seconds}s for the vendor stack"
+deadline=$(($(date +%s) + wait_seconds))
+until ssh -o ConnectTimeout=3 -o ServerAliveInterval=2 -o ServerAliveCountMax=2 -o BatchMode=yes \
+	"$CAMERA" 'pidof device rtsp router' >/dev/null 2>&1; do
+	if [ "$(date +%s)" -ge "$deadline" ]; then
+		echo "device-session: the vendor stack is not back on $CAMERA after ${wait_seconds}s" >&2
+		exit 1
+	fi
+	sleep 5
+done
+exit "$status"

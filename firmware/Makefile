@@ -1,0 +1,32 @@
+PYTHON ?= python3
+MI360 := cameras/mi360
+REOLINK := cameras/reolink-e1-zoom
+SDK_HEADERS := $(abspath $(MI360)/target/sdk-headers)
+.PHONY: headers fast area gate build-mi360 build-reolink
+headers:
+	$(PYTHON) $(REOLINK)/scripts/fetch-hdal-headers
+	$(PYTHON) $(MI360)/scripts/headers.py --out "$(SDK_HEADERS)"
+fast: headers
+	cargo test --workspace --locked
+	$(PYTHON) -I -m unittest discover -s $(REOLINK)/scripts
+	$(PYTHON) -B $(MI360)/toolchain/test_elf_compat.py
+	$(PYTHON) -B $(MI360)/sdk/test_imp_bridge.py --headers "$(SDK_HEADERS)"
+	$(PYTHON) -B $(MI360)/sdk/test_imp_audio.py --headers "$(SDK_HEADERS)"
+	$(PYTHON) -B $(MI360)/sdk/test_imp_controls.py --headers "$(SDK_HEADERS)"
+	$(PYTHON) -B $(MI360)/sdk/test_imp_tuning.py --headers "$(SDK_HEADERS)"
+	$(PYTHON) -B $(MI360)/scripts/test_recovery.py
+	$(PYTHON) -B $(MI360)/firmware/test_environment.py
+	$(PYTHON) -B $(MI360)/firmware/test_firmware.py
+	$(PYTHON) -B $(MI360)/firmware/test_mtd_writer.py
+	$(MAKE) -C $(MI360)/probes/controls fast
+area: fast
+	$(PYTHON) -I $(REOLINK)/scripts/check-tree
+	$(PYTHON) -I $(REOLINK)/scripts/check-links
+	cargo fmt --all -- --check
+	cargo clippy --workspace --all-targets --locked -- -D warnings
+	$(MAKE) -C $(MI360)/probes/controls area
+gate: area
+build-mi360:
+	cd $(MI360) && scripts/build-mips
+build-reolink:
+	$(MAKE) -C $(REOLINK) build

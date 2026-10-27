@@ -46,3 +46,15 @@ build/
 *.squashfs
 *.img
 *.pseudo
+
+# Firmware build products and fetched SDK/sysroot inputs.
+target/
+.tools/
+sysroot/
+**/vendor/sysroot/
+**/hdal-sys/vendor/hdal-include/
+cam.toml
+cam-rtsp.auth
+*.o
+*.dSYM/
+.idea/

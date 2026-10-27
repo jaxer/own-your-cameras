@@ -1,0 +1,8 @@
+target/
+*.bin
+*.pak
+__pycache__/
+/vendor/sysroot/
+/hdal-sys/vendor/hdal-include/
+.tools/
+/.venv/

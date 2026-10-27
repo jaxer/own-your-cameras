@@ -1,0 +1,4 @@
+#!/bin/sh
+# Launch independent recovery without blocking init or the root SSH hook.
+case "${1:-start}" in start) ;; *) exit 0 ;; esac
+exec /bin/sh /mnt/usr/etc/mi360/network-start.sh start

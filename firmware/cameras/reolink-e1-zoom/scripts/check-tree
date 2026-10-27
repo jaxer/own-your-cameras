@@ -1,0 +1,54 @@
+#!/usr/bin/env python3
+"""Fail if any tracked file is vendor bytes: ELF or shared libraries, anything under hdal-sys/vendor/
+(fetched headers, never committed), Novatek or stock start_app text, or anything over 1 MiB.
+
+Reads `git ls-files`, so the fetched headers and the camera-copied sysroot (both git-ignored) never count.
+Usage: check-tree [repository]
+"""
+from pathlib import Path
+import re
+import subprocess
+import sys
+
+LIMIT = 1024 * 1024
+PATCH = "hdal-sys/hdal-include.patch"
+# Split so this file does not match itself.
+NOVATEK = b"Copyright " + b"Novatek"
+STOCK_START_APP = (b"spawn-" + b"fcgi -a 127.0.0.1 -p 9527", b"not support lens:" + b"$lens for sensor:")
+
+
+def refusals(name, data):
+    """Why the file `name` with contents `data` may not be tracked (also used on the blobs of an export)."""
+    if re.search(r"\.so(\.|$)", Path(name).name) or data.startswith(b"\x7fELF"):
+        yield "ELF or shared library"
+    if name.startswith("hdal-sys/vendor/"):
+        yield "under hdal-sys/vendor/ (fetched by make headers, never tracked)"
+    if name != PATCH and NOVATEK in data:
+        yield "Novatek copyright text"
+    if any(marker in data for marker in STOCK_START_APP):
+        yield "stock start_app text (spliced in by the image builder)"
+    if len(data) > LIMIT:
+        yield f"{len(data)} bytes, over 1 MiB"
+
+
+def problems(root):
+    names = subprocess.run(["git", "-C", str(root), "ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", "."], check=True,
+                           capture_output=True).stdout.decode().split("\0")
+    for name in filter(None, names):
+        path = root / name
+        if not path.is_file():
+            continue  # deleted in the work tree
+        for reason in refusals(name, path.read_bytes()):
+            yield name, reason
+
+
+def main():
+    root = Path(sys.argv[1] if len(sys.argv) > 1 else Path(__file__).resolve().parents[1])
+    found = list(problems(root))
+    for name, reason in found:
+        print(f"check-tree: {name}: {reason}", file=sys.stderr)
+    return 1 if found else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

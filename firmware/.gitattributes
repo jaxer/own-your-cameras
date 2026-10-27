@@ -1,0 +1,3 @@
+# Diff payloads and recorded text fixtures preserve their original whitespace.
+*.patch -whitespace
+cameras/reolink-e1-zoom/cam/tests/fixtures/** -whitespace

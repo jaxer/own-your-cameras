@@ -1,0 +1,10 @@
+**/build/
+target/
+sysroot/
+artifacts/
+*.o
+.idea/
+cam.toml
+cam-rtsp.auth
+__pycache__/
+*.pyc

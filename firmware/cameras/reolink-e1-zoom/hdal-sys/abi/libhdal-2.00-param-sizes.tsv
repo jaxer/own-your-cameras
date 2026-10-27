@@ -1,0 +1,117 @@
+# Historical claims, NOT verified payload sizes. See README.md; bytes are the old claimed extent.
+# unit	op	id	name	struct	bytes	how	addr
+videocap	get	0	DEVCOUNT	HD_DEVCOUNT	4	legacy-ok	1b864
+videocap	get	1	SYSCAPS	HD_VIDEOCAP_SYSCAPS	76	legacy-ok	1b72c
+videocap	get	2	SYSINFO	HD_VIDEOCAP_SYSINFO	64	legacy-ok	1b678
+videocap	get	3	DRV_CONFIG	HD_VIDEOCAP_DRV_CONFIG	148	legacy-ok	1b644
+videocap	get	5	FUNC_CONFIG	HD_VIDEOCAP_FUNC_CONFIG	8	legacy-ok	1b898,1b590
+videocap	set	5	FUNC_CONFIG	HD_VIDEOCAP_FUNC_CONFIG	8	legacy-ok	1c044,1c5e8
+videocap	get	6	IN_CROP	HD_VIDEOCAP_CROP	52	legacy-ok	1b898,1b5d4
+videocap	set	6	IN_CROP	HD_VIDEOCAP_CROP	52	legacy-ok	1c154,1c600
+videocap	get	7	OUT_CROP	HD_VIDEOCAP_CROP	52	legacy-pin	1b5d4 memcpy 52, same case as IN_CROP
+videocap	set	7	OUT_CROP	HD_VIDEOCAP_CROP	52	legacy-pin	1c154 memcpy 52, same case as IN_CROP
+videocap	get	8	OUT	HD_VIDEOCAP_OUT	24	legacy-ok	1b898,1b55c
+videocap	set	8	OUT	HD_VIDEOCAP_OUT	24	legacy-ok	1bdec,1c548
+videocap	set	10	OUT_MD_STATUS	HD_VIDEOCAP_MD_STATUS	4	retracted-word	1bd04,1c5e8; no copy count: old classifier inferred 4 from header size alone
+videocap	get	11	CTRL	HD_VIDEOCAP_CTRL	4	legacy-ok	1b608,1b898
+videocap	get	12	IN	HD_VIDEOCAP_IN	24	legacy-pin	1b930 memcpy 24
+videocap	set	12	IN	HD_VIDEOCAP_IN	24	legacy-ok	1bd1c
+videoproc	get	0	DEVCOUNT	HD_DEVCOUNT	4	legacy-ok	384e0
+videoproc	get	1	SYSCAPS	HD_VIDEOPROC_SYSCAPS	120	legacy-ok	383bc
+videoproc	get	2	SYSINFO	HD_VIDEOPROC_SYSINFO	72	legacy-ok	38370
+videoproc	get	3	DEV_CONFIG	HD_VIDEOPROC_DEV_CONFIG	120	legacy-ok	38310
+videoproc	set	3	DEV_CONFIG	HD_VIDEOPROC_DEV_CONFIG	120	legacy-ok	39880
+videoproc	get	4	CTRL	HD_VIDEOPROC_CTRL	8	legacy-ok	382d4
+videoproc	set	4	CTRL	HD_VIDEOPROC_CTRL	8	legacy-ok	396e0
+videoproc	get	5	IN	HD_VIDEOPROC_IN	24	legacy-ok	38198,381e8
+videoproc	set	5	IN	HD_VIDEOPROC_IN	24	legacy-ok	392fc,39484
+videoproc	get	6	IN_FRC	HD_VIDEOPROC_FRC	4	legacy-word	38158,381e8
+videoproc	set	6	IN_FRC	HD_VIDEOPROC_FRC	4	legacy-word	39270,39484
+videoproc	get	7	IN_CROP	HD_VIDEOPROC_CROP	28	legacy-ok	380f8,381e8
+videoproc	set	7	IN_CROP	HD_VIDEOPROC_CROP	28	legacy-ok	39180,39484
+videoproc	get	8	IN_CROP_PSR	HD_VIDEOPROC_CROP	28	legacy-ok	38088,381e8
+videoproc	set	8	IN_CROP_PSR	HD_VIDEOPROC_CROP	28	legacy-pin	390d8 reads user bytes 0..27, stores zeros (set is a no-op)
+videoproc	get	9	OUT	HD_VIDEOPROC_OUT	52	legacy-ok	37ff0,381e8
+videoproc	set	9	OUT	HD_VIDEOPROC_OUT	52	legacy-ok	38ddc,39484
+videoproc	get	10	OUT_FRC	HD_VIDEOPROC_FRC	4	legacy-word	37fa4,381e8
+videoproc	set	10	OUT_FRC	HD_VIDEOPROC_FRC	4	legacy-word	38d48,39484
+videoproc	get	11	OUT_CROP	HD_VIDEOPROC_CROP	28	legacy-ok	37f38,381e8
+videoproc	get	13	OUT_EX	HD_VIDEOPROC_OUT_EX	28	legacy-ok	37eb4,381e8
+videoproc	set	13	OUT_EX	HD_VIDEOPROC_OUT_EX	28	legacy-ok	38b50,39484
+videoproc	get	14	OUT_EX_CROP	HD_VIDEOPROC_CROP	28	legacy-ok	37e44,381e8
+videoproc	set	14	OUT_EX_CROP	HD_VIDEOPROC_CROP	28	legacy-ok	38a40,39484
+videoproc	get	25	LL_CONFIG	HD_VIDEOPROC_LL_CONFIG	4	legacy-word	3826c
+videoproc	set	25	LL_CONFIG	HD_VIDEOPROC_LL_CONFIG	4	legacy-word	39500
+videoenc	get	2	PATH_CONFIG	HD_VIDEOENC_PATH_CONFIG	120	legacy-ok	2cfe0,2d17c,2d2d0
+videoenc	set	2	PATH_CONFIG	HD_VIDEOENC_PATH_CONFIG	120	legacy-ok	2e07c,2eee0,2ef74
+videoenc	get	3	BUFINFO	HD_VIDEOENC_BUFINFO	8	legacy-ok	2cf24,2d154,2d2bc
+videoenc	get	4	IN	HD_VIDEOENC_IN	20	legacy-ok	2ce88,2d098,2d2a8
+videoenc	set	4	IN	HD_VIDEOENC_IN	20	legacy-ok	2df54,2ed64,2ee18
+videoenc	get	5	OUT_ENC_PARAM	HD_VIDEOENC_OUT	44	legacy-pin	2ce38 memset 44, then codec + memcpy(p+4, 8|40)
+videoenc	set	5	OUT_ENC_PARAM	HD_VIDEOENC_OUT	44	legacy-pin	2df18 memset 44
+videoenc	get	6	OUT_VUI	HD_H26XENC_VUI	24	legacy-ok	2cd88
+videoenc	set	6	OUT_VUI	HD_H26XENC_VUI	24	legacy-ok	2e848
+videoenc	get	7	OUT_DEBLOCK	HD_H26XENC_DEBLOCK	3	legacy-ok	2cd04
+videoenc	set	7	OUT_DEBLOCK	HD_H26XENC_DEBLOCK	3	legacy-ok	2e7d8
+videoenc	get	8	OUT_RATE_CONTROL	HD_H26XENC_RATE_CONTROL	64	legacy-pin	2ccb0: copies rc_mode then 28|32|12|60 into the union (2d2e4..2d2a8)
+videoenc	get	9	OUT_USR_QP	HD_H26XENC_USR_QP	8	legacy-ok	2cc34
+videoenc	set	9	OUT_USR_QP	HD_H26XENC_USR_QP	8	legacy-ok	2e734
+videoenc	get	10	OUT_SLICE_SPLIT	HD_H26XENC_SLICE_SPLIT	8	legacy-ok	2cbb8
+videoenc	set	10	OUT_SLICE_SPLIT	HD_H26XENC_SLICE_SPLIT	8	legacy-ok	2e6cc
+videoenc	get	11	OUT_ENC_GDR	HD_H26XENC_GDR	12	legacy-ok	2cb38
+videoenc	set	11	OUT_ENC_GDR	HD_H26XENC_GDR	12	legacy-ok	2e660
+videoenc	get	12	OUT_ROI	HD_H26XENC_ROI	284	legacy-ok	2ca60
+videoenc	set	12	OUT_ROI	HD_H26XENC_ROI	284	legacy-ok	2e5a0
+videoenc	get	13	OUT_ROW_RC	HD_H26XENC_ROW_RC	12	legacy-ok	2c928
+videoenc	set	13	OUT_ROW_RC	HD_H26XENC_ROW_RC	12	legacy-ok	2e39c
+videoenc	get	14	OUT_AQ	HD_H26XENC_AQ	72	legacy-ok	2c768
+videoenc	set	14	OUT_AQ	HD_H26XENC_AQ	72	legacy-ok	2e31c
+videoenc	set	15	OUT_REQUEST_IFRAME	HD_H26XENC_REQUEST_IFRAME	4	legacy-ok	2dcf8
+videoenc	set	16	OUT_TRIG_SNAPSHOT	HD_H26XENC_TRIG_SNAPSHOT	12	legacy-ok	2dd68
+videoenc	get	24	IN_FRC	HD_VIDEOENC_FRC	4	legacy-word	2c9dc
+videoenc	set	24	IN_FRC	HD_VIDEOENC_FRC	4	legacy-word	2d8a0
+videoenc	get	26	FUNC_CONFIG	HD_VIDEOENC_FUNC_CONFIG	8	legacy-ok	2c6e4
+videoenc	set	26	FUNC_CONFIG	HD_VIDEOENC_FUNC_CONFIG	8	legacy-ok	2db70
+videoenc	get	27	OUT_ENC_PARAM2	HD_VIDEOENC_OUT2	44	legacy-pin	2c638 memcpy 44
+videoenc	set	27	OUT_ENC_PARAM2	HD_VIDEOENC_OUT2	44	legacy-pin	2d97c memcpy 44
+videoenc	get	28	OUT_RATE_CONTROL2	HD_H26XENC_RATE_CONTROL2	80	legacy-ok	2c5b0
+videoenc	set	28	OUT_RATE_CONTROL2	HD_H26XENC_RATE_CONTROL2	80	legacy-ok	2d834
+audiocap	get	0	DEVCOUNT	HD_DEVCOUNT	4	legacy-ok	d5d8
+audiocap	get	1	SYSCAPS	HD_AUDIOCAP_SYSCAPS	156	legacy-ok	d540
+audiocap	get	2	SYSINFO	HD_AUDIOCAP_SYSINFO	80	legacy-ok	d46c
+audiocap	get	3	DEV_CONFIG	HD_AUDIOCAP_DEV_CONFIG	172	legacy-ok	d3bc
+audiocap	get	4	DRV_CONFIG	HD_AUDIOCAP_DRV_CONFIG	148	legacy-ok	d380
+audiocap	get	5	IN	HD_AUDIOCAP_IN	16	legacy-ok	d2c0,d604
+audiocap	set	5	IN	HD_AUDIOCAP_IN	16	legacy-ok	db94
+audiocap	get	6	OUT	HD_AUDIOCAP_OUT	4	legacy-word	d284,d604
+audiocap	set	6	OUT	HD_AUDIOCAP_OUT	4	legacy-word	dafc
+audiocap	get	7	OUT_AEC	HD_AUDIOCAP_AEC	36	legacy-ok	d1e8,d604
+audiocap	set	7	OUT_AEC	HD_AUDIOCAP_AEC	36	legacy-ok	d9dc
+audiocap	get	8	OUT_ANR	HD_AUDIOCAP_ANR	16	legacy-ok	d180,d604
+audiocap	set	8	OUT_ANR	HD_AUDIOCAP_ANR	16	legacy-ok	d8f8
+audiocap	get	9	VOLUME	HD_AUDIOCAP_VOLUME	4	legacy-word	d12c,d350
+audiocap	set	9	VOLUME	HD_AUDIOCAP_VOLUME	4	legacy-pin	d8e0 ctrl-path only (0xffff); dddc ldr [r9] one word, kflow item 0x19001 (stock device sets 0x50 here)
+audiocap	get	10	BUFINFO	HD_AUDIOCAP_BUFINFO	8	legacy-ok	d310
+audioout	get	0	DEVCOUNT	HD_DEVCOUNT	4	legacy-ok	17f40
+audioout	get	1	SYSCAPS	HD_AUDIOOUT_SYSCAPS	44	legacy-ok	17eac
+audioout	get	2	SYSINFO	HD_AUDIOOUT_SYSINFO	24	legacy-ok	17de4
+audioout	get	3	DEV_CONFIG	HD_AUDIOOUT_DEV_CONFIG	24	legacy-ok	17d98
+audioout	set	3	DEV_CONFIG	HD_AUDIOOUT_DEV_CONFIG	24	legacy-pin	1829c ldm/stm 16+8
+audioout	get	4	DRV_CONFIG	HD_AUDIOOUT_DRV_CONFIG	56	legacy-ok	17d4c
+audioout	set	4	DRV_CONFIG	HD_AUDIOOUT_DRV_CONFIG	56	legacy-pin	18474 ldm/stm 3x16+8
+audioout	set	5	OUT	HD_AUDIOOUT_OUT	12	legacy-pin	185a4 ldm/stm 12
+audioout	get	6	IN	HD_AUDIOOUT_IN	4	legacy-word	17cf4
+audioout	set	6	IN	HD_AUDIOOUT_IN	4	legacy-pin	181f8 one word
+audioout	get	7	VOLUME	HD_AUDIOOUT_VOLUME	4	legacy-word	17d28
+audioout	set	7	VOLUME	HD_AUDIOOUT_VOLUME	4	legacy-pin	18418 one word
+audioenc	get	2	BUFINFO	HD_AUDIOENC_BUFINFO	8	legacy-ok	148b8
+audioenc	get	3	PATH_CONFIG	HD_AUDIOENC_PATH_CONFIG	16	legacy-ok	1484c
+audioenc	set	3	PATH_CONFIG	HD_AUDIOENC_PATH_CONFIG	16	legacy-ok	14f3c
+audioenc	get	4	IN	HD_AUDIOENC_IN	12	legacy-ok	147e8
+audioenc	set	4	IN	HD_AUDIOENC_IN	12	legacy-ok	14e0c
+audioenc	get	5	OUT	HD_AUDIOENC_OUT	8	legacy-ok	14780
+audioenc	set	5	OUT	HD_AUDIOENC_OUT	8	legacy-ok	14ca0
+audioenc	get	6	PATH_CONFIG2	HD_AUDIOENC_PATH_CONFIG2	20	legacy-ok	14714
+audiocap	set	3	DEV_CONFIG	HD_AUDIOCAP_DEV_CONFIG	172	legacy-pin	def8/df10 memcpy 172
+audiocap	set	4	DRV_CONFIG	HD_AUDIOCAP_DRV_CONFIG	148	legacy-pin	de30/de44 memcpy 148
+audioenc	set	6	PATH_CONFIG2	HD_AUDIOENC_PATH_CONFIG2	20	legacy-pin	150a4/150ac memcpy 20

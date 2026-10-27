@@ -1,0 +1,22 @@
+[package]
+name = "mi360-cam"
+version = "0.1.0"
+edition = "2024"
+publish = false
+license = "MIT"
+
+[features]
+default = ["imp-video"]
+imp-video = []
+
+[dependencies]
+libc = "=0.2.188"
+sha2 = "=0.10.9"
+camera-transport = { path = "../../crates/camera-transport" }
+serde = { version = "=1.0.228", features = ["derive"] }
+toml = "=0.8.23"
+serde_json = "=1.0.145"
+
+[[bin]]
+name = "mi360-cam"
+path = "src/main.rs"

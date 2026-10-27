@@ -1,0 +1,67 @@
+#!/bin/sh
+# Stock 4417 blocks are byte-pinned by launcher_tests.py. --fixture-root is an isolated host fixture.
+stock_init() {
+# BEGIN STOCK INIT
+@STOCK_INIT@
+# END STOCK INIT
+}
+stock_vendor() {
+# BEGIN STOCK VENDOR
+@STOCK_VENDOR@
+# END STOCK VENDOR
+}
+root=
+if [ "$#" -ne 0 ]; then
+    [ "$#" -eq 2 ] && [ "$1" = --fixture-root ] && [ "$2" != / ] || exit 2
+    case "$2" in /*) root=$2;; *) exit 2;; esac
+fi
+# This boot's choice is irrevocable, including after flag removal or supervisor death.
+if ! mkdir "$root/mnt/tmp/cam-boot-selected" 2>/dev/null; then
+    # Existing directory: already selected. Otherwise no selection protection:
+    # start nothing, leave SSH. Never request an uncounted reboot.
+    exit 0
+fi
+if [ -n "$root" ]; then
+    "$root/etc/init.d/cam-stock-init" || exit 1
+else
+    stock_init
+fi
+vendor() {
+    if [ -n "$root" ]; then
+        "$root/etc/init.d/cam-stock-vendor"
+    else
+        stock_vendor
+    fi
+}
+request_reset() {
+    "$root/usr/bin/cam-launch" --reset "${root:-/}"
+    case "$?" in
+        # Reserved statuses mean the reset helper could not execute/load.
+        126|127) "$root/sbin/reboot" ;;
+    esac
+}
+if [ -f "$root/mnt/para/cam.enabled" ] && [ -f "$root/usr/bin/cam-launch" ] && [ -x "$root/usr/bin/cam-launch" ]; then
+    (
+        # This phase cannot start hardware. Any failure can safely select vendor.
+        "$root/usr/bin/cam-launch" --reserve "${root:-/}" &
+        reservation=$!
+        ( sleep 10; kill -KILL "$reservation" ) &
+        deadline=$!
+        wait "$reservation"
+        status=$?
+        kill "$deadline" 2>/dev/null
+        wait "$deadline" 2>/dev/null
+        if [ "$status" -ne 0 ]; then
+            vendor
+            exit 0
+        fi
+        # Only a durably reserved attempt can reach this phase. Never select vendor.
+        "$root/usr/bin/cam-launch" --serve "${root:-/}" &
+        supervisor=$!
+        ( sleep 5; [ -d "$root/mnt/tmp/cam-guard-up" ] || request_reset ) &
+        wait "$supervisor"
+        request_reset
+    ) </dev/null >/dev/null 2>&1 &
+else
+    vendor
+fi

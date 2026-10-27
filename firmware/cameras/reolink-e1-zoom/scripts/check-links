@@ -1,0 +1,78 @@
+#!/usr/bin/env python3
+"""Fail if a relative link in a public Markdown file does not reach a tracked public file, directory or heading.
+
+Public means every tracked file outside PRIVATE (the agent and audit material that is never published).
+Offline: external links are not fetched. Links inside code blocks and code spans are ignored.
+Usage: check-links [repository]
+"""
+from collections import Counter
+import posixpath
+from pathlib import Path
+import re
+import subprocess
+import sys
+
+PRIVATE = ("CLAUDE.md", "AGENTS.md", ".afk.json", ".afk/", "docs/agents/", "docs/decisions/", "publish/")
+LINK = re.compile(r"!?\[[^\]]*\]\(\s*<?([^)\s>]+)>?(?:\s+\"[^\"]*\")?\s*\)")
+FENCE = re.compile(r"^(```|~~~).*?^\1[^\n]*$", re.M | re.S)
+CODE_SPAN = re.compile(r"(`+)(?:(?!\1).)+?\1", re.S)
+HEADING = re.compile(r"^#{1,6}\s+(.*?)\s*#*\s*$", re.M)
+
+
+def private(name):
+    return any(name == p or (p.endswith("/") and name.startswith(p)) for p in PRIVATE)
+
+
+def prose(text):
+    return CODE_SPAN.sub("", FENCE.sub("", text))
+
+
+def slugs(text):
+    """GitHub's heading anchors: lower case, punctuation dropped, spaces to hyphens, repeats numbered."""
+    seen = Counter()
+    found = set()
+    for title in HEADING.findall(FENCE.sub("", text)):
+        slug = re.sub(r"[^\w\- ]", "", title.replace("`", "").lower()).replace(" ", "-")
+        found.add(f"{slug}-{seen[slug]}" if seen[slug] else slug)
+        seen[slug] += 1
+    return found
+
+
+def problems(root):
+    root = Path(subprocess.check_output(["git", "-C", str(root), "rev-parse", "--show-toplevel"], text=True).strip())
+    names = subprocess.run(["git", "-C", str(root), "ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", "."], check=True,
+                           capture_output=True).stdout.decode().split("\0")
+    files = {n for n in names if n and (root / n).is_file()}
+    dirs = set()
+    for n in files:
+        while n:
+            n = posixpath.dirname(n)
+            dirs.add(n)
+    for name in sorted(n for n in files if n.endswith(".md") and not private(n)):
+        text = (root / name).read_text()
+        for target in LINK.findall(prose(text)):
+            if re.match(r"^[a-z][a-z0-9+.-]*:", target, re.I):
+                continue
+            path, _, anchor = target.partition("#")
+            resolved = posixpath.normpath(posixpath.join(posixpath.dirname(name), path)) if path else name
+            if resolved.startswith("../") or resolved == "..":
+                yield name, f"{target}: leaves the repository"
+            elif private(resolved) or private(resolved + "/"):
+                yield name, f"{target}: links to a private file"
+            elif resolved in files:
+                if anchor and resolved.endswith(".md") and anchor not in slugs((root / resolved).read_text()):
+                    yield name, f"{target}: no heading #{anchor} in {resolved}"
+            elif resolved.rstrip("/") not in dirs or anchor:
+                yield name, f"{target}: {resolved} is not a tracked file"
+
+
+def main():
+    root = Path(sys.argv[1] if len(sys.argv) > 1 else Path(__file__).resolve().parents[1])
+    found = list(problems(root))
+    for name, reason in found:
+        print(f"check-links: {name}: {reason}", file=sys.stderr)
+    return 1 if found else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

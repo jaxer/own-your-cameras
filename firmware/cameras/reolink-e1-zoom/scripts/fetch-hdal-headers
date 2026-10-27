@@ -1,0 +1,103 @@
+#!/usr/bin/env python3
+"""Fetch the Novatek HDAL headers into hdal-sys/vendor/hdal-include/ (`make headers`).
+
+The headers are not in this repository: they are downloaded from the public repository named in
+hdal-sys/hdal-include.lock, checked against its upstream hashes, patched with hdal-sys/hdal-include.patch
+and checked again against its patched hashes before the set is moved into place. A set that already
+matches the lock is left alone, without any network access.
+"""
+import hashlib
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+import tempfile
+import urllib.request
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def read_lock(path):
+    """Returns (base URL, [(relative path, upstream sha256, patched sha256)])."""
+    url, entries = None, []
+    for line in Path(path).read_text().splitlines():
+        fields = line.split()
+        if not fields or fields[0].startswith("#"):
+            continue
+        if fields[0] == "url":
+            url = fields[1]
+        else:
+            upstream, patched, name = fields
+            entries.append((name, upstream, patched))
+    if not url or not entries:
+        raise SystemExit(f"{path}: needs a url line and at least one header")
+    return url, entries
+
+
+def matches(directory, entries):
+    return all((directory / name).is_file() and digest((directory / name).read_bytes()) == patched
+               for name, _, patched in entries)
+
+
+def mismatch(name, kind, expected, actual, advice):
+    return SystemExit(f"{name}: {kind} SHA-256 is {actual}, expected {expected}. {advice}")
+
+
+def download(url, entries, into):
+    for name, upstream, _ in entries:
+        try:
+            with urllib.request.urlopen(url + name, timeout=60) as response:
+                data = response.read()
+        except OSError as error:
+            raise SystemExit(f"{name}: download from {url + name} failed ({error}); check the network "
+                             "and run `make headers` again") from None
+        if digest(data) != upstream:
+            raise mismatch(name, "upstream", upstream, digest(data),
+                           "The source repository changed or the download is corrupt; nothing was installed.")
+        (into / name).parent.mkdir(parents=True, exist_ok=True)
+        (into / name).write_bytes(data)
+
+
+def install(lock, patch, dest):
+    """Installs the locked header set into dest; returns False when it was already there."""
+    url, entries = read_lock(lock)
+    dest = Path(dest)
+    if matches(dest, entries):
+        return False
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    work = Path(tempfile.mkdtemp(prefix=".hdal-include.", dir=dest.parent))
+    try:
+        source, staged = work / "upstream", work / "new"
+        download(url, entries, source)
+        result = subprocess.run(["patch", "-p1", "-s", "-F0", "-d", str(source), "-i", str(Path(patch).resolve())],
+                                capture_output=True, text=True)
+        if result.returncode:
+            raise SystemExit(f"{patch} does not apply to the upstream headers:\n{result.stdout}{result.stderr}")
+        for name, _, patched in entries:
+            data = (source / name).read_bytes()
+            if digest(data) != patched:
+                raise mismatch(name, "patched", patched, digest(data),
+                               f"{patch} and {lock} disagree; nothing was installed.")
+            (staged / name).parent.mkdir(parents=True, exist_ok=True)
+            (staged / name).write_bytes(data)
+        # Swap whole directories, so a reader never sees a half-installed set.
+        if dest.exists():
+            dest.rename(work / "old")
+        staged.rename(dest)
+    finally:
+        shutil.rmtree(work, ignore_errors=True)
+    return True
+
+
+def main():
+    hdal = ROOT / "hdal-sys"
+    fetched = install(hdal / "hdal-include.lock", hdal / "hdal-include.patch", hdal / "vendor/hdal-include")
+    print("fetched HDAL headers" if fetched else "HDAL headers present")
+
+
+if __name__ == "__main__":
+    sys.exit(main())

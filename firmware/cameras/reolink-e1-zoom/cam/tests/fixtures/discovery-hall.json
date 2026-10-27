@@ -1,0 +1,680 @@
+{
+  "availability": "camera/hall/availability",
+  "client_id": "cam_hall",
+  "dhcp_hostname": "hostname:hall",
+  "discovery_with_presets": [
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/pan/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"max\":7360,\"min\":0,\"mode\":\"box\",\"name\":\"Pan\",\"retain\":false,\"state_topic\":\"camera/hall/pan/state\",\"step\":1,\"unique_id\":\"cam_hall_pan\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/pan/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/tilt/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"max\":1240,\"min\":0,\"mode\":\"box\",\"name\":\"Tilt\",\"retain\":false,\"state_topic\":\"camera/hall/tilt/state\",\"step\":1,\"unique_id\":\"cam_hall_tilt\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/tilt/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/zoom/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"max\":1024,\"min\":0,\"mode\":\"slider\",\"name\":\"Zoom\",\"retain\":false,\"state_topic\":\"camera/hall/zoom/state\",\"step\":1,\"unique_id\":\"cam_hall_zoom\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/zoom/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/preset/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"name\":\"Preset\",\"options\":[\"Desk\",\"Door\"],\"retain\":false,\"state_topic\":\"camera/hall/preset/state\",\"unique_id\":\"cam_hall_preset\"}",
+      "retain": true,
+      "topic": "homeassistant/select/cam_hall/preset/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/reboot/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"device_class\":\"restart\",\"entity_category\":\"config\",\"name\":\"Reboot\",\"payload_press\":\"PRESS\",\"retain\":false,\"unique_id\":\"cam_hall_reboot\"}",
+      "retain": true,
+      "topic": "homeassistant/button/cam_hall/reboot/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/refocus/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"icon\":\"mdi:image-filter-center-focus\",\"name\":\"Refocus\",\"payload_press\":\"PRESS\",\"retain\":false,\"unique_id\":\"cam_hall_refocus\"}",
+      "retain": true,
+      "topic": "homeassistant/button/cam_hall/refocus/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/calibrate_focus/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"icon\":\"mdi:crosshairs-gps\",\"name\":\"Lens Calibrate focus (15 min)\",\"payload_press\":\"PRESS\",\"retain\":false,\"unique_id\":\"cam_hall_calibrate_focus\"}",
+      "retain": true,
+      "topic": "homeassistant/button/cam_hall/calibrate_focus/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"diagnostic\",\"icon\":\"mdi:camera-iris\",\"json_attributes_topic\":\"camera/hall/autofocus_attributes/state\",\"name\":\"Autofocus\",\"state_topic\":\"camera/hall/autofocus_state/state\",\"unique_id\":\"cam_hall_autofocus_state\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/autofocus_state/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"diagnostic\",\"name\":\"Pipeline health\",\"payload_off\":\"OFF\",\"payload_on\":\"ON\",\"state_topic\":\"camera/hall/pipeline/state\",\"unique_id\":\"cam_hall_pipeline\"}",
+      "retain": true,
+      "topic": "homeassistant/binary_sensor/cam_hall/pipeline/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"diagnostic\",\"icon\":\"mdi:brightness-6\",\"name\":\"Light sensor\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/light/state\",\"unique_id\":\"cam_hall_light\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/light/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"diagnostic\",\"icon\":\"mdi:cog-outline\",\"name\":\"Settings\",\"state_topic\":\"camera/hall/settings/state\",\"unique_id\":\"cam_hall_settings\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/settings/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/mic_volume/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":100,\"min\":0,\"mode\":\"slider\",\"name\":\"Audio Mic volume\",\"retain\":false,\"state_topic\":\"camera/hall/mic_volume/state\",\"step\":1,\"unique_id\":\"cam_hall_mic_volume\",\"unit_of_measurement\":\"%\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/mic_volume/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/speaker_volume/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":100,\"min\":0,\"mode\":\"slider\",\"name\":\"Audio Speaker volume\",\"retain\":false,\"state_topic\":\"camera/hall/speaker_volume/state\",\"step\":1,\"unique_id\":\"cam_hall_speaker_volume\",\"unit_of_measurement\":\"%\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/speaker_volume/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/aec/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"name\":\"Audio Echo cancellation\",\"payload_off\":\"OFF\",\"payload_on\":\"ON\",\"retain\":false,\"state_topic\":\"camera/hall/aec/state\",\"unique_id\":\"cam_hall_aec\"}",
+      "retain": true,
+      "topic": "homeassistant/switch/cam_hall/aec/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/aec_noise_level/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":-3,\"min\":-60,\"mode\":\"slider\",\"name\":\"Audio AEC noise level\",\"retain\":false,\"state_topic\":\"camera/hall/aec_noise_level/state\",\"step\":1,\"unique_id\":\"cam_hall_aec_noise_level\",\"unit_of_measurement\":\"dB\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/aec_noise_level/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/aec_echo_level/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":-30,\"min\":-60,\"mode\":\"slider\",\"name\":\"Audio AEC echo level\",\"retain\":false,\"state_topic\":\"camera/hall/aec_echo_level/state\",\"step\":1,\"unique_id\":\"cam_hall_aec_echo_level\",\"unit_of_measurement\":\"dB\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/aec_echo_level/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/aec_notch_radius/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":1000,\"min\":0,\"mode\":\"slider\",\"name\":\"Audio AEC notch radius\",\"retain\":false,\"state_topic\":\"camera/hall/aec_notch_radius/state\",\"step\":1,\"unique_id\":\"cam_hall_aec_notch_radius\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/aec_notch_radius/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/aec_leak_estimate/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"name\":\"Audio AEC leak estimate\",\"payload_off\":\"OFF\",\"payload_on\":\"ON\",\"retain\":false,\"state_topic\":\"camera/hall/aec_leak_estimate/state\",\"unique_id\":\"cam_hall_aec_leak_estimate\"}",
+      "retain": true,
+      "topic": "homeassistant/switch/cam_hall/aec_leak_estimate/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/aec_leak_value/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":99,\"min\":25,\"mode\":\"slider\",\"name\":\"Audio AEC leak value\",\"retain\":false,\"state_topic\":\"camera/hall/aec_leak_value/state\",\"step\":1,\"unique_id\":\"cam_hall_aec_leak_value\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/aec_leak_value/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/anr/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"name\":\"Audio Noise reduction\",\"payload_off\":\"OFF\",\"payload_on\":\"ON\",\"retain\":false,\"state_topic\":\"camera/hall/anr/state\",\"unique_id\":\"cam_hall_anr\"}",
+      "retain": true,
+      "topic": "homeassistant/switch/cam_hall/anr/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/anr_suppress_level/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":35,\"min\":3,\"mode\":\"slider\",\"name\":\"Audio ANR suppress level\",\"retain\":false,\"state_topic\":\"camera/hall/anr_suppress_level/state\",\"step\":1,\"unique_id\":\"cam_hall_anr_suppress_level\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/anr_suppress_level/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/anr_hpf_cutoff/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":1000,\"min\":0,\"mode\":\"slider\",\"name\":\"Audio ANR high-pass cutoff\",\"retain\":false,\"state_topic\":\"camera/hall/anr_hpf_cutoff/state\",\"step\":1,\"unique_id\":\"cam_hall_anr_hpf_cutoff\",\"unit_of_measurement\":\"Hz\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/anr_hpf_cutoff/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/anr_bias_sensitive/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":9,\"min\":1,\"mode\":\"slider\",\"name\":\"Audio ANR bias sensitivity\",\"retain\":false,\"state_topic\":\"camera/hall/anr_bias_sensitive/state\",\"step\":1,\"unique_id\":\"cam_hall_anr_bias_sensitive\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/anr_bias_sensitive/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/mirror/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"name\":\"Picture Mirror\",\"payload_off\":\"OFF\",\"payload_on\":\"ON\",\"retain\":false,\"state_topic\":\"camera/hall/mirror/state\",\"unique_id\":\"cam_hall_mirror\"}",
+      "retain": true,
+      "topic": "homeassistant/switch/cam_hall/mirror/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/flip/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"name\":\"Picture Flip\",\"payload_off\":\"OFF\",\"payload_on\":\"ON\",\"retain\":false,\"state_topic\":\"camera/hall/flip/state\",\"unique_id\":\"cam_hall_flip\"}",
+      "retain": true,
+      "topic": "homeassistant/switch/cam_hall/flip/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/ir_to_night/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":4095,\"min\":0,\"mode\":\"slider\",\"name\":\"Night vision IR to-night threshold\",\"retain\":false,\"state_topic\":\"camera/hall/ir_to_night/state\",\"step\":1,\"unique_id\":\"cam_hall_ir_to_night\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/ir_to_night/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/ir_to_day/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":4095,\"min\":0,\"mode\":\"slider\",\"name\":\"Night vision IR to-day threshold\",\"retain\":false,\"state_topic\":\"camera/hall/ir_to_day/state\",\"step\":1,\"unique_id\":\"cam_hall_ir_to_day\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/ir_to_day/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/ir_hold/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":60,\"min\":1,\"mode\":\"slider\",\"name\":\"Night vision IR switch hold\",\"retain\":false,\"state_topic\":\"camera/hall/ir_hold/state\",\"step\":1,\"unique_id\":\"cam_hall_ir_hold\",\"unit_of_measurement\":\"s\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/ir_hold/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/ir_leds_at_night/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"name\":\"Night vision IR LEDs at night\",\"payload_off\":\"OFF\",\"payload_on\":\"ON\",\"retain\":false,\"state_topic\":\"camera/hall/ir_leds_at_night/state\",\"unique_id\":\"cam_hall_ir_leds_at_night\"}",
+      "retain": true,
+      "topic": "homeassistant/switch/cam_hall/ir_leds_at_night/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/ir/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"name\":\"Night vision IR mode\",\"options\":[\"auto\",\"day\",\"night\"],\"retain\":false,\"state_topic\":\"camera/hall/ir/state\",\"unique_id\":\"cam_hall_ir\"}",
+      "retain": true,
+      "topic": "homeassistant/select/cam_hall/ir/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/led/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"name\":\"Status LED\",\"payload_off\":\"OFF\",\"payload_on\":\"ON\",\"retain\":false,\"state_topic\":\"camera/hall/led/state\",\"unique_id\":\"cam_hall_led\"}",
+      "retain": true,
+      "topic": "homeassistant/switch/cam_hall/led/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/ptz_speed/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":720,\"min\":100,\"mode\":\"slider\",\"name\":\"Pan & tilt Speed\",\"retain\":false,\"state_topic\":\"camera/hall/ptz_speed/state\",\"step\":1,\"unique_id\":\"cam_hall_ptz_speed\",\"unit_of_measurement\":\"pps\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/ptz_speed/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/ptz_start_speed/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":720,\"min\":100,\"mode\":\"slider\",\"name\":\"Pan & tilt Start speed\",\"retain\":false,\"state_topic\":\"camera/hall/ptz_start_speed/state\",\"step\":1,\"unique_id\":\"cam_hall_ptz_start_speed\",\"unit_of_measurement\":\"pps\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/ptz_start_speed/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/ptz_ramp/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":3000,\"min\":0,\"mode\":\"slider\",\"name\":\"Pan & tilt Ramp\",\"retain\":false,\"state_topic\":\"camera/hall/ptz_ramp/state\",\"step\":1,\"unique_id\":\"cam_hall_ptz_ramp\",\"unit_of_measurement\":\"ms\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/ptz_ramp/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/ptz_hold_timeout/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":60,\"min\":1,\"mode\":\"slider\",\"name\":\"Pan & tilt Hold timeout\",\"retain\":false,\"state_topic\":\"camera/hall/ptz_hold_timeout/state\",\"step\":1,\"unique_id\":\"cam_hall_ptz_hold_timeout\",\"unit_of_measurement\":\"s\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/ptz_hold_timeout/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/tap_delay/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":3000,\"min\":0,\"mode\":\"slider\",\"name\":\"Pan & tilt Tap delay\",\"retain\":false,\"state_topic\":\"camera/hall/tap_delay/state\",\"step\":1,\"unique_id\":\"cam_hall_tap_delay\",\"unit_of_measurement\":\"ms\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/tap_delay/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/zoom_speed/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"name\":\"Lens Zoom speed\",\"options\":[\"20\",\"40\",\"60\",\"80\",\"100\"],\"retain\":false,\"state_topic\":\"camera/hall/zoom_speed/state\",\"unique_id\":\"cam_hall_zoom_speed\"}",
+      "retain": true,
+      "topic": "homeassistant/select/cam_hall/zoom_speed/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/autofocus/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"name\":\"Lens Autofocus\",\"payload_off\":\"OFF\",\"payload_on\":\"ON\",\"retain\":false,\"state_topic\":\"camera/hall/autofocus/state\",\"unique_id\":\"cam_hall_autofocus\"}",
+      "retain": true,
+      "topic": "homeassistant/switch/cam_hall/autofocus/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/af_watch_hold/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":300,\"min\":10,\"mode\":\"slider\",\"name\":\"Lens Autofocus watchdog hold\",\"retain\":false,\"state_topic\":\"camera/hall/af_watch_hold/state\",\"step\":1,\"unique_id\":\"cam_hall_af_watch_hold\",\"unit_of_measurement\":\"s\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/af_watch_hold/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/af_watch_drop/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":90,\"min\":20,\"mode\":\"slider\",\"name\":\"Lens Autofocus watchdog drop\",\"retain\":false,\"state_topic\":\"camera/hall/af_watch_drop/state\",\"step\":1,\"unique_id\":\"cam_hall_af_watch_drop\",\"unit_of_measurement\":\"%\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/af_watch_drop/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/af_move_drop/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":99,\"min\":50,\"mode\":\"slider\",\"name\":\"Lens Autofocus move drop\",\"retain\":false,\"state_topic\":\"camera/hall/af_move_drop/state\",\"step\":1,\"unique_id\":\"cam_hall_af_move_drop\",\"unit_of_measurement\":\"%\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/af_move_drop/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/af_climb_drop/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":20,\"min\":1,\"mode\":\"slider\",\"name\":\"Lens Autofocus climb drop\",\"retain\":false,\"state_topic\":\"camera/hall/af_climb_drop/state\",\"step\":1,\"unique_id\":\"cam_hall_af_climb_drop\",\"unit_of_measurement\":\"%\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/af_climb_drop/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/main_bitrate/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":8192,\"min\":256,\"mode\":\"slider\",\"name\":\"Main stream Main bitrate\",\"retain\":false,\"state_topic\":\"camera/hall/main_bitrate/state\",\"step\":1,\"unique_id\":\"cam_hall_main_bitrate\",\"unit_of_measurement\":\"kbps\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/main_bitrate/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/main_resolution/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"name\":\"Main stream Main resolution\",\"options\":[\"2592x1944\",\"1920x1440\",\"1280x960\"],\"retain\":false,\"state_topic\":\"camera/hall/main_resolution/state\",\"unique_id\":\"cam_hall_main_resolution\"}",
+      "retain": true,
+      "topic": "homeassistant/select/cam_hall/main_resolution/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/main_fps/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":30,\"min\":5,\"mode\":\"slider\",\"name\":\"Main stream Main frame rate\",\"retain\":false,\"state_topic\":\"camera/hall/main_fps/state\",\"step\":1,\"unique_id\":\"cam_hall_main_fps\",\"unit_of_measurement\":\"fps\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/main_fps/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/isp_brightness/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":200,\"min\":0,\"mode\":\"slider\",\"name\":\"Picture Brightness\",\"retain\":false,\"state_topic\":\"camera/hall/isp_brightness/state\",\"step\":1,\"unique_id\":\"cam_hall_isp_brightness\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/isp_brightness/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/isp_contrast/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":200,\"min\":0,\"mode\":\"slider\",\"name\":\"Picture Contrast\",\"retain\":false,\"state_topic\":\"camera/hall/isp_contrast/state\",\"step\":1,\"unique_id\":\"cam_hall_isp_contrast\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/isp_contrast/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/isp_saturation/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":200,\"min\":0,\"mode\":\"slider\",\"name\":\"Picture Saturation\",\"retain\":false,\"state_topic\":\"camera/hall/isp_saturation/state\",\"step\":1,\"unique_id\":\"cam_hall_isp_saturation\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/isp_saturation/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/isp_sharpness/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":200,\"min\":0,\"mode\":\"slider\",\"name\":\"Picture Sharpness\",\"retain\":false,\"state_topic\":\"camera/hall/isp_sharpness/state\",\"step\":1,\"unique_id\":\"cam_hall_isp_sharpness\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/isp_sharpness/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/isp_hue/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":360,\"min\":0,\"mode\":\"slider\",\"name\":\"Picture Hue\",\"retain\":false,\"state_topic\":\"camera/hall/isp_hue/state\",\"step\":1,\"unique_id\":\"cam_hall_isp_hue\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/isp_hue/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/isp_noise_reduction/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":200,\"min\":0,\"mode\":\"slider\",\"name\":\"Picture Noise reduction (2D)\",\"retain\":false,\"state_topic\":\"camera/hall/isp_noise_reduction/state\",\"step\":1,\"unique_id\":\"cam_hall_isp_noise_reduction\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/isp_noise_reduction/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/isp_exposure/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":32,\"min\":0,\"mode\":\"slider\",\"name\":\"Picture Exposure compensation\",\"retain\":false,\"state_topic\":\"camera/hall/isp_exposure/state\",\"step\":1,\"unique_id\":\"cam_hall_isp_exposure\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/isp_exposure/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/isp_anti_flicker/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"name\":\"Picture Anti-flicker\",\"options\":[\"50 Hz\",\"60 Hz\"],\"retain\":false,\"state_topic\":\"camera/hall/isp_anti_flicker/state\",\"unique_id\":\"cam_hall_isp_anti_flicker\"}",
+      "retain": true,
+      "topic": "homeassistant/select/cam_hall/isp_anti_flicker/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"diagnostic\",\"icon\":\"mdi:cpu-32-bit\",\"name\":\"CPU busy\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/cpu/state\",\"unique_id\":\"cam_hall_cpu\",\"unit_of_measurement\":\"%\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/cpu/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"device_class\":\"data_size\",\"entity_category\":\"diagnostic\",\"name\":\"Memory available\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/mem_available/state\",\"unique_id\":\"cam_hall_mem_available\",\"unit_of_measurement\":\"MiB\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/mem_available/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"device_class\":\"data_size\",\"entity_category\":\"diagnostic\",\"name\":\"Daemon memory\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/rss/state\",\"unique_id\":\"cam_hall_rss\",\"unit_of_measurement\":\"MiB\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/rss/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"diagnostic\",\"icon\":\"mdi:gauge\",\"name\":\"Load average\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/load/state\",\"unique_id\":\"cam_hall_load\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/load/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"device_class\":\"temperature\",\"entity_category\":\"diagnostic\",\"name\":\"Temperature\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/temperature/state\",\"unique_id\":\"cam_hall_temperature\",\"unit_of_measurement\":\"°C\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/temperature/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"diagnostic\",\"icon\":\"mdi:wifi\",\"name\":\"Wi-Fi signal\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/wifi/state\",\"unique_id\":\"cam_hall_wifi\",\"unit_of_measurement\":\"%\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/wifi/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"device_class\":\"signal_strength\",\"entity_category\":\"diagnostic\",\"name\":\"Wi-Fi RSSI\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/wifi_rssi/state\",\"unique_id\":\"cam_hall_wifi_rssi\",\"unit_of_measurement\":\"dBm\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/wifi_rssi/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"device_class\":\"data_rate\",\"entity_category\":\"diagnostic\",\"name\":\"Main bitrate (actual)\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/main_bitrate_actual/state\",\"unique_id\":\"cam_hall_main_bitrate_actual\",\"unit_of_measurement\":\"kbit/s\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/main_bitrate_actual/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"device_class\":\"data_rate\",\"entity_category\":\"diagnostic\",\"name\":\"Sub bitrate (actual)\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/sub_bitrate_actual/state\",\"unique_id\":\"cam_hall_sub_bitrate_actual\",\"unit_of_measurement\":\"kbit/s\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/sub_bitrate_actual/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"diagnostic\",\"icon\":\"mdi:filmstrip\",\"name\":\"Main frame rate (actual)\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/main_fps_actual/state\",\"unique_id\":\"cam_hall_main_fps_actual\",\"unit_of_measurement\":\"fps\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/main_fps_actual/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"diagnostic\",\"icon\":\"mdi:filmstrip\",\"name\":\"Sub frame rate (actual)\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/sub_fps_actual/state\",\"unique_id\":\"cam_hall_sub_fps_actual\",\"unit_of_measurement\":\"fps\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/sub_fps_actual/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"diagnostic\",\"icon\":\"mdi:filmstrip-off\",\"name\":\"Main frames short\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/main_dropped/state\",\"unique_id\":\"cam_hall_main_dropped\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/main_dropped/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"diagnostic\",\"icon\":\"mdi:filmstrip-off\",\"name\":\"Sub frames short\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/sub_dropped/state\",\"unique_id\":\"cam_hall_sub_dropped\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/sub_dropped/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"device_class\":\"duration\",\"entity_category\":\"diagnostic\",\"name\":\"Uptime\",\"state_class\":\"total_increasing\",\"state_topic\":\"camera/hall/uptime/state\",\"unique_id\":\"cam_hall_uptime\",\"unit_of_measurement\":\"s\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/uptime/config"
+    }
+  ],
+  "discovery_without_presets": [
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/pan/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"max\":7360,\"min\":0,\"mode\":\"box\",\"name\":\"Pan\",\"retain\":false,\"state_topic\":\"camera/hall/pan/state\",\"step\":1,\"unique_id\":\"cam_hall_pan\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/pan/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/tilt/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"max\":1240,\"min\":0,\"mode\":\"box\",\"name\":\"Tilt\",\"retain\":false,\"state_topic\":\"camera/hall/tilt/state\",\"step\":1,\"unique_id\":\"cam_hall_tilt\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/tilt/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/zoom/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"max\":1024,\"min\":0,\"mode\":\"slider\",\"name\":\"Zoom\",\"retain\":false,\"state_topic\":\"camera/hall/zoom/state\",\"step\":1,\"unique_id\":\"cam_hall_zoom\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/zoom/config"
+    },
+    {
+      "payload": "",
+      "retain": true,
+      "topic": "homeassistant/select/cam_hall/preset/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/reboot/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"device_class\":\"restart\",\"entity_category\":\"config\",\"name\":\"Reboot\",\"payload_press\":\"PRESS\",\"retain\":false,\"unique_id\":\"cam_hall_reboot\"}",
+      "retain": true,
+      "topic": "homeassistant/button/cam_hall/reboot/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/refocus/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"icon\":\"mdi:image-filter-center-focus\",\"name\":\"Refocus\",\"payload_press\":\"PRESS\",\"retain\":false,\"unique_id\":\"cam_hall_refocus\"}",
+      "retain": true,
+      "topic": "homeassistant/button/cam_hall/refocus/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/calibrate_focus/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"icon\":\"mdi:crosshairs-gps\",\"name\":\"Lens Calibrate focus (15 min)\",\"payload_press\":\"PRESS\",\"retain\":false,\"unique_id\":\"cam_hall_calibrate_focus\"}",
+      "retain": true,
+      "topic": "homeassistant/button/cam_hall/calibrate_focus/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"diagnostic\",\"icon\":\"mdi:camera-iris\",\"json_attributes_topic\":\"camera/hall/autofocus_attributes/state\",\"name\":\"Autofocus\",\"state_topic\":\"camera/hall/autofocus_state/state\",\"unique_id\":\"cam_hall_autofocus_state\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/autofocus_state/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"diagnostic\",\"name\":\"Pipeline health\",\"payload_off\":\"OFF\",\"payload_on\":\"ON\",\"state_topic\":\"camera/hall/pipeline/state\",\"unique_id\":\"cam_hall_pipeline\"}",
+      "retain": true,
+      "topic": "homeassistant/binary_sensor/cam_hall/pipeline/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"diagnostic\",\"icon\":\"mdi:brightness-6\",\"name\":\"Light sensor\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/light/state\",\"unique_id\":\"cam_hall_light\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/light/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"diagnostic\",\"icon\":\"mdi:cog-outline\",\"name\":\"Settings\",\"state_topic\":\"camera/hall/settings/state\",\"unique_id\":\"cam_hall_settings\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/settings/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/mic_volume/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":100,\"min\":0,\"mode\":\"slider\",\"name\":\"Audio Mic volume\",\"retain\":false,\"state_topic\":\"camera/hall/mic_volume/state\",\"step\":1,\"unique_id\":\"cam_hall_mic_volume\",\"unit_of_measurement\":\"%\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/mic_volume/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/speaker_volume/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":100,\"min\":0,\"mode\":\"slider\",\"name\":\"Audio Speaker volume\",\"retain\":false,\"state_topic\":\"camera/hall/speaker_volume/state\",\"step\":1,\"unique_id\":\"cam_hall_speaker_volume\",\"unit_of_measurement\":\"%\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/speaker_volume/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/aec/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"name\":\"Audio Echo cancellation\",\"payload_off\":\"OFF\",\"payload_on\":\"ON\",\"retain\":false,\"state_topic\":\"camera/hall/aec/state\",\"unique_id\":\"cam_hall_aec\"}",
+      "retain": true,
+      "topic": "homeassistant/switch/cam_hall/aec/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/aec_noise_level/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":-3,\"min\":-60,\"mode\":\"slider\",\"name\":\"Audio AEC noise level\",\"retain\":false,\"state_topic\":\"camera/hall/aec_noise_level/state\",\"step\":1,\"unique_id\":\"cam_hall_aec_noise_level\",\"unit_of_measurement\":\"dB\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/aec_noise_level/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/aec_echo_level/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":-30,\"min\":-60,\"mode\":\"slider\",\"name\":\"Audio AEC echo level\",\"retain\":false,\"state_topic\":\"camera/hall/aec_echo_level/state\",\"step\":1,\"unique_id\":\"cam_hall_aec_echo_level\",\"unit_of_measurement\":\"dB\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/aec_echo_level/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/aec_notch_radius/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":1000,\"min\":0,\"mode\":\"slider\",\"name\":\"Audio AEC notch radius\",\"retain\":false,\"state_topic\":\"camera/hall/aec_notch_radius/state\",\"step\":1,\"unique_id\":\"cam_hall_aec_notch_radius\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/aec_notch_radius/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/aec_leak_estimate/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"name\":\"Audio AEC leak estimate\",\"payload_off\":\"OFF\",\"payload_on\":\"ON\",\"retain\":false,\"state_topic\":\"camera/hall/aec_leak_estimate/state\",\"unique_id\":\"cam_hall_aec_leak_estimate\"}",
+      "retain": true,
+      "topic": "homeassistant/switch/cam_hall/aec_leak_estimate/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/aec_leak_value/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":99,\"min\":25,\"mode\":\"slider\",\"name\":\"Audio AEC leak value\",\"retain\":false,\"state_topic\":\"camera/hall/aec_leak_value/state\",\"step\":1,\"unique_id\":\"cam_hall_aec_leak_value\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/aec_leak_value/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/anr/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"name\":\"Audio Noise reduction\",\"payload_off\":\"OFF\",\"payload_on\":\"ON\",\"retain\":false,\"state_topic\":\"camera/hall/anr/state\",\"unique_id\":\"cam_hall_anr\"}",
+      "retain": true,
+      "topic": "homeassistant/switch/cam_hall/anr/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/anr_suppress_level/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":35,\"min\":3,\"mode\":\"slider\",\"name\":\"Audio ANR suppress level\",\"retain\":false,\"state_topic\":\"camera/hall/anr_suppress_level/state\",\"step\":1,\"unique_id\":\"cam_hall_anr_suppress_level\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/anr_suppress_level/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/anr_hpf_cutoff/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":1000,\"min\":0,\"mode\":\"slider\",\"name\":\"Audio ANR high-pass cutoff\",\"retain\":false,\"state_topic\":\"camera/hall/anr_hpf_cutoff/state\",\"step\":1,\"unique_id\":\"cam_hall_anr_hpf_cutoff\",\"unit_of_measurement\":\"Hz\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/anr_hpf_cutoff/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/anr_bias_sensitive/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":9,\"min\":1,\"mode\":\"slider\",\"name\":\"Audio ANR bias sensitivity\",\"retain\":false,\"state_topic\":\"camera/hall/anr_bias_sensitive/state\",\"step\":1,\"unique_id\":\"cam_hall_anr_bias_sensitive\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/anr_bias_sensitive/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/mirror/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"name\":\"Picture Mirror\",\"payload_off\":\"OFF\",\"payload_on\":\"ON\",\"retain\":false,\"state_topic\":\"camera/hall/mirror/state\",\"unique_id\":\"cam_hall_mirror\"}",
+      "retain": true,
+      "topic": "homeassistant/switch/cam_hall/mirror/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/flip/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"name\":\"Picture Flip\",\"payload_off\":\"OFF\",\"payload_on\":\"ON\",\"retain\":false,\"state_topic\":\"camera/hall/flip/state\",\"unique_id\":\"cam_hall_flip\"}",
+      "retain": true,
+      "topic": "homeassistant/switch/cam_hall/flip/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/ir_to_night/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":4095,\"min\":0,\"mode\":\"slider\",\"name\":\"Night vision IR to-night threshold\",\"retain\":false,\"state_topic\":\"camera/hall/ir_to_night/state\",\"step\":1,\"unique_id\":\"cam_hall_ir_to_night\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/ir_to_night/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/ir_to_day/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":4095,\"min\":0,\"mode\":\"slider\",\"name\":\"Night vision IR to-day threshold\",\"retain\":false,\"state_topic\":\"camera/hall/ir_to_day/state\",\"step\":1,\"unique_id\":\"cam_hall_ir_to_day\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/ir_to_day/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/ir_hold/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":60,\"min\":1,\"mode\":\"slider\",\"name\":\"Night vision IR switch hold\",\"retain\":false,\"state_topic\":\"camera/hall/ir_hold/state\",\"step\":1,\"unique_id\":\"cam_hall_ir_hold\",\"unit_of_measurement\":\"s\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/ir_hold/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/ir_leds_at_night/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"name\":\"Night vision IR LEDs at night\",\"payload_off\":\"OFF\",\"payload_on\":\"ON\",\"retain\":false,\"state_topic\":\"camera/hall/ir_leds_at_night/state\",\"unique_id\":\"cam_hall_ir_leds_at_night\"}",
+      "retain": true,
+      "topic": "homeassistant/switch/cam_hall/ir_leds_at_night/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/ir/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"name\":\"Night vision IR mode\",\"options\":[\"auto\",\"day\",\"night\"],\"retain\":false,\"state_topic\":\"camera/hall/ir/state\",\"unique_id\":\"cam_hall_ir\"}",
+      "retain": true,
+      "topic": "homeassistant/select/cam_hall/ir/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/led/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"name\":\"Status LED\",\"payload_off\":\"OFF\",\"payload_on\":\"ON\",\"retain\":false,\"state_topic\":\"camera/hall/led/state\",\"unique_id\":\"cam_hall_led\"}",
+      "retain": true,
+      "topic": "homeassistant/switch/cam_hall/led/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/ptz_speed/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":720,\"min\":100,\"mode\":\"slider\",\"name\":\"Pan & tilt Speed\",\"retain\":false,\"state_topic\":\"camera/hall/ptz_speed/state\",\"step\":1,\"unique_id\":\"cam_hall_ptz_speed\",\"unit_of_measurement\":\"pps\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/ptz_speed/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/ptz_start_speed/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":720,\"min\":100,\"mode\":\"slider\",\"name\":\"Pan & tilt Start speed\",\"retain\":false,\"state_topic\":\"camera/hall/ptz_start_speed/state\",\"step\":1,\"unique_id\":\"cam_hall_ptz_start_speed\",\"unit_of_measurement\":\"pps\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/ptz_start_speed/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/ptz_ramp/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":3000,\"min\":0,\"mode\":\"slider\",\"name\":\"Pan & tilt Ramp\",\"retain\":false,\"state_topic\":\"camera/hall/ptz_ramp/state\",\"step\":1,\"unique_id\":\"cam_hall_ptz_ramp\",\"unit_of_measurement\":\"ms\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/ptz_ramp/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/ptz_hold_timeout/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":60,\"min\":1,\"mode\":\"slider\",\"name\":\"Pan & tilt Hold timeout\",\"retain\":false,\"state_topic\":\"camera/hall/ptz_hold_timeout/state\",\"step\":1,\"unique_id\":\"cam_hall_ptz_hold_timeout\",\"unit_of_measurement\":\"s\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/ptz_hold_timeout/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/tap_delay/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":3000,\"min\":0,\"mode\":\"slider\",\"name\":\"Pan & tilt Tap delay\",\"retain\":false,\"state_topic\":\"camera/hall/tap_delay/state\",\"step\":1,\"unique_id\":\"cam_hall_tap_delay\",\"unit_of_measurement\":\"ms\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/tap_delay/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/zoom_speed/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"name\":\"Lens Zoom speed\",\"options\":[\"20\",\"40\",\"60\",\"80\",\"100\"],\"retain\":false,\"state_topic\":\"camera/hall/zoom_speed/state\",\"unique_id\":\"cam_hall_zoom_speed\"}",
+      "retain": true,
+      "topic": "homeassistant/select/cam_hall/zoom_speed/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/autofocus/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"name\":\"Lens Autofocus\",\"payload_off\":\"OFF\",\"payload_on\":\"ON\",\"retain\":false,\"state_topic\":\"camera/hall/autofocus/state\",\"unique_id\":\"cam_hall_autofocus\"}",
+      "retain": true,
+      "topic": "homeassistant/switch/cam_hall/autofocus/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/af_watch_hold/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":300,\"min\":10,\"mode\":\"slider\",\"name\":\"Lens Autofocus watchdog hold\",\"retain\":false,\"state_topic\":\"camera/hall/af_watch_hold/state\",\"step\":1,\"unique_id\":\"cam_hall_af_watch_hold\",\"unit_of_measurement\":\"s\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/af_watch_hold/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/af_watch_drop/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":90,\"min\":20,\"mode\":\"slider\",\"name\":\"Lens Autofocus watchdog drop\",\"retain\":false,\"state_topic\":\"camera/hall/af_watch_drop/state\",\"step\":1,\"unique_id\":\"cam_hall_af_watch_drop\",\"unit_of_measurement\":\"%\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/af_watch_drop/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/af_move_drop/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":99,\"min\":50,\"mode\":\"slider\",\"name\":\"Lens Autofocus move drop\",\"retain\":false,\"state_topic\":\"camera/hall/af_move_drop/state\",\"step\":1,\"unique_id\":\"cam_hall_af_move_drop\",\"unit_of_measurement\":\"%\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/af_move_drop/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/af_climb_drop/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":20,\"min\":1,\"mode\":\"slider\",\"name\":\"Lens Autofocus climb drop\",\"retain\":false,\"state_topic\":\"camera/hall/af_climb_drop/state\",\"step\":1,\"unique_id\":\"cam_hall_af_climb_drop\",\"unit_of_measurement\":\"%\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/af_climb_drop/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/main_bitrate/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":8192,\"min\":256,\"mode\":\"slider\",\"name\":\"Main stream Main bitrate\",\"retain\":false,\"state_topic\":\"camera/hall/main_bitrate/state\",\"step\":1,\"unique_id\":\"cam_hall_main_bitrate\",\"unit_of_measurement\":\"kbps\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/main_bitrate/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/main_resolution/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"name\":\"Main stream Main resolution\",\"options\":[\"2592x1944\",\"1920x1440\",\"1280x960\"],\"retain\":false,\"state_topic\":\"camera/hall/main_resolution/state\",\"unique_id\":\"cam_hall_main_resolution\"}",
+      "retain": true,
+      "topic": "homeassistant/select/cam_hall/main_resolution/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/main_fps/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":30,\"min\":5,\"mode\":\"slider\",\"name\":\"Main stream Main frame rate\",\"retain\":false,\"state_topic\":\"camera/hall/main_fps/state\",\"step\":1,\"unique_id\":\"cam_hall_main_fps\",\"unit_of_measurement\":\"fps\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/main_fps/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/isp_brightness/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":200,\"min\":0,\"mode\":\"slider\",\"name\":\"Picture Brightness\",\"retain\":false,\"state_topic\":\"camera/hall/isp_brightness/state\",\"step\":1,\"unique_id\":\"cam_hall_isp_brightness\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/isp_brightness/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/isp_contrast/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":200,\"min\":0,\"mode\":\"slider\",\"name\":\"Picture Contrast\",\"retain\":false,\"state_topic\":\"camera/hall/isp_contrast/state\",\"step\":1,\"unique_id\":\"cam_hall_isp_contrast\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/isp_contrast/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/isp_saturation/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":200,\"min\":0,\"mode\":\"slider\",\"name\":\"Picture Saturation\",\"retain\":false,\"state_topic\":\"camera/hall/isp_saturation/state\",\"step\":1,\"unique_id\":\"cam_hall_isp_saturation\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/isp_saturation/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/isp_sharpness/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":200,\"min\":0,\"mode\":\"slider\",\"name\":\"Picture Sharpness\",\"retain\":false,\"state_topic\":\"camera/hall/isp_sharpness/state\",\"step\":1,\"unique_id\":\"cam_hall_isp_sharpness\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/isp_sharpness/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/isp_hue/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":360,\"min\":0,\"mode\":\"slider\",\"name\":\"Picture Hue\",\"retain\":false,\"state_topic\":\"camera/hall/isp_hue/state\",\"step\":1,\"unique_id\":\"cam_hall_isp_hue\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/isp_hue/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/isp_noise_reduction/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":200,\"min\":0,\"mode\":\"slider\",\"name\":\"Picture Noise reduction (2D)\",\"retain\":false,\"state_topic\":\"camera/hall/isp_noise_reduction/state\",\"step\":1,\"unique_id\":\"cam_hall_isp_noise_reduction\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/isp_noise_reduction/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/isp_exposure/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"max\":32,\"min\":0,\"mode\":\"slider\",\"name\":\"Picture Exposure compensation\",\"retain\":false,\"state_topic\":\"camera/hall/isp_exposure/state\",\"step\":1,\"unique_id\":\"cam_hall_isp_exposure\"}",
+      "retain": true,
+      "topic": "homeassistant/number/cam_hall/isp_exposure/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"command_topic\":\"camera/hall/isp_anti_flicker/set\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"config\",\"name\":\"Picture Anti-flicker\",\"options\":[\"50 Hz\",\"60 Hz\"],\"retain\":false,\"state_topic\":\"camera/hall/isp_anti_flicker/state\",\"unique_id\":\"cam_hall_isp_anti_flicker\"}",
+      "retain": true,
+      "topic": "homeassistant/select/cam_hall/isp_anti_flicker/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"diagnostic\",\"icon\":\"mdi:cpu-32-bit\",\"name\":\"CPU busy\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/cpu/state\",\"unique_id\":\"cam_hall_cpu\",\"unit_of_measurement\":\"%\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/cpu/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"device_class\":\"data_size\",\"entity_category\":\"diagnostic\",\"name\":\"Memory available\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/mem_available/state\",\"unique_id\":\"cam_hall_mem_available\",\"unit_of_measurement\":\"MiB\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/mem_available/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"device_class\":\"data_size\",\"entity_category\":\"diagnostic\",\"name\":\"Daemon memory\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/rss/state\",\"unique_id\":\"cam_hall_rss\",\"unit_of_measurement\":\"MiB\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/rss/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"diagnostic\",\"icon\":\"mdi:gauge\",\"name\":\"Load average\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/load/state\",\"unique_id\":\"cam_hall_load\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/load/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"device_class\":\"temperature\",\"entity_category\":\"diagnostic\",\"name\":\"Temperature\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/temperature/state\",\"unique_id\":\"cam_hall_temperature\",\"unit_of_measurement\":\"°C\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/temperature/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"diagnostic\",\"icon\":\"mdi:wifi\",\"name\":\"Wi-Fi signal\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/wifi/state\",\"unique_id\":\"cam_hall_wifi\",\"unit_of_measurement\":\"%\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/wifi/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"device_class\":\"signal_strength\",\"entity_category\":\"diagnostic\",\"name\":\"Wi-Fi RSSI\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/wifi_rssi/state\",\"unique_id\":\"cam_hall_wifi_rssi\",\"unit_of_measurement\":\"dBm\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/wifi_rssi/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"device_class\":\"data_rate\",\"entity_category\":\"diagnostic\",\"name\":\"Main bitrate (actual)\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/main_bitrate_actual/state\",\"unique_id\":\"cam_hall_main_bitrate_actual\",\"unit_of_measurement\":\"kbit/s\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/main_bitrate_actual/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"device_class\":\"data_rate\",\"entity_category\":\"diagnostic\",\"name\":\"Sub bitrate (actual)\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/sub_bitrate_actual/state\",\"unique_id\":\"cam_hall_sub_bitrate_actual\",\"unit_of_measurement\":\"kbit/s\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/sub_bitrate_actual/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"diagnostic\",\"icon\":\"mdi:filmstrip\",\"name\":\"Main frame rate (actual)\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/main_fps_actual/state\",\"unique_id\":\"cam_hall_main_fps_actual\",\"unit_of_measurement\":\"fps\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/main_fps_actual/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"diagnostic\",\"icon\":\"mdi:filmstrip\",\"name\":\"Sub frame rate (actual)\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/sub_fps_actual/state\",\"unique_id\":\"cam_hall_sub_fps_actual\",\"unit_of_measurement\":\"fps\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/sub_fps_actual/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"diagnostic\",\"icon\":\"mdi:filmstrip-off\",\"name\":\"Main frames short\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/main_dropped/state\",\"unique_id\":\"cam_hall_main_dropped\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/main_dropped/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"entity_category\":\"diagnostic\",\"icon\":\"mdi:filmstrip-off\",\"name\":\"Sub frames short\",\"state_class\":\"measurement\",\"state_topic\":\"camera/hall/sub_dropped/state\",\"unique_id\":\"cam_hall_sub_dropped\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/sub_dropped/config"
+    },
+    {
+      "payload": "{\"availability_topic\":\"camera/hall/availability\",\"device\":{\"identifiers\":[\"cam_hall\"],\"manufacturer\":\"Reolink\",\"model\":\"E1 Zoom (cam)\",\"name\":\"Hall camera\"},\"device_class\":\"duration\",\"entity_category\":\"diagnostic\",\"name\":\"Uptime\",\"state_class\":\"total_increasing\",\"state_topic\":\"camera/hall/uptime/state\",\"unique_id\":\"cam_hall_uptime\",\"unit_of_measurement\":\"s\"}",
+      "retain": true,
+      "topic": "homeassistant/sensor/cam_hall/uptime/config"
+    }
+  ],
+  "subscribe": "camera/hall/+/set"
+}

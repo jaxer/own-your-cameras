@@ -1,0 +1,2 @@
+typedef struct _IO_FILE FILE;
+#include <stddef.h>

@@ -1,0 +1,930 @@
+{
+ "discovery_with_presets": [
+  {
+   "topic": "homeassistant/number/cam_hall/pan/config",
+   "unique_id": "cam_hall_pan",
+   "command_topic": "camera/hall/pan/set",
+   "state_topic": "camera/hall/pan/state",
+   "name": "Pan"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/tilt/config",
+   "unique_id": "cam_hall_tilt",
+   "command_topic": "camera/hall/tilt/set",
+   "state_topic": "camera/hall/tilt/state",
+   "name": "Tilt"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/zoom/config",
+   "unique_id": "cam_hall_zoom",
+   "command_topic": "camera/hall/zoom/set",
+   "state_topic": "camera/hall/zoom/state",
+   "name": "Zoom"
+  },
+  {
+   "topic": "homeassistant/select/cam_hall/preset/config",
+   "unique_id": "cam_hall_preset",
+   "command_topic": "camera/hall/preset/set",
+   "state_topic": "camera/hall/preset/state",
+   "name": "Preset"
+  },
+  {
+   "topic": "homeassistant/button/cam_hall/reboot/config",
+   "unique_id": "cam_hall_reboot",
+   "command_topic": "camera/hall/reboot/set",
+   "state_topic": null,
+   "name": "Reboot"
+  },
+  {
+   "topic": "homeassistant/button/cam_hall/refocus/config",
+   "unique_id": "cam_hall_refocus",
+   "command_topic": "camera/hall/refocus/set",
+   "state_topic": null,
+   "name": "Refocus"
+  },
+  {
+   "topic": "homeassistant/button/cam_hall/calibrate_focus/config",
+   "unique_id": "cam_hall_calibrate_focus",
+   "command_topic": "camera/hall/calibrate_focus/set",
+   "state_topic": null,
+   "name": "Calibrate focus (15 min)"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/autofocus_state/config",
+   "unique_id": "cam_hall_autofocus_state",
+   "command_topic": null,
+   "state_topic": "camera/hall/autofocus_state/state",
+   "name": "Autofocus"
+  },
+  {
+   "topic": "homeassistant/binary_sensor/cam_hall/pipeline/config",
+   "unique_id": "cam_hall_pipeline",
+   "command_topic": null,
+   "state_topic": "camera/hall/pipeline/state",
+   "name": "Pipeline health"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/light/config",
+   "unique_id": "cam_hall_light",
+   "command_topic": null,
+   "state_topic": "camera/hall/light/state",
+   "name": "Light sensor"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/settings/config",
+   "unique_id": "cam_hall_settings",
+   "command_topic": null,
+   "state_topic": "camera/hall/settings/state",
+   "name": "Settings"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/mic_volume/config",
+   "unique_id": "cam_hall_mic_volume",
+   "command_topic": "camera/hall/mic_volume/set",
+   "state_topic": "camera/hall/mic_volume/state",
+   "name": "Mic volume"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/speaker_volume/config",
+   "unique_id": "cam_hall_speaker_volume",
+   "command_topic": "camera/hall/speaker_volume/set",
+   "state_topic": "camera/hall/speaker_volume/state",
+   "name": "Speaker volume"
+  },
+  {
+   "topic": "homeassistant/switch/cam_hall/aec/config",
+   "unique_id": "cam_hall_aec",
+   "command_topic": "camera/hall/aec/set",
+   "state_topic": "camera/hall/aec/state",
+   "name": "Echo cancellation"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/aec_noise_level/config",
+   "unique_id": "cam_hall_aec_noise_level",
+   "command_topic": "camera/hall/aec_noise_level/set",
+   "state_topic": "camera/hall/aec_noise_level/state",
+   "name": "AEC noise level"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/aec_echo_level/config",
+   "unique_id": "cam_hall_aec_echo_level",
+   "command_topic": "camera/hall/aec_echo_level/set",
+   "state_topic": "camera/hall/aec_echo_level/state",
+   "name": "AEC echo level"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/aec_notch_radius/config",
+   "unique_id": "cam_hall_aec_notch_radius",
+   "command_topic": "camera/hall/aec_notch_radius/set",
+   "state_topic": "camera/hall/aec_notch_radius/state",
+   "name": "AEC notch radius"
+  },
+  {
+   "topic": "homeassistant/switch/cam_hall/aec_leak_estimate/config",
+   "unique_id": "cam_hall_aec_leak_estimate",
+   "command_topic": "camera/hall/aec_leak_estimate/set",
+   "state_topic": "camera/hall/aec_leak_estimate/state",
+   "name": "AEC leak estimate"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/aec_leak_value/config",
+   "unique_id": "cam_hall_aec_leak_value",
+   "command_topic": "camera/hall/aec_leak_value/set",
+   "state_topic": "camera/hall/aec_leak_value/state",
+   "name": "AEC leak value"
+  },
+  {
+   "topic": "homeassistant/switch/cam_hall/anr/config",
+   "unique_id": "cam_hall_anr",
+   "command_topic": "camera/hall/anr/set",
+   "state_topic": "camera/hall/anr/state",
+   "name": "Noise reduction"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/anr_suppress_level/config",
+   "unique_id": "cam_hall_anr_suppress_level",
+   "command_topic": "camera/hall/anr_suppress_level/set",
+   "state_topic": "camera/hall/anr_suppress_level/state",
+   "name": "ANR suppress level"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/anr_hpf_cutoff/config",
+   "unique_id": "cam_hall_anr_hpf_cutoff",
+   "command_topic": "camera/hall/anr_hpf_cutoff/set",
+   "state_topic": "camera/hall/anr_hpf_cutoff/state",
+   "name": "ANR high-pass cutoff"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/anr_bias_sensitive/config",
+   "unique_id": "cam_hall_anr_bias_sensitive",
+   "command_topic": "camera/hall/anr_bias_sensitive/set",
+   "state_topic": "camera/hall/anr_bias_sensitive/state",
+   "name": "ANR bias sensitivity"
+  },
+  {
+   "topic": "homeassistant/switch/cam_hall/mirror/config",
+   "unique_id": "cam_hall_mirror",
+   "command_topic": "camera/hall/mirror/set",
+   "state_topic": "camera/hall/mirror/state",
+   "name": "Mirror"
+  },
+  {
+   "topic": "homeassistant/switch/cam_hall/flip/config",
+   "unique_id": "cam_hall_flip",
+   "command_topic": "camera/hall/flip/set",
+   "state_topic": "camera/hall/flip/state",
+   "name": "Flip"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/ir_to_night/config",
+   "unique_id": "cam_hall_ir_to_night",
+   "command_topic": "camera/hall/ir_to_night/set",
+   "state_topic": "camera/hall/ir_to_night/state",
+   "name": "IR to-night threshold"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/ir_to_day/config",
+   "unique_id": "cam_hall_ir_to_day",
+   "command_topic": "camera/hall/ir_to_day/set",
+   "state_topic": "camera/hall/ir_to_day/state",
+   "name": "IR to-day threshold"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/ir_hold/config",
+   "unique_id": "cam_hall_ir_hold",
+   "command_topic": "camera/hall/ir_hold/set",
+   "state_topic": "camera/hall/ir_hold/state",
+   "name": "IR switch hold"
+  },
+  {
+   "topic": "homeassistant/switch/cam_hall/ir_leds_at_night/config",
+   "unique_id": "cam_hall_ir_leds_at_night",
+   "command_topic": "camera/hall/ir_leds_at_night/set",
+   "state_topic": "camera/hall/ir_leds_at_night/state",
+   "name": "IR LEDs at night"
+  },
+  {
+   "topic": "homeassistant/select/cam_hall/ir/config",
+   "unique_id": "cam_hall_ir",
+   "command_topic": "camera/hall/ir/set",
+   "state_topic": "camera/hall/ir/state",
+   "name": "IR mode"
+  },
+  {
+   "topic": "homeassistant/switch/cam_hall/led/config",
+   "unique_id": "cam_hall_led",
+   "command_topic": "camera/hall/led/set",
+   "state_topic": "camera/hall/led/state",
+   "name": "Status LED"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/ptz_speed/config",
+   "unique_id": "cam_hall_ptz_speed",
+   "command_topic": "camera/hall/ptz_speed/set",
+   "state_topic": "camera/hall/ptz_speed/state",
+   "name": "PTZ speed"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/ptz_start_speed/config",
+   "unique_id": "cam_hall_ptz_start_speed",
+   "command_topic": "camera/hall/ptz_start_speed/set",
+   "state_topic": "camera/hall/ptz_start_speed/state",
+   "name": "PTZ start speed"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/ptz_ramp/config",
+   "unique_id": "cam_hall_ptz_ramp",
+   "command_topic": "camera/hall/ptz_ramp/set",
+   "state_topic": "camera/hall/ptz_ramp/state",
+   "name": "PTZ ramp"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/ptz_hold_timeout/config",
+   "unique_id": "cam_hall_ptz_hold_timeout",
+   "command_topic": "camera/hall/ptz_hold_timeout/set",
+   "state_topic": "camera/hall/ptz_hold_timeout/state",
+   "name": "PTZ hold timeout"
+  },
+  {
+   "topic": "homeassistant/select/cam_hall/zoom_speed/config",
+   "unique_id": "cam_hall_zoom_speed",
+   "command_topic": "camera/hall/zoom_speed/set",
+   "state_topic": "camera/hall/zoom_speed/state",
+   "name": "Zoom speed"
+  },
+  {
+   "topic": "homeassistant/switch/cam_hall/autofocus/config",
+   "unique_id": "cam_hall_autofocus",
+   "command_topic": "camera/hall/autofocus/set",
+   "state_topic": "camera/hall/autofocus/state",
+   "name": "Autofocus"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/af_watch_hold/config",
+   "unique_id": "cam_hall_af_watch_hold",
+   "command_topic": "camera/hall/af_watch_hold/set",
+   "state_topic": "camera/hall/af_watch_hold/state",
+   "name": "Autofocus watchdog hold"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/af_watch_drop/config",
+   "unique_id": "cam_hall_af_watch_drop",
+   "command_topic": "camera/hall/af_watch_drop/set",
+   "state_topic": "camera/hall/af_watch_drop/state",
+   "name": "Autofocus watchdog drop"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/af_move_drop/config",
+   "unique_id": "cam_hall_af_move_drop",
+   "command_topic": "camera/hall/af_move_drop/set",
+   "state_topic": "camera/hall/af_move_drop/state",
+   "name": "Autofocus move drop"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/af_climb_drop/config",
+   "unique_id": "cam_hall_af_climb_drop",
+   "command_topic": "camera/hall/af_climb_drop/set",
+   "state_topic": "camera/hall/af_climb_drop/state",
+   "name": "Autofocus climb drop"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/main_bitrate/config",
+   "unique_id": "cam_hall_main_bitrate",
+   "command_topic": "camera/hall/main_bitrate/set",
+   "state_topic": "camera/hall/main_bitrate/state",
+   "name": "Main bitrate"
+  },
+  {
+   "topic": "homeassistant/select/cam_hall/main_resolution/config",
+   "unique_id": "cam_hall_main_resolution",
+   "command_topic": "camera/hall/main_resolution/set",
+   "state_topic": "camera/hall/main_resolution/state",
+   "name": "Main resolution"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/main_fps/config",
+   "unique_id": "cam_hall_main_fps",
+   "command_topic": "camera/hall/main_fps/set",
+   "state_topic": "camera/hall/main_fps/state",
+   "name": "Main frame rate"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/isp_brightness/config",
+   "unique_id": "cam_hall_isp_brightness",
+   "command_topic": "camera/hall/isp_brightness/set",
+   "state_topic": "camera/hall/isp_brightness/state",
+   "name": "Brightness"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/isp_contrast/config",
+   "unique_id": "cam_hall_isp_contrast",
+   "command_topic": "camera/hall/isp_contrast/set",
+   "state_topic": "camera/hall/isp_contrast/state",
+   "name": "Contrast"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/isp_saturation/config",
+   "unique_id": "cam_hall_isp_saturation",
+   "command_topic": "camera/hall/isp_saturation/set",
+   "state_topic": "camera/hall/isp_saturation/state",
+   "name": "Saturation"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/isp_sharpness/config",
+   "unique_id": "cam_hall_isp_sharpness",
+   "command_topic": "camera/hall/isp_sharpness/set",
+   "state_topic": "camera/hall/isp_sharpness/state",
+   "name": "Sharpness"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/isp_hue/config",
+   "unique_id": "cam_hall_isp_hue",
+   "command_topic": "camera/hall/isp_hue/set",
+   "state_topic": "camera/hall/isp_hue/state",
+   "name": "Hue"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/isp_noise_reduction/config",
+   "unique_id": "cam_hall_isp_noise_reduction",
+   "command_topic": "camera/hall/isp_noise_reduction/set",
+   "state_topic": "camera/hall/isp_noise_reduction/state",
+   "name": "Noise reduction (2D)"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/isp_exposure/config",
+   "unique_id": "cam_hall_isp_exposure",
+   "command_topic": "camera/hall/isp_exposure/set",
+   "state_topic": "camera/hall/isp_exposure/state",
+   "name": "Exposure compensation"
+  },
+  {
+   "topic": "homeassistant/select/cam_hall/isp_anti_flicker/config",
+   "unique_id": "cam_hall_isp_anti_flicker",
+   "command_topic": "camera/hall/isp_anti_flicker/set",
+   "state_topic": "camera/hall/isp_anti_flicker/state",
+   "name": "Anti-flicker"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/cpu/config",
+   "unique_id": "cam_hall_cpu",
+   "command_topic": null,
+   "state_topic": "camera/hall/cpu/state",
+   "name": "CPU busy"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/mem_available/config",
+   "unique_id": "cam_hall_mem_available",
+   "command_topic": null,
+   "state_topic": "camera/hall/mem_available/state",
+   "name": "Memory available"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/rss/config",
+   "unique_id": "cam_hall_rss",
+   "command_topic": null,
+   "state_topic": "camera/hall/rss/state",
+   "name": "Daemon memory"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/load/config",
+   "unique_id": "cam_hall_load",
+   "command_topic": null,
+   "state_topic": "camera/hall/load/state",
+   "name": "Load average"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/temperature/config",
+   "unique_id": "cam_hall_temperature",
+   "command_topic": null,
+   "state_topic": "camera/hall/temperature/state",
+   "name": "Temperature"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/wifi/config",
+   "unique_id": "cam_hall_wifi",
+   "command_topic": null,
+   "state_topic": "camera/hall/wifi/state",
+   "name": "Wi-Fi signal"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/wifi_rssi/config",
+   "unique_id": "cam_hall_wifi_rssi",
+   "command_topic": null,
+   "state_topic": "camera/hall/wifi_rssi/state",
+   "name": "Wi-Fi RSSI"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/main_bitrate_actual/config",
+   "unique_id": "cam_hall_main_bitrate_actual",
+   "command_topic": null,
+   "state_topic": "camera/hall/main_bitrate_actual/state",
+   "name": "Main bitrate (actual)"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/sub_bitrate_actual/config",
+   "unique_id": "cam_hall_sub_bitrate_actual",
+   "command_topic": null,
+   "state_topic": "camera/hall/sub_bitrate_actual/state",
+   "name": "Sub bitrate (actual)"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/main_fps_actual/config",
+   "unique_id": "cam_hall_main_fps_actual",
+   "command_topic": null,
+   "state_topic": "camera/hall/main_fps_actual/state",
+   "name": "Main frame rate (actual)"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/sub_fps_actual/config",
+   "unique_id": "cam_hall_sub_fps_actual",
+   "command_topic": null,
+   "state_topic": "camera/hall/sub_fps_actual/state",
+   "name": "Sub frame rate (actual)"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/main_dropped/config",
+   "unique_id": "cam_hall_main_dropped",
+   "command_topic": null,
+   "state_topic": "camera/hall/main_dropped/state",
+   "name": "Main frames short"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/sub_dropped/config",
+   "unique_id": "cam_hall_sub_dropped",
+   "command_topic": null,
+   "state_topic": "camera/hall/sub_dropped/state",
+   "name": "Sub frames short"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/uptime/config",
+   "unique_id": "cam_hall_uptime",
+   "command_topic": null,
+   "state_topic": "camera/hall/uptime/state",
+   "name": "Uptime"
+  }
+ ],
+ "discovery_without_presets": [
+  {
+   "topic": "homeassistant/number/cam_hall/pan/config",
+   "unique_id": "cam_hall_pan",
+   "command_topic": "camera/hall/pan/set",
+   "state_topic": "camera/hall/pan/state",
+   "name": "Pan"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/tilt/config",
+   "unique_id": "cam_hall_tilt",
+   "command_topic": "camera/hall/tilt/set",
+   "state_topic": "camera/hall/tilt/state",
+   "name": "Tilt"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/zoom/config",
+   "unique_id": "cam_hall_zoom",
+   "command_topic": "camera/hall/zoom/set",
+   "state_topic": "camera/hall/zoom/state",
+   "name": "Zoom"
+  },
+  {
+   "topic": "homeassistant/select/cam_hall/preset/config",
+   "unique_id": null,
+   "command_topic": null,
+   "state_topic": null,
+   "name": null
+  },
+  {
+   "topic": "homeassistant/button/cam_hall/reboot/config",
+   "unique_id": "cam_hall_reboot",
+   "command_topic": "camera/hall/reboot/set",
+   "state_topic": null,
+   "name": "Reboot"
+  },
+  {
+   "topic": "homeassistant/button/cam_hall/refocus/config",
+   "unique_id": "cam_hall_refocus",
+   "command_topic": "camera/hall/refocus/set",
+   "state_topic": null,
+   "name": "Refocus"
+  },
+  {
+   "topic": "homeassistant/button/cam_hall/calibrate_focus/config",
+   "unique_id": "cam_hall_calibrate_focus",
+   "command_topic": "camera/hall/calibrate_focus/set",
+   "state_topic": null,
+   "name": "Calibrate focus (15 min)"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/autofocus_state/config",
+   "unique_id": "cam_hall_autofocus_state",
+   "command_topic": null,
+   "state_topic": "camera/hall/autofocus_state/state",
+   "name": "Autofocus"
+  },
+  {
+   "topic": "homeassistant/binary_sensor/cam_hall/pipeline/config",
+   "unique_id": "cam_hall_pipeline",
+   "command_topic": null,
+   "state_topic": "camera/hall/pipeline/state",
+   "name": "Pipeline health"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/light/config",
+   "unique_id": "cam_hall_light",
+   "command_topic": null,
+   "state_topic": "camera/hall/light/state",
+   "name": "Light sensor"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/settings/config",
+   "unique_id": "cam_hall_settings",
+   "command_topic": null,
+   "state_topic": "camera/hall/settings/state",
+   "name": "Settings"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/mic_volume/config",
+   "unique_id": "cam_hall_mic_volume",
+   "command_topic": "camera/hall/mic_volume/set",
+   "state_topic": "camera/hall/mic_volume/state",
+   "name": "Mic volume"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/speaker_volume/config",
+   "unique_id": "cam_hall_speaker_volume",
+   "command_topic": "camera/hall/speaker_volume/set",
+   "state_topic": "camera/hall/speaker_volume/state",
+   "name": "Speaker volume"
+  },
+  {
+   "topic": "homeassistant/switch/cam_hall/aec/config",
+   "unique_id": "cam_hall_aec",
+   "command_topic": "camera/hall/aec/set",
+   "state_topic": "camera/hall/aec/state",
+   "name": "Echo cancellation"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/aec_noise_level/config",
+   "unique_id": "cam_hall_aec_noise_level",
+   "command_topic": "camera/hall/aec_noise_level/set",
+   "state_topic": "camera/hall/aec_noise_level/state",
+   "name": "AEC noise level"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/aec_echo_level/config",
+   "unique_id": "cam_hall_aec_echo_level",
+   "command_topic": "camera/hall/aec_echo_level/set",
+   "state_topic": "camera/hall/aec_echo_level/state",
+   "name": "AEC echo level"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/aec_notch_radius/config",
+   "unique_id": "cam_hall_aec_notch_radius",
+   "command_topic": "camera/hall/aec_notch_radius/set",
+   "state_topic": "camera/hall/aec_notch_radius/state",
+   "name": "AEC notch radius"
+  },
+  {
+   "topic": "homeassistant/switch/cam_hall/aec_leak_estimate/config",
+   "unique_id": "cam_hall_aec_leak_estimate",
+   "command_topic": "camera/hall/aec_leak_estimate/set",
+   "state_topic": "camera/hall/aec_leak_estimate/state",
+   "name": "AEC leak estimate"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/aec_leak_value/config",
+   "unique_id": "cam_hall_aec_leak_value",
+   "command_topic": "camera/hall/aec_leak_value/set",
+   "state_topic": "camera/hall/aec_leak_value/state",
+   "name": "AEC leak value"
+  },
+  {
+   "topic": "homeassistant/switch/cam_hall/anr/config",
+   "unique_id": "cam_hall_anr",
+   "command_topic": "camera/hall/anr/set",
+   "state_topic": "camera/hall/anr/state",
+   "name": "Noise reduction"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/anr_suppress_level/config",
+   "unique_id": "cam_hall_anr_suppress_level",
+   "command_topic": "camera/hall/anr_suppress_level/set",
+   "state_topic": "camera/hall/anr_suppress_level/state",
+   "name": "ANR suppress level"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/anr_hpf_cutoff/config",
+   "unique_id": "cam_hall_anr_hpf_cutoff",
+   "command_topic": "camera/hall/anr_hpf_cutoff/set",
+   "state_topic": "camera/hall/anr_hpf_cutoff/state",
+   "name": "ANR high-pass cutoff"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/anr_bias_sensitive/config",
+   "unique_id": "cam_hall_anr_bias_sensitive",
+   "command_topic": "camera/hall/anr_bias_sensitive/set",
+   "state_topic": "camera/hall/anr_bias_sensitive/state",
+   "name": "ANR bias sensitivity"
+  },
+  {
+   "topic": "homeassistant/switch/cam_hall/mirror/config",
+   "unique_id": "cam_hall_mirror",
+   "command_topic": "camera/hall/mirror/set",
+   "state_topic": "camera/hall/mirror/state",
+   "name": "Mirror"
+  },
+  {
+   "topic": "homeassistant/switch/cam_hall/flip/config",
+   "unique_id": "cam_hall_flip",
+   "command_topic": "camera/hall/flip/set",
+   "state_topic": "camera/hall/flip/state",
+   "name": "Flip"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/ir_to_night/config",
+   "unique_id": "cam_hall_ir_to_night",
+   "command_topic": "camera/hall/ir_to_night/set",
+   "state_topic": "camera/hall/ir_to_night/state",
+   "name": "IR to-night threshold"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/ir_to_day/config",
+   "unique_id": "cam_hall_ir_to_day",
+   "command_topic": "camera/hall/ir_to_day/set",
+   "state_topic": "camera/hall/ir_to_day/state",
+   "name": "IR to-day threshold"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/ir_hold/config",
+   "unique_id": "cam_hall_ir_hold",
+   "command_topic": "camera/hall/ir_hold/set",
+   "state_topic": "camera/hall/ir_hold/state",
+   "name": "IR switch hold"
+  },
+  {
+   "topic": "homeassistant/switch/cam_hall/ir_leds_at_night/config",
+   "unique_id": "cam_hall_ir_leds_at_night",
+   "command_topic": "camera/hall/ir_leds_at_night/set",
+   "state_topic": "camera/hall/ir_leds_at_night/state",
+   "name": "IR LEDs at night"
+  },
+  {
+   "topic": "homeassistant/select/cam_hall/ir/config",
+   "unique_id": "cam_hall_ir",
+   "command_topic": "camera/hall/ir/set",
+   "state_topic": "camera/hall/ir/state",
+   "name": "IR mode"
+  },
+  {
+   "topic": "homeassistant/switch/cam_hall/led/config",
+   "unique_id": "cam_hall_led",
+   "command_topic": "camera/hall/led/set",
+   "state_topic": "camera/hall/led/state",
+   "name": "Status LED"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/ptz_speed/config",
+   "unique_id": "cam_hall_ptz_speed",
+   "command_topic": "camera/hall/ptz_speed/set",
+   "state_topic": "camera/hall/ptz_speed/state",
+   "name": "PTZ speed"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/ptz_start_speed/config",
+   "unique_id": "cam_hall_ptz_start_speed",
+   "command_topic": "camera/hall/ptz_start_speed/set",
+   "state_topic": "camera/hall/ptz_start_speed/state",
+   "name": "PTZ start speed"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/ptz_ramp/config",
+   "unique_id": "cam_hall_ptz_ramp",
+   "command_topic": "camera/hall/ptz_ramp/set",
+   "state_topic": "camera/hall/ptz_ramp/state",
+   "name": "PTZ ramp"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/ptz_hold_timeout/config",
+   "unique_id": "cam_hall_ptz_hold_timeout",
+   "command_topic": "camera/hall/ptz_hold_timeout/set",
+   "state_topic": "camera/hall/ptz_hold_timeout/state",
+   "name": "PTZ hold timeout"
+  },
+  {
+   "topic": "homeassistant/select/cam_hall/zoom_speed/config",
+   "unique_id": "cam_hall_zoom_speed",
+   "command_topic": "camera/hall/zoom_speed/set",
+   "state_topic": "camera/hall/zoom_speed/state",
+   "name": "Zoom speed"
+  },
+  {
+   "topic": "homeassistant/switch/cam_hall/autofocus/config",
+   "unique_id": "cam_hall_autofocus",
+   "command_topic": "camera/hall/autofocus/set",
+   "state_topic": "camera/hall/autofocus/state",
+   "name": "Autofocus"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/af_watch_hold/config",
+   "unique_id": "cam_hall_af_watch_hold",
+   "command_topic": "camera/hall/af_watch_hold/set",
+   "state_topic": "camera/hall/af_watch_hold/state",
+   "name": "Autofocus watchdog hold"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/af_watch_drop/config",
+   "unique_id": "cam_hall_af_watch_drop",
+   "command_topic": "camera/hall/af_watch_drop/set",
+   "state_topic": "camera/hall/af_watch_drop/state",
+   "name": "Autofocus watchdog drop"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/af_move_drop/config",
+   "unique_id": "cam_hall_af_move_drop",
+   "command_topic": "camera/hall/af_move_drop/set",
+   "state_topic": "camera/hall/af_move_drop/state",
+   "name": "Autofocus move drop"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/af_climb_drop/config",
+   "unique_id": "cam_hall_af_climb_drop",
+   "command_topic": "camera/hall/af_climb_drop/set",
+   "state_topic": "camera/hall/af_climb_drop/state",
+   "name": "Autofocus climb drop"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/main_bitrate/config",
+   "unique_id": "cam_hall_main_bitrate",
+   "command_topic": "camera/hall/main_bitrate/set",
+   "state_topic": "camera/hall/main_bitrate/state",
+   "name": "Main bitrate"
+  },
+  {
+   "topic": "homeassistant/select/cam_hall/main_resolution/config",
+   "unique_id": "cam_hall_main_resolution",
+   "command_topic": "camera/hall/main_resolution/set",
+   "state_topic": "camera/hall/main_resolution/state",
+   "name": "Main resolution"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/main_fps/config",
+   "unique_id": "cam_hall_main_fps",
+   "command_topic": "camera/hall/main_fps/set",
+   "state_topic": "camera/hall/main_fps/state",
+   "name": "Main frame rate"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/isp_brightness/config",
+   "unique_id": "cam_hall_isp_brightness",
+   "command_topic": "camera/hall/isp_brightness/set",
+   "state_topic": "camera/hall/isp_brightness/state",
+   "name": "Brightness"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/isp_contrast/config",
+   "unique_id": "cam_hall_isp_contrast",
+   "command_topic": "camera/hall/isp_contrast/set",
+   "state_topic": "camera/hall/isp_contrast/state",
+   "name": "Contrast"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/isp_saturation/config",
+   "unique_id": "cam_hall_isp_saturation",
+   "command_topic": "camera/hall/isp_saturation/set",
+   "state_topic": "camera/hall/isp_saturation/state",
+   "name": "Saturation"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/isp_sharpness/config",
+   "unique_id": "cam_hall_isp_sharpness",
+   "command_topic": "camera/hall/isp_sharpness/set",
+   "state_topic": "camera/hall/isp_sharpness/state",
+   "name": "Sharpness"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/isp_hue/config",
+   "unique_id": "cam_hall_isp_hue",
+   "command_topic": "camera/hall/isp_hue/set",
+   "state_topic": "camera/hall/isp_hue/state",
+   "name": "Hue"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/isp_noise_reduction/config",
+   "unique_id": "cam_hall_isp_noise_reduction",
+   "command_topic": "camera/hall/isp_noise_reduction/set",
+   "state_topic": "camera/hall/isp_noise_reduction/state",
+   "name": "Noise reduction (2D)"
+  },
+  {
+   "topic": "homeassistant/number/cam_hall/isp_exposure/config",
+   "unique_id": "cam_hall_isp_exposure",
+   "command_topic": "camera/hall/isp_exposure/set",
+   "state_topic": "camera/hall/isp_exposure/state",
+   "name": "Exposure compensation"
+  },
+  {
+   "topic": "homeassistant/select/cam_hall/isp_anti_flicker/config",
+   "unique_id": "cam_hall_isp_anti_flicker",
+   "command_topic": "camera/hall/isp_anti_flicker/set",
+   "state_topic": "camera/hall/isp_anti_flicker/state",
+   "name": "Anti-flicker"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/cpu/config",
+   "unique_id": "cam_hall_cpu",
+   "command_topic": null,
+   "state_topic": "camera/hall/cpu/state",
+   "name": "CPU busy"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/mem_available/config",
+   "unique_id": "cam_hall_mem_available",
+   "command_topic": null,
+   "state_topic": "camera/hall/mem_available/state",
+   "name": "Memory available"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/rss/config",
+   "unique_id": "cam_hall_rss",
+   "command_topic": null,
+   "state_topic": "camera/hall/rss/state",
+   "name": "Daemon memory"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/load/config",
+   "unique_id": "cam_hall_load",
+   "command_topic": null,
+   "state_topic": "camera/hall/load/state",
+   "name": "Load average"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/temperature/config",
+   "unique_id": "cam_hall_temperature",
+   "command_topic": null,
+   "state_topic": "camera/hall/temperature/state",
+   "name": "Temperature"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/wifi/config",
+   "unique_id": "cam_hall_wifi",
+   "command_topic": null,
+   "state_topic": "camera/hall/wifi/state",
+   "name": "Wi-Fi signal"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/wifi_rssi/config",
+   "unique_id": "cam_hall_wifi_rssi",
+   "command_topic": null,
+   "state_topic": "camera/hall/wifi_rssi/state",
+   "name": "Wi-Fi RSSI"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/main_bitrate_actual/config",
+   "unique_id": "cam_hall_main_bitrate_actual",
+   "command_topic": null,
+   "state_topic": "camera/hall/main_bitrate_actual/state",
+   "name": "Main bitrate (actual)"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/sub_bitrate_actual/config",
+   "unique_id": "cam_hall_sub_bitrate_actual",
+   "command_topic": null,
+   "state_topic": "camera/hall/sub_bitrate_actual/state",
+   "name": "Sub bitrate (actual)"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/main_fps_actual/config",
+   "unique_id": "cam_hall_main_fps_actual",
+   "command_topic": null,
+   "state_topic": "camera/hall/main_fps_actual/state",
+   "name": "Main frame rate (actual)"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/sub_fps_actual/config",
+   "unique_id": "cam_hall_sub_fps_actual",
+   "command_topic": null,
+   "state_topic": "camera/hall/sub_fps_actual/state",
+   "name": "Sub frame rate (actual)"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/main_dropped/config",
+   "unique_id": "cam_hall_main_dropped",
+   "command_topic": null,
+   "state_topic": "camera/hall/main_dropped/state",
+   "name": "Main frames short"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/sub_dropped/config",
+   "unique_id": "cam_hall_sub_dropped",
+   "command_topic": null,
+   "state_topic": "camera/hall/sub_dropped/state",
+   "name": "Sub frames short"
+  },
+  {
+   "topic": "homeassistant/sensor/cam_hall/uptime/config",
+   "unique_id": "cam_hall_uptime",
+   "command_topic": null,
+   "state_topic": "camera/hall/uptime/state",
+   "name": "Uptime"
+  }
+ ]
+}

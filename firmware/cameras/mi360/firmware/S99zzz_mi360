@@ -1,0 +1,4 @@
+#!/bin/sh
+case "${1:-start}" in start) ;; *) exit 0 ;; esac
+/bin/sh /mnt/usr/etc/mi360/launcher.sh </dev/null >/tmp/mi360-launcher.log 2>&1 &
+exit 0

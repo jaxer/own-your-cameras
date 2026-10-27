@@ -1,0 +1,111 @@
+# Audio: microphone, speaker and the amplifier
+
+`cam serve` captures 16 kHz mono AAC-LC from the microphone and plays signed 16-bit mono samples on the speaker,
+inside the video pipeline's HDAL session and common memory. Both RTSP paths share one microphone hub and one
+exclusive PCMU backchannel ([../architecture.md](../architecture.md#rtsp)). The RTSP server starts only after audio
+startup succeeds; shutdown stops audio before common memory is torn down, and a failed start releases everything it
+acquired. Tags as in [README.md](README.md#evidence-tags).
+
+## Stock settings [D]
+
+Stock `device` at `0x8f0f4..0x8f194` opens capture at 16 kHz, 16 bit, mono, 1,024 samples, 10 frames.
+ANR is `(enabled=1, suppress=30, HPF=160, bias=9)`. The AEC maximum settings are `(enabled=1, leak_enabled=0,
+leak_value=99, noise=-60, echo=-60, filter_length=1024, frame_size=128, notch_radius=992, loopback=left)`; stock
+also has a model-47 branch that picks noise −30, and the model predicate was not resolved, so `cam` uses the
+generic −60. The stock runtime setter at `0x8f4d4..0x8f52c` uses the same filter, frame and notch values. The
+kernel accepts these parameters [V]; that does not prove acoustic echo suppression.
+
+**AEC has no reference signal.** `lb_channel=left` names the capture channel that carries the speaker loopback,
+but capture is one channel (`mode=1`) with a zeroed `DRV_CONFIG`, so nothing is mixed in. The stock
+`DRV_CONFIG` contents were not recovered. Until a recording with the speaker playing shows the echo with AEC on
+and off, treat the microphone path as having no echo reference. No loopback route is added: an unverified one
+could change the frame layout the AAC encoder consumes.
+
+## Capture
+
+Capture binds directly to `hd_audioenc` with `aac_adts=0`. Each raw access unit and its encoder PTS are copied
+once into the audio hub, and both RTSP paths packetize it as RFC 3640. The bitstream region is mapped once,
+cache-invalidated before reads and bounds-checked, and every pulled descriptor is released, also on the
+copy and cache failure paths.
+
+## Speaker
+
+Samples go through a 2,048-byte physical staging buffer from `hd_common_mem_alloc`, flushed before the
+non-blocking `hd_audioout_push_in_buf`; no Rust heap pointer reaches an HDAL descriptor. The staging buffer is
+reusable as soon as the push returns [D]: `isf_audout_inputport_push_imgbuf_to_dest` (`kflow_audioout.ko`
+`0x1748`) calls `wavstudio_push_buf_to_queue`, which (`kflow_audiocap.ko` `0x37f0`) copies the bytes into its own
+ring at `0x3940` before returning. A full buffer counts as dropped samples; other failures propagate.
+
+Stock allocates 60 output frames (`device` `0x8fe68`); `cam` uses eight. Three frames dropped about 40 % of
+paced samples, eight dropped none on the same recording [V]. That is allocation capacity, not a measured
+playback latency.
+
+The hardware loop waits at most 10 ms for video, polls one AAC unit without waiting, and drains one fresh
+talkback packet per iteration in blocks of at most 1,024 samples. The RTSP side keeps a five-packet queue
+with 100 ms expiry, one exclusive talker, and clears it on disconnect.
+
+### Amplifier: GPIO 234
+
+The codec output alone is too weak for the speaker. Stock talkback drives GPIO **234** high during playback
+and low afterwards [V, syscall trace of the stock `device`]. With the same voice clip replayed and recorded by
+the camera's own microphone, speech correlation was 0.094 with GPIO 234 low, 0.532 with it high and 0.553 on
+stock [V].
+
+`Sys::with_speaker_enable` takes the sysfs GPIO adapter. Speaker startup first drives it low, enables it once
+HDAL and the staging memory are ready, and keeps it high for the output graph's lifetime; teardown mutes it
+before releasing HDAL. A failed enable mutes and unwinds; a failed mute still releases every HDAL resource and
+ends the session. Without the GPIO the adapter refuses to start the speaker.
+
+## Tuning at runtime
+
+Every audio parameter is a setting ([../settings.md](../settings.md)): mic and speaker volume, AEC on/off with
+noise, echo, notch and leak, ANR on/off with suppression, high-pass cutoff and bias. `hdal::audio::Tuning::stock()`
+holds the stock values (AEC and ANR on, mic 80 as stock sets it through ctrl item `0x19001`, speaker 100). The
+`DEV_CONFIG` `aec_max`/`anr_max` envelope always stays stock.
+
+- **Live sets do not take effect** [V]. On a running capture, `hd_audiocap_set(OUT_AEC/OUT_ANR)` on the i/o path
+  and `VOLUME` on the ctrl path return 0, but 20 s quiet-room captures were unchanged (−47.9/−48.0/−48.1 dBFS RMS
+  for mic 100/50/100, −48.0 with ANR on). Stock also re-opens the capture for every AEC/ANR change.
+- **So the media thread restarts the capture path** between loop iterations; video, the sub stream and the
+  speaker keep running. The same settings then change the capture by up to 23 dB (ANR on −38.9 vs off −24.6 dBFS
+  RMS) [V]. The room was not acoustically controlled: this shows the settings take effect, not good values.
+- Speaker volume is a live ctrl-path set on the running output, no restart.
+- **Mic and speaker volume are accepted but change nothing measurable** [V]. A camera recording replayed at
+  +12 dB through the backchannel and recorded from `Preview_01_sub` (peaks −4…−6 dBFS, no clipping) gave
+  −23.1…−24.6 dBFS for mic 100 and 30, and −24.4/−24.5 dBFS for speaker 100 and 40, whether the capture volume
+  was set before or after the i/o path opened.
+- A start the driver refuses falls back to the previous tuning, and the state reports what runs. If that also
+  fails, capture is down and it is a media error. At boot a refused persisted tuning is retried once with
+  `Tuning::stock()`.
+- Kernel limits (`kflow_audiocap.ko` strings): bias is clamped to 1–9, a volume above 100 becomes 100. Suppression
+  3–35 and high-pass 0–1000 Hz are the ranges exercised on the camera; nothing outside them is established, so the
+  settings clamp there.
+- ABI: audiocap set `VOLUME` (id 9) is a one-word ctrl-path set (`hd_audiocap_set` @ `0xdddc` → kflow item
+  `0x19001`), listed in `hdal-sys/abi/libhdal-2.00-param-sizes.tsv`.
+
+## Checking it on a camera
+
+`make device-serve CAMERA=<ssh host> AUTH=<file with user:password>` runs `cam serve --diagnostic` in RAM with the
+vendor stack stopped and reboots afterwards ([../development.md](../development.md)); the diagnostic serves on
+port 8554, the installed daemon on 554. While it runs, `ffprobe`
+both paths over TCP: H.264 plus AAC-LC, 16,000 Hz, one channel. Record the microphone:
+
+```sh
+ffmpeg -rtsp_transport tcp -i 'rtsp://USER:PASSWORD@CAMERA_IP:8554/Preview_01_sub' \
+  -map 0:a:0 -t 3 -c:a copy mic.aac
+```
+
+Play a recording on the speaker through the backchannel (the tool reads the credentials from the file and
+never prints them):
+
+```sh
+ffmpeg -i speech.wav -ar 8000 -ac 1 -f mulaw speech.pcmu
+python3 -I scripts/audio_backchannel.py --host CAMERA_IP --port 8554 --auth AUTH_FILE speech.pcmu
+```
+
+The sender negotiates DESCRIBE → SETUP of track 2 → PLAY, sends 20 ms PCMU RTP packets with TCP NODELAY, then
+TEARDOWN; it accepts either path. Sent bytes × 2 should equal the daemon's `speaker_samples`, with zero
+`speaker_dropped_samples` for a paced run.
+
+These checks establish microphone AAC on both paths and recorded audio reaching the speaker driver. They do not
+establish intelligibility, loudness or echo quality: listen through your own client for that.

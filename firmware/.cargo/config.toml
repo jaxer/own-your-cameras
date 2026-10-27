@@ -1,0 +1,6 @@
+[build]
+# Worktree-specific intermediates prevent Cargo reusing path-embedded test binaries.
+build-dir = "{cargo-cache-home}/build/own-your-cameras/{workspace-path-hash}"
+
+[target.armv7-unknown-linux-gnueabihf]
+rustflags = ["-C", "target-cpu=cortex-a9"]

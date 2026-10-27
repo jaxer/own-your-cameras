@@ -1,0 +1,31 @@
+#!/bin/sh
+# Copy libhdal.so, the camera's own proprietary library, from your camera into vendor/sysroot/ (git-ignored),
+# where the cross build links against it. CAMERA is the camera's ssh host (root). Read-only on the camera;
+# a present, verified copy needs no camera.
+set -eu
+cd "$(dirname "$0")/.."
+# The 4417 firmware's library, the one the ABI work was done against.
+sha=7e8b23c12e69271f3c81132e98ab9eacbf340d4d2f0c3e94cd4b8f44946539b3
+lib=vendor/sysroot/usr/lib/libhdal.so
+
+sha256() { if command -v sha256sum >/dev/null; then sha256sum "$1"; else shasum -a 256 "$1"; fi | cut -d' ' -f1; }
+
+if [ -f "$lib" ] && [ "$(sha256 "$lib")" = "$sha" ]; then
+	echo "have $lib"
+	exit 0
+fi
+if [ -z "${CAMERA:-}" ]; then
+	echo "fetch-sysroot: $lib is missing; run with CAMERA=<ssh host of your camera>" >&2
+	exit 1
+fi
+mkdir -p "$(dirname "$lib")"
+ssh "$CAMERA" cat /usr/lib/libhdal.so >"$lib.part"
+actual=$(sha256 "$lib.part")
+if [ "$actual" != "$sha" ]; then
+	rm -f "$lib.part"
+	echo "fetch-sysroot: $CAMERA's /usr/lib/libhdal.so has SHA-256 $actual, expected $sha;" \
+		"this firmware is only verified against the 4417 firmware's library" >&2
+	exit 1
+fi
+mv "$lib.part" "$lib"
+echo "fetched $CAMERA:/usr/lib/libhdal.so -> $lib"

@@ -50,11 +50,9 @@ def check_squashfs(data):
     return used
 
 
-def check_dump(data, expected_sha256):
-    if not re.fullmatch('[0-9a-f]{64}', expected_sha256):
-        raise ValueError('Supply the lowercase SHA-256 recorded for your original dump')
-    if len(data) != FLASH_SIZE or digest(data) != expected_sha256:
-        raise ValueError('Original dump size or expected SHA-256 does not match')
+def environment(data):
+    if len(data) < ENV_START + ENV_SIZE:
+        raise ValueError('Truncated boot environment')
     payload = bytes(data[ENV_START + 4:ENV_START + ENV_SIZE])
     if zlib.crc32(payload) != struct.unpack_from('<I', data, ENV_START)[0]:
         raise ValueError('Stored U-Boot environment CRC mismatch')
@@ -67,6 +65,15 @@ def check_dump(data, expected_sha256):
         if not separator or name in env:
             raise ValueError('Invalid or duplicate boot environment variable')
         env[name] = value
+    return env
+
+
+def check_dump(data, expected_sha256):
+    if not re.fullmatch('[0-9a-f]{64}', expected_sha256):
+        raise ValueError('Supply the lowercase SHA-256 recorded for your original dump')
+    if len(data) != FLASH_SIZE or digest(data) != expected_sha256:
+        raise ValueError('Original dump size or expected SHA-256 does not match')
+    env = environment(data)
     match = re.search(rb'(?:^| )mtdparts=jz_sfc:([^ ]+)(?: |$)', env.get(b'bootargs', b''))
     specification = ','.join(f'{size // 1024}k({name})' for name, size in LAYOUT).encode()
     if match is None or match[1] != specification:

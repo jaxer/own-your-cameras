@@ -1,0 +1,3 @@
+#!/bin/sh
+# Vendor service runlevels are intentionally never entered by this image.
+exit 0

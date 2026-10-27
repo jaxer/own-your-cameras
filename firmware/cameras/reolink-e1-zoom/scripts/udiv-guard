@@ -1,0 +1,17 @@
+#!/bin/sh
+# Fail if the binary contains UDIV/SDIV (not on Cortex-A9; such a build SIGILLs on the camera).
+set -eu
+bin=${1:?usage: udiv-guard BINARY}
+objdump=${LLVM_OBJDUMP:-$(command -v llvm-objdump || echo /opt/homebrew/opt/llvm/bin/llvm-objdump)}
+dump=$(mktemp)
+trap 'rm -f "$dump"' EXIT HUP INT TERM
+# Keep disassembly separate: a pipeline can hide objdump's nonzero exit status.
+"$objdump" -d "$bin" > "$dump"
+if n=$(grep -Ec '\b(udiv|sdiv)\b' "$dump"); then
+	echo "udiv-guard: $bin has $n udiv/sdiv instructions" >&2
+	exit 1
+else
+	status=$?
+	[ "$status" -eq 1 ] || exit "$status"
+fi
+echo "udiv-guard: ok ($bin)"
