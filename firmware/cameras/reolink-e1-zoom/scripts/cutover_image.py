@@ -151,14 +151,16 @@ def safe_pak(stock_pak, rootfs):
     return pak, sections
 
 
-def build(stock_path, checkout, dropbear_path, key_path, out, expect=None):
+def build(stock_path, checkout, dropbear_path, key_path, out, expect=None, binaries=None):
+    binaries = BINARIES if binaries is None else binaries
+    require(set(binaries) == set(BINARIES), "Expected exactly cam and cam-launch binary inputs")
     ubi = own_your_cameras.load(checkout, "ubi")
     recipe = own_your_cameras.load(checkout, "build")
     hook = own_your_cameras.path(checkout, "S99_zzRootSSH").read_bytes()
     stock_pak = Path(stock_path).read_bytes()
     template, stock_provenance = ubi.read_stock_pak(stock_path)  # refuses anything but the 4417 PAK
     dropbear = Path(dropbear_path).read_bytes()
-    require(digest(dropbear) == recipe.WORKER_SHA256,
+    require(digest(dropbear) in recipe.WORKER_SHA256S,
             "SSH binary differs from own-your-cameras' Cortex-A9 Dropbear build (build_dropbear.py)")
     key = read_key(key_path)
 
@@ -167,9 +169,9 @@ def build(stock_path, checkout, dropbear_path, key_path, out, expect=None):
     (out / "stock.squashfs").write_bytes(stock_sqsh)
     assembled = start_app.assemble((ROOT / "image/start_app").read_bytes(),
                                    *start_app.stock_blocks(start_app.from_squashfs(out / "stock.squashfs")))
-    sources = {"/etc/init.d/start_app": out / "start_app", **BINARIES}
+    sources = {"/etc/init.d/start_app": out / "start_app", **binaries}
     (out / "start_app").write_bytes(assembled)
-    for binary in BINARIES.values():
+    for binary in binaries.values():
         run(str(ROOT / "scripts/udiv-guard"), str(binary))
     approved = {path: file_entry(source.read_bytes(), 0o100755) for path, source in sources.items()}
     (out / "authorized_keys").write_bytes(key)
@@ -221,7 +223,10 @@ def build(stock_path, checkout, dropbear_path, key_path, out, expect=None):
     (out / "stock.spub").write_bytes(restore)
     hashes = {**{path: entry["sha256"] for path, entry in approved.items()},
               "candidate": digest(pak), "rootfs.ubi": digest(rootfs), "stock.spub": digest(restore)}
-    result = {"packaging_commit": run("git", "-C", str(ROOT), "rev-parse", "HEAD").decode().strip(),
+    revision_file = Path(checkout) / "SOURCE_REVISION"
+    revision = (revision_file.read_text().strip() if revision_file.is_file()
+                else run("git", "-C", str(ROOT), "rev-parse", "HEAD").decode().strip())
+    result = {"packaging_commit": revision,
               "hashes": hashes, "artifacts": approved,
               "own_your_cameras": {"commit": own_your_cameras.COMMIT, "sha256": own_your_cameras.SHA256},
               "ssh_binary_sha256": digest(dropbear), "authorized_key_sha256": digest(key),
@@ -252,10 +257,15 @@ def main():
     parser.add_argument("--authorized-key", type=Path, required=True, help="your Ed25519 public key")
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--expect", type=Path, help="JSON of expected hashes; refuse on any difference")
+    parser.add_argument("--cam", type=Path, help="prebuilt camera binary; requires --launcher")
+    parser.add_argument("--launcher", type=Path, help="prebuilt launcher; requires --cam")
     args = parser.parse_args()
+    require(bool(args.cam) == bool(args.launcher), "Supply both --cam and --launcher")
+    binaries = ({"/usr/bin/cam": args.cam.resolve(), "/usr/bin/cam-launch": args.launcher.resolve()}
+                if args.cam else None)
     expect = json.loads(args.expect.read_text()) if args.expect else None
     build(args.stock_pak.resolve(), args.own_your_cameras.resolve(), args.ssh_binary, args.authorized_key,
-          args.output_dir.resolve(), expect)
+          args.output_dir.resolve(), expect, binaries)
 
 
 if __name__ == "__main__":

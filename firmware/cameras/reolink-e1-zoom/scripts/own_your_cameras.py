@@ -1,8 +1,10 @@
 """The public own-your-cameras E1 Zoom tools this repo builds and flashes images with, pinned by hash.
 
 The caller supplies this repository root. The shared tools must match the hashes below.
-COMMIT records the upstream revision where those unchanged tool bytes were qualified;
-it is provenance, not a requirement to use an older checkout.
+COMMIT records the original upstream baseline. SHA256 pins the currently reviewed tool
+bytes, including later requalifications; the image manifest separately records the
+current packaging/source revision. The baseline is not a claim that all current
+bytes existed at that older commit.
 """
 import hashlib
 import importlib.util
@@ -13,7 +15,7 @@ COMMIT = "b06aad8d5fa80aa19dd07e00c9bd65513a4879f8"
 TOOLS = Path("tools/reolink-e1-zoom")
 SHA256 = {
     "ubi.py": "e0fa51572a902c68851dac13177429f1b77212e6879b6b1ad9af4cee773ca95e",
-    "build.py": "155e9b732ff4abc77cdafc939348021ad7c39796b73e557c55272f4fc8c774d2",
+    "build.py": "0ef126a81da8d95e88bf587229810ccc47ab37322e888c3586d95a50f2bd8d19",
     "upload.py": "7d0f13dab24b1eb7d772e26cda5f7bd1b8e470c0207ec7e691a6a0dbc65fd81d",
     "S99_zzRootSSH": "1f458ad049d865cfc7dd1a13be81e3410b73ac531dc5c26bc70e125656704e90",
 }

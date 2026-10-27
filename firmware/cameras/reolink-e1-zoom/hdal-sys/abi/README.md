@@ -13,23 +13,14 @@ output is only a list of candidates: [../../docs/hdal-abi.md](../../docs/hdal-ab
 
 ## Running them
 
-They need the camera's own library, which `make sysroot CAMERA=<ssh host>` copies into
-`vendor/sysroot/usr/lib/libhdal.so` and checks, and `arm-none-eabi-objdump`.
+These optional maintainer tools need a separately retained, hash-verified original library,
+its reference headers and an ARM disassembler. They are not part of normal builds.
 
 ```sh
 mkdir -p target/abi
-make sysroot CAMERA=<ssh host>
-arm-none-eabi-objdump -d vendor/sysroot/usr/lib/libhdal.so > target/abi/hdal.asm
-cargo build -p hdal-sys --message-format=json > target/abi/build.jsonl
-```
-
-Take `out_dir` from that build's `build-script-executed` record for `hdal-sys` (not a wildcard: several Cargo
-configurations can leave different output directories) and point `HDAL_SIZES` at its `header_sizes.rs`:
-
-```sh
-HDAL_SIZES=/absolute/out_dir/header_sizes.rs
-python3 -I hdal-sys/abi/draft_table.py target/abi/hdal.asm "$HDAL_SIZES" \
-  hdal-sys/vendor/hdal-include > target/abi/candidates.tsv
+arm-none-eabi-objdump -d /path/to/original/libhdal.so > target/abi/hdal.asm
+python3 -I hdal-sys/abi/draft_table.py target/abi/hdal.asm hdal-sys/src/header_sizes.rs \
+  /path/to/reference/headers > target/abi/candidates.tsv
 python3 -I hdal-sys/abi/disasm_cases.py target/abi/hdal.asm hd_videocap_set
 python3 -I hdal-sys/abi/show.py target/abi/hdal.asm 1c518 1c550
 ```

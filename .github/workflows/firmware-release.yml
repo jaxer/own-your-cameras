@@ -1,0 +1,80 @@
+name: Firmware binary release
+on:
+  push:
+    tags: ['mi360-v*', 'reolink-e1-zoom-v*']
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Model tag, for example mi360-v0.1.0 (build preview only)'
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: firmware-release-${{ github.event.inputs.version || github.ref_name }}
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    env:
+      VERSION: ${{ github.event.inputs.version || github.ref_name }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Validate model and version
+        id: model
+        run: |
+          python3 - <<'PY'
+          import os, re
+          match = re.fullmatch(r'(mi360|reolink-e1-zoom)-v[0-9]+\.[0-9]+\.[0-9]+(?:-[A-Za-z0-9.-]+)?', os.environ['VERSION'])
+          if not match:
+              raise SystemExit('Expected a model-specific semantic version tag')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write(f'model={match[1]}\n')
+          PY
+      - name: Host tools and Rust
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang llvm make autoconf automake
+          rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --component rust-src
+          rustup default 1.95.0
+          rustup target add --toolchain 1.95.0 armv7-unknown-linux-gnueabihf
+          python3 firmware/scripts/fetch-zig.py
+          echo "$GITHUB_WORKSPACE/firmware/.tools/zig" >> "$GITHUB_PATH"
+      - name: Host gate
+        run: make gate
+      - name: Build binary and image-builder bundle
+        env:
+          MODEL: ${{ steps.model.outputs.model }}
+        run: python3 firmware/scripts/release.py "$MODEL" --version "$VERSION" --output "$RUNNER_TEMP/release"
+      - name: Save manual build preview
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: ${{ env.VERSION }}
+          path: ${{ runner.temp }}/release/*
+          if-no-files-found: error
+          retention-days: 7
+      - name: Publish tagged release
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MODEL: ${{ steps.model.outputs.model }}
+        run: |
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          text = f"Binary and local image-builder bundle for {os.environ['MODEL']}.\n\n"
+          text += "Includes SHA-256 checksums. Supply your own stock firmware and SSH public key locally.\n"
+          text += "Supported hardware/base firmware is recorded in the bundle manifest. CI verifies builds; on-device qualification is separate.\n"
+          Path(os.environ['RUNNER_TEMP'], 'release-notes.md').write_text(text)
+          PY
+          gh release create "$VERSION" "$RUNNER_TEMP/release/$VERSION.tar.gz" "$RUNNER_TEMP/release/$VERSION.tar.gz.sha256" --draft --verify-tag --title "$VERSION" --notes-file "$RUNNER_TEMP/release-notes.md"
+          case "$VERSION" in
+            *-v[0-9]*.[0-9]*.[0-9]*-*) gh release edit "$VERSION" --draft=false --latest=false --prerelease ;;
+            *) gh release edit "$VERSION" --draft=false --latest=false ;;
+          esac

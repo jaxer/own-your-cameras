@@ -2,13 +2,13 @@
  * disassembly research. Headers pinned by sdk/headers.lock.json. */
 #include "imp_audio.h"
 #include <dlfcn.h>
+#include <imp_abi.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <imp/imp_audio.h>
 
 _Static_assert(sizeof(void *) == 4, "O32 pointers");
 #define SIZE(T,N,A) _Static_assert(sizeof(T)==(N), #T " size"); \

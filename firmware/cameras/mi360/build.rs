@@ -2,7 +2,14 @@ fn main() {
     let paths = [
         "toolchain/start.S",
         "toolchain/compat.c",
-        "toolchain/libraries.json",
+        "../../scripts/link_stubs.py",
+        "../../abi/mi360/libc.json",
+        "../../abi/mi360/pthread.json",
+        "../../abi/mi360/dl.json",
+        "../../abi/mi360/rt.json",
+        "../../abi/mi360/math.json",
+        "../../abi/mi360/gcc.json",
+        "../../abi/mi360/loader.json",
         "toolchain/elf_compat.py",
         "scripts/mips-linker.py",
         "scripts/build-mips",
@@ -64,9 +71,10 @@ fn main() {
             .status()
             .expect("verify pinned headers");
         assert!(status.success(), "SDK header pins");
-        let mut entries = std::fs::read_dir(headers.join("imp"))
-            .expect("SDK header directory")
+        let mut entries = std::fs::read_dir(&headers)
+            .expect("local interface directory")
             .map(|e| e.expect("SDK header").path())
+            .filter(|p| p.extension().is_some_and(|e| e == "h"))
             .collect::<Vec<_>>();
         entries.sort();
         for path in entries {

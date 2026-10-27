@@ -213,7 +213,7 @@ def main():
     args = parser.parse_args()
     configured = os.environ.get("MI360_HEADERS") or os.environ.get("MI360_HEADER_SOURCE")
     target = Path(os.environ.get("CARGO_TARGET_DIR", ROOT / "target"))
-    source = args.headers or (Path(configured) if configured else target / "sdk-headers")
+    source = (args.headers or (Path(configured) if configured else ROOT / "sdk")).resolve()
     with tempfile.TemporaryDirectory(prefix="mi360-audio-test-") as directory:
         temporary = Path(directory)
         headers = temporary / "headers"

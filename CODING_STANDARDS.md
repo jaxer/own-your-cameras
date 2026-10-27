@@ -19,4 +19,4 @@
 - Keep READMEs short: supported hardware, features and next steps. Put procedures and reference
   details in linked guides, with one home per fact.
 - Use placeholders in examples. Keep credentials, device identities, backups, recordings and generated
-  firmware outside Git; fetch vendor headers and libraries through the documented build steps.
+  firmware outside Git; maintain SDK interface declarations and link manifests locally; never package generated link stubs.

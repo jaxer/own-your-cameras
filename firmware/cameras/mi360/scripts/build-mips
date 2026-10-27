@@ -2,7 +2,6 @@
 set -eu
 repo_dir=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 cd "$repo_dir"
-: "${MI360_SYSROOT:?Set MI360_SYSROOT to the extracted stock rootfs directory}"
 workspace_dir=$(CDPATH= cd -- ../.. && pwd)
 python3 "$workspace_dir/scripts/fetch-zig.py" >/dev/null
 export PATH="$workspace_dir/.tools/zig:$PATH"
@@ -15,7 +14,6 @@ PY
 export MI360_ZIG_SHA256
 # Keep objects from same-version distributor builds out of Zig's compiler cache.
 export ZIG_GLOBAL_CACHE_DIR="$workspace_dir/.tools/zig-cache/$MI360_ZIG_SHA256"
-export MI360_SYSROOT
 target_dir=$(python3 - <<'PY'
 import os
 print(os.path.abspath(os.environ.get('CARGO_TARGET_DIR', 'target')))
@@ -23,6 +21,8 @@ PY
 )
 export CARGO_TARGET_DIR="$target_dir"
 export MI360_HEADERS="$target_dir/sdk-headers"
+export MI360_SYSROOT="$workspace_dir/.tools/link-interfaces/mi360"
+python3 "$workspace_dir/scripts/link_stubs.py" mi360 --output "$MI360_SYSROOT/lib"
 if [ -n "${MI360_HEADER_SOURCE:-}" ]; then
   python3 scripts/headers.py --out "$MI360_HEADERS" --from-directory "$MI360_HEADER_SOURCE"
 else
@@ -33,14 +33,6 @@ case "$(rustc --version)" in
   *) echo 'Build recipe requires Rust1.95.0 and matching rust-src' >&2; exit 1;;
 esac
 [ "$(zig version)" = 0.17.0 ] || { echo 'Build recipe requires Zig0.17.0' >&2; exit 1; }
-python3 - <<'PY'
-from pathlib import Path
-import hashlib,json,os
-lib=Path(os.environ['MI360_SYSROOT'])/'lib'
-for name,digest in json.loads(Path('toolchain/libraries.json').read_text()).items():
-    if hashlib.sha256((lib/name).read_bytes()).hexdigest()!=digest:
-        raise SystemExit('Target library does not match the pinned build: '+name)
-PY
 export RUSTC_BOOTSTRAP=1
 export RUSTFLAGS='-C target-feature=-soft-float,+fpxx,+nooddspreg -C relocation-model=pic'
 export CARGO_TARGET_MIPSEL_UNKNOWN_LINUX_UCLIBC_LINKER="$repo_dir/scripts/mips-linker.py"

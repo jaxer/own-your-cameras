@@ -1,0 +1,72 @@
+# Binary releases
+
+Download the bundle for your exact model from [Releases](https://github.com/jaxer/own-your-cameras/releases),
+verify its checksum, then unpack it. Bundles contain prebuilt daemons, SSH/update helpers and the local
+image builder, with project, Rust dependency/toolchain, Dropbear and musl license notices.
+They contain no stock firmware, settings, owner key or generated link-only library.
+
+```sh
+sha256sum -c MODEL-vVERSION.tar.gz.sha256
+tar -xzf MODEL-vVERSION.tar.gz
+cd MODEL-vVERSION
+python3 build-image.py --help
+```
+
+On macOS, use `shasum -a 256 -c` instead of `sha256sum -c`.
+Install Python3.12+ and SquashFS tools4.7.5. Reolink also needs `ubi-reader` from its bundled
+`source/tools/reolink-e1-zoom/requirements.txt` and `llvm-objdump` on PATH. Rust, Zig and camera access
+are not needed to assemble an image from a release.
+
+## Mi360
+
+Only MJSXJ10CM / T31 / SC2336 with the qualified4.3.4_0376 base is supported.
+
+```sh
+python3 build-image.py --original-dump /path/to/original-dump.bin \
+  --expected-original-sha256 YOUR_RECORDED_ORIGINAL_SHA256 \
+  --authorized-key /path/to/key.pub --output /path/to/private-image
+```
+
+Use the [inactive-slot installation procedure](cameras/mi360/docs/install.md) with the generated kernel/
+USRFS pair and bundled `writer/camera-mtd-write` and `writer/camera-update`. Preserve the active recovery
+slot and live DATA. The full-chip programmer output is private and is not an ordinary update image.
+
+## Reolink E1 Zoom
+
+Only IPC_566SD664M5MP / stock4417 is supported.
+
+```sh
+python3 build-image.py --stock-pak /path/to/stock4417.pak \
+  --authorized-key /path/to/key.pub --output /path/to/private-image
+python3 source/firmware/cameras/reolink-e1-zoom/scripts/flash_cutover.py \
+  --own-your-cameras "$PWD/source" --image-dir /path/to/private-image
+```
+
+The last command validates and prints the plan without contacting a camera. Follow the
+[installation guide](cameras/reolink-e1-zoom/docs/install.md) before executing it: the vendor updater
+must be running, and configuration retention/recovery requirements still apply. Never run a second
+media daemon alongside the existing owner.
+
+## Build and publish
+
+From a source checkout after [host setup](README.md#host-development):
+
+```sh
+make gate
+python3 firmware/scripts/release.py mi360 --version mi360-v0.1.0 --output /path/to/releases
+python3 firmware/scripts/release.py reolink-e1-zoom --version reolink-e1-zoom-v0.1.0 --output /path/to/releases
+```
+
+The release command builds the native application and static helpers, fetches the hash-pinned Dropbear
+source (or accepts `--dropbear-source FILE`), and writes a deterministic archive and SHA-256 file.
+Library interface manifests under `abi/` generate build-only ELF metadata; SDK interface declarations
+live with each camera. No vendor library files or header downloads are involved.
+
+`.github/workflows/firmware.yml` runs the host gate and both native builds on source changes.
+`.github/workflows/firmware-release.yml` runs the gate and builds the selected bundle for a pushed
+`mi360-vMAJOR.MINOR.PATCH` or `reolink-e1-zoom-vMAJOR.MINOR.PATCH` tag. It attaches all assets to a
+draft, then publishes the release. A `-SUFFIX` tag produces a prerelease. Releases are model-specific,
+so they do not set a repository-wide latest release. Manual runs build preview artifacts only.
+
+Compilation/host checks do not qualify hardware. Keep image preservation checks and on-camera
+installation/media/control evidence separate from the release's model/source/build identity.

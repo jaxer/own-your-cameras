@@ -1,12 +1,13 @@
 PYTHON ?= python3
 MI360 := cameras/mi360
 REOLINK := cameras/reolink-e1-zoom
-SDK_HEADERS := $(abspath $(MI360)/target/sdk-headers)
+SDK_HEADERS := $(abspath $(MI360)/sdk)
 .PHONY: headers fast area gate build-mi360 build-reolink
 headers:
-	$(PYTHON) $(REOLINK)/scripts/fetch-hdal-headers
 	$(PYTHON) $(MI360)/scripts/headers.py --out "$(SDK_HEADERS)"
 fast: headers
+	$(PYTHON) -B scripts/test_link_stubs.py
+	$(PYTHON) -B scripts/test_release.py
 	cargo test --workspace --locked
 	$(PYTHON) -I -m unittest discover -s $(REOLINK)/scripts
 	$(PYTHON) -B $(MI360)/toolchain/test_elf_compat.py

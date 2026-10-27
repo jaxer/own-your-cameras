@@ -3,7 +3,7 @@
 //! The legacy table was selected using the expected header sizes. Passing these tests
 //! cannot establish copied bytes, ids, field meanings, directions or runtime coverage.
 //! Keep these snapshot guards until every row has an independent binary reading (docs/hdal-abi.md).
-//! ARM C/Rust translation checks live in foundations_c.rs and generated ARM assertions.
+//! Maintained declaration checks live in contracts.rs and the frozen ARM assertions.
 
 use hdal_sys::header_sizes::HEADER_SIZES;
 

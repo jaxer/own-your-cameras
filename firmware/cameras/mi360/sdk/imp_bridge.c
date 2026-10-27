@@ -7,6 +7,7 @@
 #include "imp_bridge.h"
 
 #include <dlfcn.h>
+#include <imp_abi.h>
 #include <errno.h>
 #include <stdbool.h>
 #include <stddef.h>
@@ -15,10 +16,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <imp/imp_isp.h>
-#include <imp/imp_framesource.h>
-#include <imp/imp_encoder.h>
-#include <imp/imp_system.h>
 
 _Static_assert(sizeof(void *) == 4, "requires O32 pointers");
 _Static_assert(sizeof(bool) == 1, "C bool");

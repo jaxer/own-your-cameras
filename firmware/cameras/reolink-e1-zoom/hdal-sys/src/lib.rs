@@ -1,6 +1,6 @@
-//! Raw bindings to the camera's `libhdal.so` (HDAL 2.00.000), generated from the vendored headers.
+//! Maintained declarations for the camera's `libhdal.so` (HDAL 2.00.000).
 //!
-//! The headers are HDAL 3.02; `abi/` and `HEADERS.md` say where the 2.00 library differs.
+//! `abi/` and `HEADERS.md` record the qualified interface and evidence limits.
 #![allow(
     non_camel_case_types,
     non_snake_case,
@@ -21,14 +21,11 @@ pub mod ctypes {
     pub type c_ulonglong = u64;
 }
 
-#[cfg(not(target_arch = "arm"))]
-include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+include!("abi.rs");
 #[cfg(target_arch = "arm")]
-include!(concat!(env!("OUT_DIR"), "/arm_bindings.rs"));
+include!("arm_layout.rs");
 
-/// `(record name, size in bytes)` for the generated wrapper's structs, unions and record aliases,
-/// as clang computes them for ARMv7. This is header evidence, not proof of the binary's ABI.
-/// Host-independent, unlike `size_of`, which follows the host's pointer width.
+/// Frozen ARM declaration sizes; historical evidence limits remain in abi/README.md.
 pub mod header_sizes {
-    include!(concat!(env!("OUT_DIR"), "/header_sizes.rs"));
+    include!("header_sizes.rs");
 }

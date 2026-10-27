@@ -1,9 +1,10 @@
-name: Firmware host checks
+name: Firmware checks
 on:
   push:
-    paths: ['firmware/**', 'tools/mi-360/**', 'tools/reolink-e1-zoom/**', 'Makefile', '.github/workflows/firmware.yml']
+    branches: ['**']
+    paths: ['firmware/**', 'tools/mi-360/**', 'tools/reolink-e1-zoom/**', 'Makefile', '.github/workflows/**']
   pull_request:
-    paths: ['firmware/**', 'tools/mi-360/**', 'tools/reolink-e1-zoom/**', 'Makefile', '.github/workflows/firmware.yml']
+    paths: ['firmware/**', 'tools/mi-360/**', 'tools/reolink-e1-zoom/**', 'Makefile', '.github/workflows/**']
 permissions:
   contents: read
 jobs:
@@ -17,7 +18,7 @@ jobs:
       - name: Host compiler and Rust
         run: |
           sudo apt-get update
-          sudo apt-get install -y clang libclang-dev
+          sudo apt-get install -y clang llvm
           rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --component rust-src
           rustup default 1.95.0
       - name: Pinned cross compiler
@@ -26,3 +27,7 @@ jobs:
           echo "$GITHUB_WORKSPACE/firmware/.tools/zig" >> "$GITHUB_PATH"
       - name: Host gate
         run: make gate
+      - name: Native builds without vendor SDK inputs
+        run: |
+          rustup target add --toolchain 1.95.0 armv7-unknown-linux-gnueabihf
+          make -C firmware build-mi360 build-reolink

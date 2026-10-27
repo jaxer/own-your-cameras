@@ -30,7 +30,7 @@ crates described in the [workspace guide](../../../README.md#source-layout).
 
 | Crate | What it is | Why it is separate |
 |---|---|---|
-| `hdal-sys` | bindgen output for the HDAL 3.02 headers, patched to the camera's 2.00 library, generated for ARM on any host | all `unsafe` FFI in one place, and the layout checks ([hdal-abi.md](hdal-abi.md)) |
+| `hdal-sys` | maintained HDAL 2.00 interface declarations with frozen ARM layout assertions | all `unsafe` FFI in one place, and the layout checks ([hdal-abi.md](hdal-abi.md)) |
 | `hdal` | a safe wrapper: the video graph, encoders, audio, common memory, all behind `Backend` traits | its `fake` feature is a host backend, so the daemon's media logic is tested without a camera |
 | `cam` | the daemon and its command line (`cam serve`, `cam ptz`, …), plus the launcher `cam-launch` (`image/cam-launch.rs`) | model boot, ownership, network, MQTT and hardware policy; RTSP uses the shared transport |
 

@@ -8,10 +8,8 @@
 | Target | What it does | Needs a camera |
 |---|---|---|
 | `make tools` | installs a pinned `cargo-zigbuild` into the workspace `firmware/.tools` (nothing global) | no |
-| `make headers` | fetches, checks and patches the HDAL headers ([../hdal-sys/HEADERS.md](../hdal-sys/HEADERS.md)) | no |
-| `make check` | headers, the Python script tests, `scripts/check-tree` (no vendor bytes are tracked), `scripts/check-links` (relative links resolve), `cargo fmt --check`, `cargo clippy -D warnings`, `cargo test` | no |
-| `make sysroot CAMERA=<ssh host>` | copies the camera's own `libhdal.so` into `vendor/sysroot/` and checks its hash; a present, matching copy needs no camera | once |
-| `make build` | cross build with `cargo zigbuild` (glibc 2.30, `-C target-cpu=cortex-a9`), then `make udiv-guard` | no, after `sysroot` |
+| `make check` | the Python script tests, `scripts/check-tree` (no vendor bytes are tracked), `scripts/check-links` (relative links resolve), `cargo fmt --check`, `cargo clippy -D warnings`, `cargo test` | no |
+| `make build` | cross build with `cargo zigbuild` (glibc 2.30, `-C target-cpu=cortex-a9`), then `make udiv-guard` | no |
 | `make udiv-guard` | fails if `cam` or `cam-launch` contains `udiv`/`sdiv`, which SIGILL on this Cortex-A9 | no |
 
 Host tests never touch a camera, a broker or host hardware: every hardware interaction has a fake. `make check`

@@ -18,6 +18,8 @@ from ubi import read_stock_pak, parse_ubi, repack, STOCK_SHA256
 
 BASE = Path(__file__).resolve().parent
 WORKER_SHA256 = "8610bab73426103d9e046de8a47ede7fd4a4b04c0927cda13da37a1822be6334"
+# Official pinned Zig and the historical distributor build differ only in nonloaded compiler comments.
+WORKER_SHA256S = frozenset({WORKER_SHA256, "1e9c27dc78633446af3620057d171c21a93445bf614d3da9fb312921bd1109e3"})
 TIMESTAMP = 1792627200  # 2026-10-22 00:00:00 UTC, fixed for reproducibility
 MARKER = b"# START OF DATA - DO NOT MODIFY\n#\n"
 ADDED = {"root/.ssh", "root/.ssh/authorized_keys", "usr/sbin/dropbear",
@@ -134,7 +136,7 @@ def main():
         raise SystemExit("Expected one dedicated Ed25519 public key")
     binary = args.ssh_binary.resolve()
     elf = binary.read_bytes()
-    if digest(elf) != WORKER_SHA256:
+    if digest(elf) not in WORKER_SHA256S:
         raise SystemExit("SSH worker differs from the tested Cortex-A9 build; use the pinned recipe")
     if len(elf) < 100000 or elf[:7] != b"\x7fELF\x01\x01\x01" or struct.unpack_from("<H", elf, 18)[0] != 40:
         raise SystemExit("Expected a built ARM32 little-endian ELF")

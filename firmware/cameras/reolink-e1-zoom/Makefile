@@ -13,16 +13,13 @@ SESSION = CAMERA=$(CAMERA) scripts/device-session
 # Maintainer-only checks; the file is absent from published copies and make skips it.
 -include publish/check.mk
 
-.PHONY: check test-scripts headers compiler build udiv-guard device-test device-probe device-dump device-serve device-zoom device-ir tools sysroot
+.PHONY: check test-scripts compiler build udiv-guard device-test device-probe device-dump device-serve device-zoom device-ir tools
 compiler:
 	python3 ../../scripts/fetch-zig.py
 test-scripts:
 	python3 -I -m unittest discover -s scripts
-# The Novatek headers are fetched, never tracked (hdal-sys/HEADERS.md); a present, matching set needs no network.
-headers:
-	python3 -I scripts/fetch-hdal-headers
 
-check: headers test-scripts $(EXTRA_CHECKS)
+check: test-scripts $(EXTRA_CHECKS)
 	python3 -I scripts/check-tree
 	python3 -I scripts/check-links
 	cargo fmt --manifest-path ../../Cargo.toml --all -- --check
@@ -34,10 +31,7 @@ tools: $(TOOLS)/bin/cargo-zigbuild
 $(TOOLS)/bin/cargo-zigbuild:
 	cargo install cargo-zigbuild --locked --version 0.24.0 --root $(TOOLS)
 
-sysroot:
-	CAMERA=$(CAMERA) scripts/fetch-sysroot
-
-build: compiler tools headers sysroot
+build: compiler tools
 	CARGO_TARGET_DIR="$(CURDIR)/target" cargo zigbuild --manifest-path ../../Cargo.toml --locked -p cam --release --target $(ZIGTARGET)
 	$(MAKE) udiv-guard
 

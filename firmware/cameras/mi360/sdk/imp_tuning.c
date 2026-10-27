@@ -1,11 +1,11 @@
 /* Exact shipped IMP1.1.2 tuning ABI; no lifecycle/device ownership here. */
 #include "imp_tuning.h"
 #include <dlfcn.h>
+#include <imp_abi.h>
 #include <stddef.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
-#include <imp/imp_isp.h>
 
 #ifndef T31_TUNING_HOST_TEST
 _Static_assert(sizeof(void *) == 4, "O32 pointers");

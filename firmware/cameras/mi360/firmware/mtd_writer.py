@@ -12,6 +12,8 @@ import subprocess
 
 SOURCE_SHA256 = "082a1a7cbe68c614022bdcdf0b5a9a0f3dd14f01b502f2d36dd85c17125e81c7"
 BASE_BINARY_SHA256 = "1487ca86042d3f57c3882a1f5a78cfba4499749addaf6ee8553f09d50587665f"
+# Official Zig differs from the historical worker only in a nonloaded compiler comment.
+BASE_BINARY_SHA256S = frozenset({BASE_BINARY_SHA256, "67448de0266586f14617c6fefd961566ff5564f152fc9a088cecb28eec25e88d"})
 CFLAGS = "-Oz -fstack-protector-strong -ffunction-sections -fdata-sections -fno-unwind-tables -fno-asynchronous-unwind-tables"
 LDFLAGS = "-static -s -Wl,--gc-sections -Wl,-z,relro -Wl,-z,now"
 TARGET = "mipsel-linux-musleabi"

@@ -1,0 +1,39 @@
+# Use this Mi360 bundle
+
+Supported: MJSXJ10CM / T31 / SC2336 / stock4.3.4_0376. Start with a rooted camera and retain its original
+full-chip backup and trusted SSH access. Install Python3.12+ and SquashFS tools4.7.5 on the host.
+
+From the extracted bundle:
+
+```sh
+BUNDLE="$PWD"
+WORK="/path/to/new-private-work"
+umask 077
+mkdir -m 700 "$WORK"
+python3 "$BUNDLE/build-image.py" --original-dump /path/to/original-dump.bin \
+  --expected-original-sha256 YOUR_RECORDED_ORIGINAL_SHA256 \
+  --authorized-key /path/to/key.pub --output "$WORK/native-image"
+cp -R "$BUNDLE/writer" "$WORK/qualified-writer"
+```
+
+Set up [configuration](source/firmware/cameras/mi360/docs/configuration.md), then follow the bundled
+[installation procedure](source/firmware/cameras/mi360/docs/install.md), starting at **Preserve the
+working access path**. It stages the inactive slot and retains live DATA/settings/host keys.
+The first-install procedure assumes rooted stock B is active and a stock watchdog owner is feeding;
+do not apply those preconditions unchanged to an already running native installation.
+
+Use these paths wherever that guide refers to build outputs:
+
+| Guide input | Bundle/output path |
+|---|---|
+| Kernel image | `$WORK/native-image/bootstrap/kernel-for-update.bin` |
+| Application image | `$WORK/native-image/B_USRFS.bin` |
+| Qualified writer/updater | `$WORK/qualified-writer/{camera-mtd-write,camera-update}` |
+| Environment verifier | `$BUNDLE/source/firmware/cameras/mi360/firmware/verify_environment.py` |
+
+The writer's `plan` commands do not write flash. Staging, activation and reboot are separate explicit
+steps. Stop on any failed check. The full-chip `camera-mi360-16MiB.bin` contains original private DATA
+and is for a separately reviewed programmer/recovery procedure; it is not the normal updater input.
+
+After reboot, require the same trusted SSH host key, expected active slot, attempts1 and advancing
+healthy video/audio counters. Check both real streams and your configured controls.

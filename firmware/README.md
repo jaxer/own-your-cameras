@@ -2,7 +2,8 @@
 
 Replacement userspace for two qualified camera models. Each camera runs its own small native daemon;
 both applications use the same RTSP/RTP implementation and motion command contract.
-Vendor kernels, drivers and hardware SDKs remain required inputs and are not distributed here.
+Vendor kernels, drivers and SDK implementations stay on the cameras. Native builds use local interface
+declarations and generated link-only metadata; they need no vendor firmware, libraries or header downloads.
 
 | Camera | Platform | Build and installation |
 |---|---|---|
@@ -14,7 +15,7 @@ recovery backups private. The two image formats and recovery procedures are diff
 
 ## Host development
 
-From the repository root, with Python 3.12+, a host C compiler and libclang installed:
+From the repository root, with Python 3.12+, a host C compiler installed:
 
 ```sh
 rustup toolchain install 1.95.0 --component rustfmt --component clippy --component rust-src
@@ -24,12 +25,18 @@ make gate
 ```
 
 The workspace pins Rust in `rust-toolchain.toml`. The Zig installer verifies official release hashes and writes only to `firmware/.tools/`.
-On macOS, `brew install llvm` supplies libclang; on Debian/Ubuntu, install `clang libclang-dev`.
-The gate fetches pinned public SDK headers, compiles the production C ABI checks, and runs isolated
+On macOS, `brew install llvm` supplies the ARM disassembler; on Debian/Ubuntu, install `clang llvm`.
+The gate checks local interface pins, compiles the production ABI assertions, and runs isolated
 host tests. It needs no camera, broker, Home Assistant, microphone, speaker or proprietary libraries.
 
-Native builds need additional owner-supplied inputs; follow the model guide. A successful host gate
+Native builds need only the pinned toolchains and source dependencies. Personalized images still need
+your stock firmware/backup and SSH public key; follow the model guide. A successful host gate
 or cross-build does not establish new hardware acceptance.
+
+## Binary releases
+
+[Build, download and use a binary/builder bundle](RELEASES.md). Model tags produce GitHub releases;
+manual workflow runs produce build previews. Private images are assembled locally.
 
 ## Source layout
 

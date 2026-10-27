@@ -11,7 +11,7 @@ import zlib
 from dissect.squashfs import SquashFS
 
 from ubi import STOCK_SHA256, parse_ubi
-from build import WORKER_SHA256
+from build import WORKER_SHA256S
 
 BASE = Path(__file__).resolve().parent
 
@@ -103,7 +103,8 @@ def verify(stock_path, directory):
         assert after[path]['uid'] == after[path]['gid'] == 0
         assert after[path]['mode'] == mode, path
     assert after['/usr/bin/dropbearkey']['target'] == '../sbin/dropbear'
-    assert after['/usr/sbin/dropbear']['sha256'] == manifest['ssh_binary_sha256'] == WORKER_SHA256
+    assert after['/usr/sbin/dropbear']['sha256'] == manifest['ssh_binary_sha256']
+    assert manifest['ssh_binary_sha256'] in WORKER_SHA256S
     assert after['/root/.ssh/authorized_keys']['sha256'] == manifest['authorized_key_sha256']
     assert after['/etc/init.d/S99_zzRootSSH']['sha256'] == digest((BASE / 'S99_zzRootSSH').read_bytes())
     return {'passed': True, 'reader': 'dissect.squashfs 1.12',
@@ -113,7 +114,7 @@ def verify(stock_path, directory):
         'all_stock_regular_file_bytes_read_and_compared': True,
         'symlinks_modes_owners_timestamps_compared': True,
         'independently_extracted_payload_matches': True,
-        'ssh_binary_sha256': WORKER_SHA256,
+        'ssh_binary_sha256': manifest['ssh_binary_sha256'],
         'limits': 'Offline content verification; no hardware boot, acceptance or recovery proof'}
 
 

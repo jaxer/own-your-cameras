@@ -1,21 +1,19 @@
 # Binding a library without its headers
 
 The camera's media stack is Novatek HDAL: `libhdal.so` in user space over the `kflow_*`/`nvt_*` kernel modules.
-The camera runs HDAL **2.00.000** (`/usr/lib/libhdal.so`, the copy `scripts/fetch-sysroot` checks). Its headers
+The camera runs HDAL **2.00.000** (`/usr/lib/libhdal.so`, the hash recorded in `firmware/abi/reolink-e1-zoom/hdal.json`). Its headers
 were never published. The closest public headers are HDAL **3.02.000** for the NT9833x
 ([../hdal-sys/HEADERS.md](../hdal-sys/HEADERS.md) has the source and pin). This page says how `hdal-sys` is made
 to match the 2.00 library anyway, what is proven and what is not.
 
 ## The method
 
-1. **Generate for the camera, on any host.** `hdal-sys/build.rs` runs bindgen with `--target=armv7-unknown-linux-gnueabihf
-   -mcpu=cortex-a9` and replaces every system header with the small `hdal-sys/shim/` set, so a macOS or Linux host
-   produces the camera's ILP32 layout. bindgen's own layout assertions are compiled into the tests, and
-   `hdal-sys/layout.rs` exports every record's size as a table (`header_sizes.rs`); a record without size
-   evidence fails the build.
-2. **Check the headers themselves.** `hdal-sys/tests/foundations_c.rs` compiles the patched headers with clang
-   for ARM and `_Static_assert`s the corrected macros; `hdal-sys/tests/foundations.rs` checks the generated
-   constants and ARM type ranges. Both prove the translation, not compatibility with the older binary.
+1. **Maintain the qualified interface.** `hdal-sys/src/abi.rs` holds the Rust declarations;
+   `src/arm_layout.rs` retains the original ARM size/alignment/offset literals. ARM builds compile
+   every retained assertion; host pointers retain host width while C scalar widths stay pinned.
+2. **Check declaration contracts.** `hdal-sys/tests/contracts.rs` checks scalar widths, memory function
+   signatures and layout-assertion coverage. `tests/foundations.rs` checks constants and type ranges.
+   These checks detect interface drift; they do not prove compatibility with another SDK binary.
 3. **Read what the library really copies.** Each HDAL get/set takes a parameter id and a pointer. Inside
    `libhdal.so` the id selects a case through an ARM jump table, and the case `memset`s and `memcpy`s a fixed
    number of bytes between the caller's buffer and the ioctl envelope. That byte count, read from the
@@ -34,7 +32,7 @@ size in hand, so they are leads, not independent proof; `retracted-word` marks a
 
 ## Header changes
 
-`hdal-sys/hdal-include.patch` changes three upstream files.
+The maintained declarations inherit the following corrections from the qualified reference translation.
 
 Two structs, where the 2.00 library keeps the codec configs in a union:
 
@@ -74,7 +72,7 @@ the encoder rings come from the same pool. The main encoder's ring is sized at s
 16 MiB and both at 20 MiB; rings are mapped, never copied, and every copied access unit is bounded by
 `MAX_AU_BYTES` (7 MiB).
 
-From the library's disassembly (SHA-256 in `scripts/fetch-sysroot`):
+From the library's disassembly (SHA-256 in the HDAL link manifest):
 
 - `hd_common_mem_mmap` (`0x92b8`) rejects zero size and an unaligned physical address and turns mmap's
   all-ones failure into **null** (`0x9340` → `0x937c`). The wrapper still rejects both null and all-ones and

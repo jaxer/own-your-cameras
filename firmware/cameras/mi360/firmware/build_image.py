@@ -261,7 +261,7 @@ def main() -> None:
     copied_cam = inputs / "cam"
     copied_cam.write_bytes(cam_data)
     files: dict[str, tuple[Path, str]] = {"bin/cam": (copied_cam, "755")}
-    if sha(contents(pseudo, "bin/camera-mtd-write")) != mtd_writer.BASE_BINARY_SHA256:
+    if sha(contents(pseudo, "bin/camera-mtd-write")) not in mtd_writer.BASE_BINARY_SHA256S:
         raise ValueError("stock MTD-writer binary differs")
     copied_writer = inputs / "camera-mtd-write"
     copied_writer.write_bytes(writer_data)

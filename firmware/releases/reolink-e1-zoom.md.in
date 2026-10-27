@@ -1,0 +1,43 @@
+# Use this Reolink E1 Zoom bundle
+
+Supported: IPC_566SD664M5MP / stock4417. Retain the exact stock PAK, original recovery backups and
+trusted SSH access. Install Python3.12+, SquashFS tools4.7.5 and `llvm-objdump` on the host.
+
+From the extracted bundle, create a private work directory and install the Python image tools:
+
+```sh
+BUNDLE="$PWD"
+WORK="/path/to/new-private-work"
+umask 077
+mkdir -m 700 "$WORK"
+python3 -m venv "$WORK/venv"
+"$WORK/venv/bin/pip" install -r "$BUNDLE/source/tools/reolink-e1-zoom/requirements.txt"
+"$WORK/venv/bin/python" "$BUNDLE/build-image.py" --stock-pak /path/to/stock4417.pak \
+  --authorized-key /path/to/key.pub --output "$WORK/image"
+```
+
+Configure the three private files described in
+[Configure](source/firmware/cameras/reolink-e1-zoom/docs/install.md#configure).
+For its RAM/preflight command, use `$BUNDLE/bin/cam` as the local input binary. The private image already
+contains both prebuilt binaries and the bundled key-only SSH worker; no compilation is needed.
+
+Validate and print the flash plan:
+
+```sh
+"$WORK/venv/bin/python" "$BUNDLE/source/firmware/cameras/reolink-e1-zoom/scripts/flash_cutover.py" \
+  --own-your-cameras "$BUNDLE/source" --image-dir "$WORK/image"
+```
+
+Before uploading, follow [Flash and enable](source/firmware/cameras/reolink-e1-zoom/docs/install.md#flash-and-enable).
+The vendor updater must be running and `cam.enabled` absent. Keep configuration/recovery backups.
+To perform the one-shot upload after reviewing the plan:
+
+```sh
+"$WORK/venv/bin/python" "$BUNDLE/source/firmware/cameras/reolink-e1-zoom/scripts/flash_cutover.py" \
+  --own-your-cameras "$BUNDLE/source" --image-dir "$WORK/image" \
+  --execute-approved-flash --host CAMERA_IP --operation-dir "$WORK/flash-1"
+```
+
+Use `--insecure` only when intentionally accepting the camera's self-signed HTTPS certificate.
+After the vendor boot, enable the native daemon as documented; require trusted SSH, crash counter1,
+healthy boot qualification and actual video/audio/controls. Never start two media owners together.

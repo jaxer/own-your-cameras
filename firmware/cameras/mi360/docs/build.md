@@ -9,16 +9,12 @@ Run from the repository root. Keep all private inputs and image outputs outside 
 ## Daemon
 
 ```sh
-WORK="/path/to/private-mi360-work"
-DUMP="/path/to/original-dump.bin"
-mkdir -m 700 "$WORK"
-dd if="$DUMP" of="$WORK/rootfs.squashfs" bs=65536 skip=5 count=40
-unsquashfs -d "$WORK/rootfs" "$WORK/rootfs.squashfs"
-MI360_SYSROOT="$WORK/rootfs" make -C firmware build-mi360
+make -C firmware build-mi360
 ```
 
-Use the original unmodified full-chip dump. Output:
-`firmware/cameras/mi360/target/mipsel-unknown-linux-uclibc/release/mi360-cam`.
+Output: `firmware/cameras/mi360/target/mipsel-unknown-linux-uclibc/release/mi360-cam`.
+Compilation uses local IMP declarations and generated uClibc link interfaces; no camera/dump is needed.
+For prebuilt binaries and the image builder, see [binary releases](../../../RELEASES.md).
 
 ## Image
 
@@ -26,6 +22,9 @@ Use the workers retained from root setup and your previously recorded original d
 Each output directory must be new.
 
 ```sh
+WORK="/path/to/private-mi360-work"
+DUMP="/path/to/original-dump.bin"
+mkdir -m 700 "$WORK"
 python3 firmware/cameras/mi360/firmware/mtd_writer.py --output "$WORK/qualified-writer"
 python3 firmware/cameras/mi360/firmware/build_image.py \
   --original-dump "$DUMP" \

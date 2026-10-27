@@ -7,9 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <dlfcn.h>
-#include <imp/imp_isp.h>
-#include <imp/imp_audio.h>
-#include <imp/imp_encoder.h>
+#include <imp_abi.h>
 
 #ifndef T31_CONTROLS_HOST_TEST
 _Static_assert(sizeof(void *) == 4, "O32 pointers");
