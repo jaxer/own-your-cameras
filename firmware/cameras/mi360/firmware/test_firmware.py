@@ -2,6 +2,7 @@
 """Isolated host policy tests; no camera, flash, SDK, network or credentials."""
 import importlib.util
 from pathlib import Path
+import re
 import struct
 import subprocess
 import tempfile
@@ -13,6 +14,13 @@ HERE = Path(__file__).resolve().parent
 spec = importlib.util.spec_from_file_location("firmware_build", HERE / "build_image.py")
 build = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(build)
+
+
+def sandbox_paths(source, root):
+    replacements = {"/mnt/usr": str(root / "usr"), "/mnt/data": str(root / "data"),
+                    "/tmp/mi360": str(root / "run/mi360")}
+    # One pass: a Linux temporary root can itself start with /tmp/mi360.
+    return re.sub(r"/mnt/usr|/mnt/data|/tmp/mi360", lambda match: replacements[match[0]], source)
 
 
 def elf_fixture():
@@ -260,9 +268,7 @@ health_expired 1 216 100 200 || exit 4
             package.mkdir(parents=True)
             marker = root / "ap-started"
             (package / "ap.sh").write_text("#!/bin/sh\nprintf started >'" + str(marker) + "'\n")
-            source = (HERE / "network-start.sh").read_text()
-            for old, new in (("/mnt/usr", str(root / "usr")), ("/mnt/data", str(root / "data")), ("/tmp/mi360", str(root / "run/mi360"))):
-                source = source.replace(old, new)
+            source = sandbox_paths((HERE / "network-start.sh").read_text(), root)
             script = root / "network-start.sh"
             script.write_text(source)
             result = subprocess.run(["/bin/sh", str(script)], capture_output=True, text=True, timeout=3)
@@ -327,9 +333,7 @@ if write_attempts 2; then exit 0; else exit 7; fi
                 policy.mkdir(parents=True)
                 (policy / "boot-policy.sh").write_bytes((HERE / "boot-policy.sh").read_bytes())
                 (root / "run").mkdir()
-                source = (HERE / "launcher.sh").read_text()
-                for old, new in (("/mnt/usr", str(root / "usr")), ("/mnt/data", str(root / "data")), ("/tmp/mi360", str(root / "run/mi360"))):
-                    source = source.replace(old, new)
+                source = sandbox_paths((HERE / "launcher.sh").read_text(), root)
                 # Root ownership is production policy; tests use their own UID.
                 source = source.replace('[ "$3" = 0 ]', '[ "$3" = "$(id -u)" ]')
                 script = root / "launcher.sh"
